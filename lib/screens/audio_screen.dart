@@ -1,3 +1,5 @@
+// import 'dart:async';
+// import 'dart:async';
 import 'dart:io';
 
 import 'package:aibirdie/constants.dart';
@@ -18,6 +20,8 @@ class _AudioScreenState extends State<AudioScreen> {
   bool isPlaying;
   IconData playIcon = Icons.play_arrow;
   AudioPlayer audioPlayer = AudioPlayer();
+  int sec = 0;
+  // String rec = "Record now";
 
   @override
   void initState() {
@@ -72,8 +76,14 @@ class _AudioScreenState extends State<AudioScreen> {
                           children: <Widget>[
                             IconButton(
                               onPressed: () async {
-                                print("audio recording started");
+                                
+                                // Timer.periodic(Duration(seconds: 1), (Timer t) => setState(()=> sec++));
+
+
+                                // print("audio recording started");
                                 // final Directory appDir = await getApplicationDocumentsDirectory();
+
+                              
 
                                 final String filePath =
                                     '/storage/emulated/0/AiBirdie/${DateTime.now().millisecondsSinceEpoch.toString()}.wav';
@@ -111,10 +121,20 @@ class _AudioScreenState extends State<AudioScreen> {
                         SizedBox(
                           height: 20,
                         ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Text(
                           "Record now",
                           style: level2,
                         ),
+                        SizedBox(height: 20,),
+                        // Text(
+                        //   "00:0$sec",
+                        //   style: level2,
+                        // ),
+
+
                       ],
                     ),
                   ],

@@ -121,7 +121,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         SizedBox(height: 15,),
                         IconButton(
                           onPressed: (){
-                            print("object");
+                            // print("object");
                             
                           },
                           icon: Icon(Icons.keyboard_arrow_up, color: Colors.white, size: 30,),

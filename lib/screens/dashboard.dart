@@ -1,5 +1,6 @@
 // import 'dart:io';
 
+import 'package:aibirdie/screens/history.dart';
 import 'package:aibirdie/screens/notes.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class _DashboardState extends State<Dashboard> {
         ],
       ),
     ),
-    Center(child: Text("Data 2")),
+    History(),
     Notes(),
   ];
 
@@ -91,7 +92,7 @@ class _DashboardState extends State<Dashboard> {
           BottomNavigationBarItem(
               icon: Icon(Icons.dashboard), title: Text("Dashboard")),
           BottomNavigationBarItem(
-              icon: Icon(Icons.history), title: Text("Something")),
+              icon: Icon(Icons.history), title: Text("History")),
           BottomNavigationBarItem(
               icon: Icon(Icons.note_add), title: Text("Save")),
         ],

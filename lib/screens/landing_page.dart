@@ -1,7 +1,7 @@
 import 'package:aibirdie/screens/audio_screen.dart';
 import 'package:aibirdie/screens/camera_screen.dart';
 import 'package:aibirdie/screens/dashboard.dart';
-import 'package:aibirdie/screens/history.dart';
+// import 'package:aibirdie/screens/history.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +13,7 @@ List allPages = [
     scrollDirection: Axis.vertical,
     children: <Widget>[
       CameraScreen(cameras),
-      History(),
+      // History(),
     ],
   ),
   AudioScreen(),

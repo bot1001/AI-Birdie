@@ -72,7 +72,7 @@ class _HistoryState extends State<History> {
     return Center(
     child: imageCollections.isNotEmpty
         ? Container(
-          padding: EdgeInsets.only(top: 50),
+          // padding: EdgeInsets.only(top: 50),
           child: Stack(
             children: <Widget>[
               ListView.builder(
@@ -167,10 +167,10 @@ class _HistoryState extends State<History> {
                   // Text(_path.toString()),
                   // Text("1")
                 ),
-                                    Positioned(
-                                      top: 0,
-                                      left: 10,
-                                      child: Text("   History", style: heading1,)),
+                                    // Positioned(
+                                    //   top: 0,
+                                    //   left: 10,
+                                    //   child: Text("   History", style: heading1,)),
 
             ],
           ),

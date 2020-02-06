@@ -1,4 +1,4 @@
-import 'dart:convert';
+// import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -38,9 +38,9 @@ class _ImageResultState extends State<ImageResult> {
     print(response.body);
 
     setState(() {
-      var convertDataToJson = jsonDecode(response.body);
-      classId = convertDataToJson['class_id'];
-      className = convertDataToJson['class_name'];
+      // var convertDataToJson = jsonDecode(response.body);
+      // classId = convertDataToJson['class_id'];
+      // className = convertDataToJson['class_name'];
     });
 
 
