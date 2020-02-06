@@ -42,8 +42,6 @@ class _ImageResultState extends State<ImageResult> {
       // classId = convertDataToJson['class_id'];
       // className = convertDataToJson['class_name'];
     });
-
-
     return "success";
 
   }

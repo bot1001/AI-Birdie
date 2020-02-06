@@ -12,7 +12,7 @@ List allPages = [
   //   controller: PageController(initialPage: 0),
   //   scrollDirection: Axis.vertical,
   //   children: <Widget>[
-      CameraScreen(cameras),
+  CameraScreen(cameras),
       // History(),
     // ],
   // ),
