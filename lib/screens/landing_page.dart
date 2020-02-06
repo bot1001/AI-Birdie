@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 List<CameraDescription> cameras;
 List allPages = [
   Dashboard(),
-  PageView(
-    controller: PageController(initialPage: 0),
-    scrollDirection: Axis.vertical,
-    children: <Widget>[
+  // PageView(
+  //   controller: PageController(initialPage: 0),
+  //   scrollDirection: Axis.vertical,
+  //   children: <Widget>[
       CameraScreen(cameras),
       // History(),
-    ],
-  ),
+    // ],
+  // ),
   AudioScreen(),
 ];
 
