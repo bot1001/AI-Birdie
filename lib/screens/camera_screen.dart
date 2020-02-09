@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 // import 'package:video_player/video_player.dart';
 
 List<CameraDescription> cameras;
+var height;
 
 class CameraScreen extends StatefulWidget {
   CameraScreen(List<CameraDescription> icameras) {
@@ -40,6 +41,10 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      height = MediaQuery.of(context).size.height;
+      
+    });
     if (!controller.value.isInitialized) {
       return Container();
     }
@@ -93,6 +98,7 @@ class _CameraScreenState extends State<CameraScreen> {
                               File image = await ImagePicker.pickImage(
                                   source: ImageSource.gallery);
                               // print(image.path);
+                              if(image!=null)
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -242,7 +248,7 @@ class _CameraScreenState extends State<CameraScreen> {
     }
     return Container(
       color: Colors.black,
-      padding: EdgeInsets.symmetric(vertical: 100),
+      padding: EdgeInsets.symmetric(vertical: height*0.1),
       child: CameraPreview(controller),
     );
   }
