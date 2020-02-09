@@ -118,7 +118,7 @@ class _NotesState extends State<Notes> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Text(
-                        'Add Note',
+                        'Write anything',
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 30),
                       ),

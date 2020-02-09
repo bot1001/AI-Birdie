@@ -8,6 +8,8 @@ final TextStyle heading1 = TextStyle(
   fontFamily: 'M_semi_bold'
 );
 final TextStyle level1 = TextStyle(
+    color: Colors.black,
+
   fontSize: 15,
   fontFamily: 'M_medium'
 );
@@ -19,7 +21,8 @@ final TextStyle level1w = TextStyle(
 
 final TextStyle level2 = TextStyle(
   fontSize: 25,
-  fontFamily: 'M_medium'
+  fontFamily: 'M_medium',
+  color: Colors.black
 );
 
 final TextStyle level2w = TextStyle(

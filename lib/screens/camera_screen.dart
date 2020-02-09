@@ -56,8 +56,9 @@ class _CameraScreenState extends State<CameraScreen> {
             children: <Widget>[
               SafeArea(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
+                    Text("AI Birdie", style: level1w.copyWith(fontSize: 20),),
                     Container(
                       width: 60,
                       child: Column(

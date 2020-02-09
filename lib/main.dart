@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
 
       home: LandingPage(cameras),
       routes: {
+
         // 'home_page': (context) => HomePage(),
         // 'camera_screen': (context) => CameraScreen(),
         // 'preview_page': (context) => PreviewPage(),
