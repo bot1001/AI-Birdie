@@ -5,6 +5,7 @@
 import 'package:aibirdie/screens/landing_page.dart';
 // import 'package:aibirdie/screens/preview_page.dart';
 import 'package:camera/camera.dart';
+// import 'package:flare_splash_screen/flare_splash_screen.dart';
 import 'package:flutter/material.dart';
 
 //Screens imports
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'AI Birdie',
+
       home: LandingPage(cameras),
       routes: {
         // 'home_page': (context) => HomePage(),

@@ -26,13 +26,19 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Scaffold(
-        body: PageView.builder(
-          itemBuilder: (context, position) {
-            return allPages[position];
-          },
-          itemCount: allPages.length,
-          controller: PageController(initialPage: 1),
-        ),
+        // appBar: AppBar(),
+        body: CameraScreen(cameras),
+        
+        
+        // PageView.builder(
+        //   itemBuilder: (context, position) {
+        //     return allPages[position];
+        //   },
+        //   itemCount: allPages.length,
+        //   controller: PageController(initialPage: 1),
+        // ),
+
+
       ),
       onWillPop: () async {
         // print("Back pressed");
