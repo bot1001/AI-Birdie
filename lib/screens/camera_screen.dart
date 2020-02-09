@@ -1,6 +1,5 @@
 // import 'dart:async';
 import 'dart:io';
-
 import 'package:aibirdie/components/storage.dart';
 import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/screens/preview_page.dart';
@@ -203,7 +202,7 @@ class _CameraScreenState extends State<CameraScreen> {
       await controller.dispose();
     }
 
-    controller = CameraController(cameraDescription, ResolutionPreset.ultraHigh);
+    controller = CameraController(cameraDescription, ResolutionPreset.veryHigh);
 
     // If the controller is updated then update the UI.
     controller.addListener(() {
