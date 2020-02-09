@@ -80,6 +80,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 //         _onCapturePressed(context);
                 //       }),
                 // ),
+                SizedBox(height: 10,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
@@ -103,7 +104,7 @@ class _CameraScreenState extends State<CameraScreen> {
                             icon: Icon(
                               Icons.add_photo_alternate,
                               color: Colors.white,
-                              size: 40,
+                              size: 35,
                             ),
                           ),
                           Text(
@@ -114,19 +115,20 @@ class _CameraScreenState extends State<CameraScreen> {
                         ],
                       ),
                     ),
-                    Column(
-                      // mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        SizedBox(height: 15,),
-                        IconButton(
-                          onPressed: (){
-                            // print("object");
+                    // Column(
+                    //   // mainAxisAlignment: MainAxisAlignment.end,
+                    //   children: <Widget>[
+                    //     SizedBox(height: 15,),
+                    //     // IconButton(
+                    //     //   onPressed: (){
+                    //     //     // print("object");
                             
-                          },
-                          icon: Icon(Icons.keyboard_arrow_up, color: Colors.white, size: 30,),
-                        ),
-                      ],
-                    ),
+                    //     //   },
+                    //     //   icon: Icon(Icons.keyboard_arrow_up, color: Colors.white, size: 30,),
+                    //     // ),
+                    //   ],
+                    // ),
+                    SizedBox(width: 15,),
                     // SizedBox(
                     //   width: 100,
                     // ),
@@ -140,7 +142,7 @@ class _CameraScreenState extends State<CameraScreen> {
                             icon: Icon(
                               Icons.audiotrack,
                               color: Colors.white,
-                              size: 40,
+                              size: 30,
                             ),
                           ),
                           Text(
@@ -154,7 +156,7 @@ class _CameraScreenState extends State<CameraScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 35,
                 ),
               ],
             ),
@@ -238,8 +240,11 @@ class _CameraScreenState extends State<CameraScreen> {
         ),
       );
     }
-
-    return CameraPreview(controller);
+    return Container(
+      color: Colors.black,
+      padding: EdgeInsets.symmetric(vertical: 100),
+      child: CameraPreview(controller),
+    );
   }
 
   void _onCapturePressed(context) async {
