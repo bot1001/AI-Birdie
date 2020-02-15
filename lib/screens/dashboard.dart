@@ -9,6 +9,7 @@ import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:share/share.dart';
+import 'package:swipedetector/swipedetector.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -139,7 +140,24 @@ class _DashboardState extends State<Dashboard> {
           ],
         ),
       ),
-      body: _pageOptions[_selectedPage],
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+                      SwipeDetector(
+            onSwipeLeft: () => Navigator.of(context).pop(),
+            swipeConfiguration: SwipeConfiguration(
+                horizontalSwipeMaxHeightThreshold: 100.0,
+                horizontalSwipeMinDisplacement: 10.0,
+                horizontalSwipeMinVelocity: 10.0),
+            child: Container(
+              color: Colors.white,
+            ),
+          ),
+
+            _pageOptions[_selectedPage],
+          ],
+        )
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedPage,
         onTap: (int index) => setState(() => _selectedPage = index),

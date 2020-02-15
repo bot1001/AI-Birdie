@@ -8,7 +8,7 @@ Widget solidButton(String text, Function onTap) {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       onPressed: onTap,
       // color: Color(0xff047bfe),
-      color: myBlue,
+      color: myGreen,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 15),
         child: Text(text, style: level1.copyWith(color: Colors.white)),

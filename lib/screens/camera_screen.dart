@@ -135,29 +135,29 @@ class _CameraScreenState extends State<CameraScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Container(
-                        width: 90,
-                        child: Column(
-                          children: <Widget>[
-                            IconButton(
-                              onPressed: () {
-                                myTransition(context, -1.0, 0.0, Dashboard());
-                              },
-                              icon: Icon(
-                                Icons.dashboard,
-                                color: Colors.white,
-                                size: 35,
-                              ),
-                            ),
-                            Text(
-                              "Dashboard",
-                              style: level1.copyWith(
+                          width: 90,
+                          child: Column(
+                            children: <Widget>[
+                              IconButton(
+                                onPressed: () {
+                                  myTransition(context, -1.0, 0.0, Dashboard());
+                                },
+                                icon: Icon(
+                                  Icons.dashboard,
                                   color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13),
-                            )
-                          ],
+                                  size: 35,
+                                ),
+                              ),
+                              Text(
+                                "Dashboard",
+                                style: level1.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
                       // Column(
                       //   // mainAxisAlignment: MainAxisAlignment.end,
                       //   children: <Widget>[
@@ -178,28 +178,28 @@ class _CameraScreenState extends State<CameraScreen> {
                       //   width: 100,
                       // ),
                       Container(
-                        width: 90,
-                        child: Column(
-                          children: <Widget>[
-                            IconButton(
-                              onPressed: () => myTransition(
-                                  context, 1.0, 0.0, AudioClassification()),
-                              icon: Icon(
-                                Icons.audiotrack,
-                                color: Colors.white,
-                                size: 30,
-                              ),
-                            ),
-                            Text(
-                              "Audio",
-                              style: level1.copyWith(
+                          width: 90,
+                          child: Column(
+                            children: <Widget>[
+                              IconButton(
+                                onPressed: () => myTransition(
+                                    context, 1.0, 0.0, AudioClassification()),
+                                icon: Icon(
+                                  Icons.audiotrack,
                                   color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13),
-                            ),
-                          ],
+                                  size: 30,
+                                ),
+                              ),
+                              Text(
+                                "Audio",
+                                style: level1.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
                     ],
                   ),
                   SizedBox(
