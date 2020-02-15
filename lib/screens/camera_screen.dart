@@ -1,8 +1,10 @@
 // import 'dart:async';
 import 'dart:io';
 import 'package:aibirdie/components/storage.dart';
+import 'package:aibirdie/components/transitions.dart';
 import 'package:aibirdie/constants.dart';
-import 'package:aibirdie/screens/audio_screen.dart';
+import 'package:aibirdie/screens/audio_classidication.dart';
+// import 'package:aibirdie/screens/audio_screen.dart';
 import 'package:aibirdie/screens/dashboard.dart';
 import 'package:aibirdie/screens/preview_page.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +98,7 @@ class _CameraScreenState extends State<CameraScreen> {
               ),
               SwipeDetector(
                 onSwipeLeft: () =>
-                    myTransition(context, 1.0, 0.0, AudioScreen()),
+                    myTransition(context, 1.0, 0.0, AudioClassification()),
                 onSwipeRight: () =>
                     myTransition(context, -1.0, 0.0, Dashboard()),
                 swipeConfiguration: SwipeConfiguration(
@@ -114,7 +116,7 @@ class _CameraScreenState extends State<CameraScreen> {
                   GestureDetector(
                     child: Hero(
                       tag: 'key',
-                                          child: Container(
+                      child: Container(
                         height: 85.00,
                         width: 85.00,
                         decoration: BoxDecoration(
@@ -181,7 +183,7 @@ class _CameraScreenState extends State<CameraScreen> {
                           children: <Widget>[
                             IconButton(
                               onPressed: () => myTransition(
-                                  context, 1.0, 0.0, AudioScreen()),
+                                  context, 1.0, 0.0, AudioClassification()),
                               icon: Icon(
                                 Icons.audiotrack,
                                 color: Colors.white,
@@ -230,26 +232,7 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  myTransition(BuildContext context, double a, double b, var myPage) {
-    return Navigator.push(
-      context,
-      PageRouteBuilder(transitionsBuilder: (BuildContext context,
-          Animation<double> animation,
-          Animation<double> secAnimation,
-          Widget child) {
-        return SlideTransition(
-          position: Tween<Offset>(
-            begin: Offset(a, b),
-            end: Offset.zero,
-          ).animate(animation),
-          child: child,
-        );
-      }, pageBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secAnimation) {
-        return myPage;
-      }),
-    );
-  }
+
 
   void _showCameraException(CameraException e) {
     print("Error: ${e.code}\n${e.description}");

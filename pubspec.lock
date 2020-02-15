@@ -111,6 +111,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_animation_set:
+    dependency: "direct main"
+    description:
+      name: flutter_animation_set
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   flutter_audio_recorder:
     dependency: "direct main"
     description:
@@ -130,6 +137,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_timer:
+    dependency: "direct main"
+    description:
+      name: flutter_timer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.6"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -212,6 +226,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.8"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   path:
     dependency: "direct main"
     description:
@@ -254,6 +275,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  provider:
+    dependency: transitive
+    description:
+      name: provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.4"
   quiver:
     dependency: transitive
     description:

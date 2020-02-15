@@ -76,10 +76,6 @@ class _AudioScreenState extends State<AudioScreen> {
                           children: <Widget>[
                             IconButton(
                               onPressed: () async {
-                                // Timer.periodic(Duration(seconds: 1), (Timer t) => setState(()=> sec++));
-
-                                // print("audio recording started");
-                                // final Directory appDir = await getApplicationDocumentsDirectory();
 
                                 final String filePath =
                                     '/storage/emulated/0/AiBirdie/${DateTime.now().millisecondsSinceEpoch.toString()}.wav';
@@ -192,6 +188,7 @@ class _AudioScreenState extends State<AudioScreen> {
                     ),
                   ],
                 ),
+                
         ),
       ),
     );

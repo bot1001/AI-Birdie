@@ -1,17 +1,6 @@
-
-//System imports
-// import 'package:aibirdie/screens/home_page.dart';
-// import 'package:aibirdie/screens/img_classification.dart';
-// import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/screens/landing_page.dart';
-// import 'package:aibirdie/screens/preview_page.dart';
 import 'package:camera/camera.dart';
-// import 'package:flare_splash_screen/flare_splash_screen.dart';
 import 'package:flutter/material.dart';
-
-//Screens imports
-// import 'package:aibirdie/screens/login_page.dart';
-// import 'package:aibirdie/screens/camera_screen.dart';
 
 List<CameraDescription> cameras;
 
@@ -27,16 +16,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'AI Birdie',
       theme: ThemeData(
-        // primarySwatch: myGreen,
       ),
-
       home: LandingPage(cameras),
-      routes: {
-
-        // 'home_page': (context) => HomePage(),
-        // 'camera_screen': (context) => CameraScreen(),
-        // 'preview_page': (context) => PreviewPage(),
-      },
       debugShowCheckedModeBanner: false,
     );
   }
