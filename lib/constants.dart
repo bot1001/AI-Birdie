@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 final Color myBlue = Color(0xff047bfe);
+final Color myGreen = Color(0xff32c955);
+
 final Color inActive = Color(0xff666666);
 
 final TextStyle heading1 = TextStyle(

@@ -2,6 +2,7 @@
 //System imports
 // import 'package:aibirdie/screens/home_page.dart';
 // import 'package:aibirdie/screens/img_classification.dart';
+// import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/screens/landing_page.dart';
 // import 'package:aibirdie/screens/preview_page.dart';
 import 'package:camera/camera.dart';
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'AI Birdie',
+      theme: ThemeData(
+        // primarySwatch: myGreen,
+      ),
 
       home: LandingPage(cameras),
       routes: {

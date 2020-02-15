@@ -41,6 +41,7 @@ class _DashboardState extends State<Dashboard> {
     // });
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: myGreen,
         title: Text("AI Birdie"),
         centerTitle: true,
         actions: <Widget>[
@@ -54,6 +55,7 @@ class _DashboardState extends State<Dashboard> {
           // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             UserAccountsDrawerHeader(
+              // arrowColor: myGreen,
               accountEmail: Text("email@xyz.com"),
               accountName: Text("Jane Doe"),
               currentAccountPicture: CircleAvatar(
@@ -143,11 +145,11 @@ class _DashboardState extends State<Dashboard> {
         onTap: (int index) => setState(() => _selectedPage = index),
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard), title: Text("Dashboard")),
+              icon: Icon(Icons.dashboard, color: _selectedPage == 0 ? myGreen:null,), title: Text("Dashboard", style: _selectedPage == 0 ? level1.copyWith(color: myGreen):TextStyle(fontFamily: 'M_medium'),)),
           BottomNavigationBarItem(
-              icon: Icon(Icons.history), title: Text("History")),
+              icon: Icon(Icons.history, color: _selectedPage == 1 ? myGreen:null,), title: Text("History", style: _selectedPage == 1 ? level1.copyWith(color: myGreen):TextStyle(fontFamily: 'M_medium'),)),
           BottomNavigationBarItem(
-              icon: Icon(Icons.note_add), title: Text("Save")),
+              icon: Icon(Icons.note_add, color: _selectedPage == 2 ? myGreen:null,), title: Text("Save", style: _selectedPage == 2 ? level1.copyWith(color: myGreen):TextStyle(fontFamily: 'M_medium'),)),
         ],
       ),
     );
