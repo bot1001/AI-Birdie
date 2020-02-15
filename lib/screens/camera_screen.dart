@@ -10,10 +10,11 @@ import 'package:camera/camera.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:swipedetector/swipedetector.dart';
 // import 'package:video_player/video_player.dart';
 
 List<CameraDescription> cameras;
-var height;
+var height, width;
 
 class CameraScreen extends StatefulWidget {
   CameraScreen(List<CameraDescription> icameras) {
@@ -43,6 +44,7 @@ class _CameraScreenState extends State<CameraScreen> {
   Widget build(BuildContext context) {
     setState(() {
       height = MediaQuery.of(context).size.height;
+      width = MediaQuery.of(context).size.width;
     });
     if (!controller.value.isInitialized) {
       return Container();
@@ -58,7 +60,10 @@ class _CameraScreenState extends State<CameraScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text("AI Birdie", style: level1w.copyWith(fontSize: 20),),
+                    Text(
+                      "AI Birdie",
+                      style: level1w.copyWith(fontSize: 20),
+                    ),
                     Container(
                       width: 60,
                       child: Column(
@@ -89,183 +94,114 @@ class _CameraScreenState extends State<CameraScreen> {
                   ],
                 ),
               ),
+              SwipeDetector(
+                onSwipeLeft: () =>
+                    myTransition(context, 1.0, 0.0, AudioScreen()),
+                onSwipeRight: () =>
+                    myTransition(context, -1.0, 0.0, Dashboard()),
+                swipeConfiguration: SwipeConfiguration(
+                    horizontalSwipeMaxHeightThreshold: 100.0,
+                    horizontalSwipeMinDisplacement: 10.0,
+                    horizontalSwipeMinVelocity: 10.0),
+                child: Container(
+                  color: Colors.transparent,
+                  width: width * 0.7,
+                  height: height * 0.7,
+                ),
+              ),
               Column(
                 children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      GestureDetector(
-                        child: Container(
-                          height: 85.00,
-                          width: 85.00,
-                          decoration: BoxDecoration(
-                            // color: Color(0xffe90328),
-                            color: Colors.red[700],
-                            border: Border.all(
-                                width: 5.00, color: Colors.grey),
-                            shape: BoxShape.circle,
-                          ),
+                  GestureDetector(
+                    child: Hero(
+                      tag: 'key',
+                                          child: Container(
+                        height: 85.00,
+                        width: 85.00,
+                        decoration: BoxDecoration(
+                          // color: Color(0xffe90328),
+                          // color: Colors.red[700],
+                          border: Border.all(width: 5.00, color: Colors.white),
+                          shape: BoxShape.circle,
                         ),
-                        onTap: () {
-                          _onCapturePressed(context);
-                        },
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Container(
-                            width: 90,
-                            child: Column(
-                              children: <Widget>[
-                                IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      PageRouteBuilder(
-                                          // transitionDuration: Duration(milliseconds: 200),
-                                          transitionsBuilder: (BuildContext
-                                                  context,
-                                              Animation<double> animation,
-                                              Animation<double>
-                                                  secAnimation,
-                                              Widget child) {
-                                        // return ScaleTransition(
-                                        //   scale: animation,
-                                        //   child: child,
-                                        //   alignment: Alignment.center,
-                                        // );
-                                        return SlideTransition(
-                                          position: Tween<Offset>(
-                                            begin: const Offset(-1.0, 0.0),
-                                            // begin: Offset(, dy),
-                                            end: Offset.zero,
-                                          ).animate(animation),
-                                          child: child,
-                                        );
-                                      }, pageBuilder: (BuildContext context,
-                                              Animation<double> animation,
-                                              Animation<double>
-                                                  secAnimation) {
-                                        return Dashboard();
-                                      }),
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.dashboard,
-                                    color: Colors.white,
-                                    size: 35,
-                                  ),
-                                ),
-                                Text(
-                                  "Dashboard",
-                                  style: level1.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13),
-                                )
-                              ],
+                    ),
+                    onTap: () {
+                      _onCapturePressed(context);
+                    },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Container(
+                        width: 90,
+                        child: Column(
+                          children: <Widget>[
+                            IconButton(
+                              onPressed: () {
+                                myTransition(context, -1.0, 0.0, Dashboard());
+                              },
+                              icon: Icon(
+                                Icons.dashboard,
+                                color: Colors.white,
+                                size: 35,
+                              ),
                             ),
-                          ),
-                          // Column(
-                          //   // mainAxisAlignment: MainAxisAlignment.end,
-                          //   children: <Widget>[
-                          //     SizedBox(height: 15,),
-                          //     // IconButton(
-                          //     //   onPressed: (){
-                          //     //     // print("object");
-
-                          //     //   },
-                          //     //   icon: Icon(Icons.keyboard_arrow_up, color: Colors.white, size: 30,),
-                          //     // ),
-                          //   ],
-                          // ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          // SizedBox(
-                          //   width: 100,
-                          // ),
-                          Container(
-                            width: 90,
-                            child: Column(
-                              children: <Widget>[
-                                IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      PageRouteBuilder(
-                                          // transitionDuration: Duration(milliseconds: 200),
-                                          transitionsBuilder: (BuildContext
-                                                  context,
-                                              Animation<double> animation,
-                                              Animation<double>
-                                                  secAnimation,
-                                              Widget child) {
-                                        // return ScaleTransition(
-                                        //   scale: animation,
-                                        //   child: child,
-                                        //   alignment: Alignment.center,
-                                        // );
-                                        return SlideTransition(
-                                          position: Tween<Offset>(
-                                            begin: const Offset(1.0, 0.0),
-                                            // begin: Offset(, dy),
-                                            end: Offset.zero,
-                                          ).animate(animation),
-                                          child: child,
-                                        );
-                                      }, pageBuilder: (BuildContext context,
-                                              Animation<double> animation,
-                                              Animation<double>
-                                                  secAnimation) {
-                                        return AudioScreen();
-                                      }),
-                                    );
-                                  },
-                                  // onPressed: () {
-                                  //   Navigator.push(
-                                  //     context,
-                                  //     PageRouteBuilder(
-                                  //         pageBuilder: (context, animation,
-                                  //                 secondaryAnimation) =>
-                                  //             AudioScreen(),
-
-                                  //         transitionsBuilder: (context, animation,
-                                  //             secondaryAnimation, child) {
-                                  //           return SlideTransition(
-                                  //             position: Tween<Offset>(
-                                  //               begin: const Offset(-1.0, 0.0),
-                                  //               end: Offset.zero,
-                                  //             ).animate(animation),
-                                  //             child: SlideTransition(
-                                  //               position: Tween<Offset>(
-                                  //                 end: const Offset(-1.0, 0.0),
-                                  //                 begin: Offset.zero,
-                                  //               ).animate(secondaryAnimation),
-                                  //             ),
-                                  //           );
-                                  //         }),
-                                  //   );
-                                  // },
-                                  icon: Icon(
-                                    Icons.audiotrack,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                ),
-                                Text(
-                                  "Audio",
-                                  style: level1.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                            Text(
+                              "Dashboard",
+                              style: level1.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13),
+                            )
+                          ],
+                        ),
                       ),
-                      SizedBox(height: 10,),
+                      // Column(
+                      //   // mainAxisAlignment: MainAxisAlignment.end,
+                      //   children: <Widget>[
+                      //     SizedBox(height: 15,),
+                      //     // IconButton(
+                      //     //   onPressed: (){
+                      //     //     // print("object");
+
+                      //     //   },
+                      //     //   icon: Icon(Icons.keyboard_arrow_up, color: Colors.white, size: 30,),
+                      //     // ),
+                      //   ],
+                      // ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      // SizedBox(
+                      //   width: 100,
+                      // ),
+                      Container(
+                        width: 90,
+                        child: Column(
+                          children: <Widget>[
+                            IconButton(
+                              onPressed: () => myTransition(
+                                  context, 1.0, 0.0, AudioScreen()),
+                              icon: Icon(
+                                Icons.audiotrack,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ),
+                            Text(
+                              "Audio",
+                              style: level1.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                 ],
               ),
@@ -294,31 +230,26 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  // Future<String> takeImage() async {
-  //   if (!controller.value.isInitialized) {
-  //     // Scaffold.of(context).showSnackBar(SnackBar(content: Text("Error: select a camera first."),));
-  //     // showInSnackBar('Error: select a camera first.');
-  //     print("Error: select a camera first.");
-  //     return null;
-  //   }
-  //   final Directory extDir = await getApplicationDocumentsDirectory();
-  //   final String dirPath = '${extDir.path}/Pictures/flutter_test';
-  //   await Directory(dirPath).create(recursive: true);
-  //   final String filePath = '$dirPath/${timestamp()}.jpg';
-
-  //   if (controller.value.isTakingPicture) {
-  //     // A capture is already pending, do nothing.
-  //     return null;
-  //   }
-
-  //   try {
-  //     await controller.takePicture(filePath);
-  //   } on CameraException catch (e) {
-  //     _showCameraException(e);
-  //     return null;
-  //   }
-  //   return filePath;
-  // }
+  myTransition(BuildContext context, double a, double b, var myPage) {
+    return Navigator.push(
+      context,
+      PageRouteBuilder(transitionsBuilder: (BuildContext context,
+          Animation<double> animation,
+          Animation<double> secAnimation,
+          Widget child) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: Offset(a, b),
+            end: Offset.zero,
+          ).animate(animation),
+          child: child,
+        );
+      }, pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secAnimation) {
+        return myPage;
+      }),
+    );
+  }
 
   void _showCameraException(CameraException e) {
     print("Error: ${e.code}\n${e.description}");
@@ -388,98 +319,8 @@ class _CameraScreenState extends State<CameraScreen> {
           builder: (context) => PreviewPage(path, Storage()),
         ),
       );
-
-      // Scaffold.of(context).showSnackBar(new SnackBar(
-      //                       content:
-      //                           new Text("Photo clicked"),
-      //                       action: SnackBarAction(
-      //                         label: "OK",
-      //                         onPressed: () {},
-      //                       ),
-      //                       behavior: SnackBarBehavior.floating,
-      //                     ));
-
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => PreviewImageScreen(imagePath: path),
-      //   ),
-      // );
     } catch (e) {
       print(e);
     }
   }
 }
-
-/**********
- * 
- * 
- * 
- * 
- * 
- * 
-upload nu onpress
-
-
-                            onPressed: () async {
-                              File image = await ImagePicker.pickImage(
-                                  source: ImageSource.gallery);
-                              // print(image.path);
-                              if (image != null)
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        PreviewPage(image.path, Storage()),
-                                  ),
-                                );
-                            },
-
-
-
-
-
-upload nu button
-
-
-
-
-
-                    Container(
-                      width: 60,
-                      child: Column(
-                        children: <Widget>[
-                          IconButton(
-                            onPressed: () async {
-                              File image = await ImagePicker.pickImage(
-                                  source: ImageSource.gallery);
-                              // print(image.path);
-                              if (image != null)
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        PreviewPage(image.path, Storage()),
-                                  ),
-                                );
-                            },
-                            icon: Icon(
-                              Icons.add_photo_alternate,
-                              color: Colors.white,
-                              size: 35,
-                            ),
-                          ),
-                          Text(
-                            "Upload",
-                            style: level1.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ),
-
-
-
-
- */

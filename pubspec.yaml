@@ -41,6 +41,7 @@ dependencies:
   share: ^0.6.3+5
   flutter_email_sender: ^2.2.2
   url_launcher: ^5.4.1
+  swipedetector: ^1.2.0
 
 
 

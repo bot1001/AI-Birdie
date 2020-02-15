@@ -47,7 +47,7 @@ class _AudioScreenState extends State<AudioScreen> {
         child: Center(
           child: file == null
               ? Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Column(
                       children: <Widget>[
@@ -76,22 +76,19 @@ class _AudioScreenState extends State<AudioScreen> {
                           children: <Widget>[
                             IconButton(
                               onPressed: () async {
-                                
                                 // Timer.periodic(Duration(seconds: 1), (Timer t) => setState(()=> sec++));
-
 
                                 // print("audio recording started");
                                 // final Directory appDir = await getApplicationDocumentsDirectory();
 
-                              
-
                                 final String filePath =
                                     '/storage/emulated/0/AiBirdie/${DateTime.now().millisecondsSinceEpoch.toString()}.wav';
                                 print(filePath);
-                                recorder = FlutterAudioRecorder(filePath, audioFormat: AudioFormat.WAV);
+                                recorder = FlutterAudioRecorder(filePath,
+                                    audioFormat: AudioFormat.WAV);
 
                                 await FlutterAudioRecorder.hasPermissions;
-                                
+
                                 await recorder.initialized;
                                 await recorder.start();
                                 // var recording = await recorder.current(channel: 0);
@@ -119,22 +116,42 @@ class _AudioScreenState extends State<AudioScreen> {
                           ],
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 40,
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
+
                         Text(
                           "Record now",
                           style: level2,
                         ),
-                        SizedBox(height: 20,),
+                      
                         // Text(
                         //   "00:0$sec",
                         //   style: level2,
                         // ),
-
-
+                      ],
+                    ),
+                      // SizedBox(
+                      //     height: 100,
+                      //   ),
+                    Column(
+                      children: <Widget>[
+                        Hero(
+                          tag: 'key',
+                          child: GestureDetector(
+                            onTap: ()=> Navigator.of(context).pop(),
+                                                      child: Container(
+                              height: 40.00,
+                              width: 40.00,
+                              decoration: BoxDecoration(
+                                // color: Color(0xffe90328),
+                                // color: Colors.red[700],
+                                border: Border.all(width: 5.00, color: Colors.black),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20),
                       ],
                     ),
                   ],
@@ -155,7 +172,7 @@ class _AudioScreenState extends State<AudioScreen> {
                             size: 50,
                           ),
                           onPressed: () async {
-                              await audioPlayer.play(file.path, isLocal: true);
+                            await audioPlayer.play(file.path, isLocal: true);
                             // print(result);
                             audioPlayer.onPlayerCompletion.listen((event) {
                               setState(() {
@@ -163,14 +180,12 @@ class _AudioScreenState extends State<AudioScreen> {
                                 playIcon = Icons.play_arrow;
                               });
                             });
-
                           },
                         ),
                         IconButton(
                           icon: Icon(Icons.stop, size: 50),
                           onPressed: () async {
-                              await audioPlayer.stop();
-
+                            await audioPlayer.stop();
                           },
                         ),
                       ],
