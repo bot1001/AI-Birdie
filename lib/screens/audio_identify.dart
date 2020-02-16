@@ -4,6 +4,7 @@ import 'package:aibirdie/constants.dart';
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:aibirdie/components/buttons.dart';
+import 'package:flutter_timer/flutter_timer.dart';
 
 File file;
 
@@ -16,7 +17,7 @@ class AudioIdentify extends StatefulWidget {
 }
 
 class _AudioIdentifyState extends State<AudioIdentify> {
-  String label = "Play";
+  var running = false;
 
   bool isPlaying;
   // IconData playIcon = Icons.play_arrow;
@@ -28,11 +29,12 @@ class _AudioIdentifyState extends State<AudioIdentify> {
       backgroundColor: Colors.white,
       body: WillPopScope(
         onWillPop: () async {
-          await audioPlayer.stop();
-          setState(() {
-            isPlaying = false;
-            label = "Play";
-          });
+          if (isPlaying == true) {
+            await audioPlayer.stop();
+            setState(() {
+              isPlaying = false;
+            });
+          }
 
           if (file.path.substring(file.path.length - 4) == ".wav") {
             Navigator.of(context).pop();
@@ -51,129 +53,101 @@ class _AudioIdentifyState extends State<AudioIdentify> {
                   width: double.infinity,
                 ),
                 Text(
-                  "File picked successfully",
+                  "Recording saved",
                   style: level2,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 3,
-                          child: Container(
-                            // width: 200,
-                            child: OutlineButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                              onPressed: () async {
-                                if (isPlaying == true) {
-                                  await audioPlayer.stop();
-                                  setState(() {
-                                    isPlaying = false;
-                                    label = "Play";
-                                  });
-                                } else {
-                                  await audioPlayer.play(file.path,
-                                      isLocal: true);
-                                  setState(() {
-                                    label = "Stop ";
-                                    isPlaying = true;
-                                  });
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   children: <Widget>[
+                    //     Container(
+                    //       width: 200,
+                    //       decoration: BoxDecoration(
+                    //         // color: Color(0xffffffff),
+                    //         border: Border.all(
+                    //           width: 1.00,
+                    //           color: Colors.black,
+                    //         ),
+                    //         borderRadius: BorderRadius.circular(31.00),
+                    //       ),
+                    //       child: Center(
+                    //         child: TikTikTimer(
+                    //           height: 50,
+                    //           width: 100,
+                    //           initialDate: DateTime.now(),
+                    //           backgroundColor: Colors.white,
+                    //           timerTextStyle: level2,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
 
-                                  audioPlayer.onPlayerCompletion
-                                      .listen((event) {
-                                    setState(() {
-                                      isPlaying = false;
-                                      label = "Play";
-                                    });
-                                  });
-                                }
-                              },
-                              borderSide: BorderSide(
-                                  style: BorderStyle.solid,
-                                  color: Colors.black,
-                                  width: 1.5),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 15),
-                                child: Row(
-                                  children: <Widget>[
-                                    Text(label, style: level1),
-                                    Icon(Icons.play_arrow),
-                                  ],
-                                ),
-                              ),
+                    Container(
+                      height: 50,
+                      width: double.infinity,
+                      child: OutlineButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                        onPressed: () async {
+                          if (isPlaying == true) {
+                            await audioPlayer.stop();
+                            setState(() => isPlaying = false);
+                          } else {
+                            await audioPlayer.play(file.path, isLocal: true);
+                            setState(() => isPlaying = true);
+                            audioPlayer.onPlayerCompletion.listen(
+                                (event) => setState(() => isPlaying = false));
+                          }
+                        },
+                        borderSide: BorderSide(
+                            style: BorderStyle.solid,
+                            color: Colors.black,
+                            width: 1.5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            TikTikTimer(
+                                backgroundColor: Colors.white,
+                                timerTextStyle: level2.copyWith(fontSize: 20),
+                                height: 50,
+                                width: 100,
+                                running: isPlaying,
+                                initialDate: DateTime.now()),
+                            Icon(
+                              isPlaying == true ? Icons.stop : Icons.play_arrow,
+                              size: 40,
+                              color:
+                                  isPlaying == true ? Colors.red[900] : myGreen,
                             ),
-                          ),
+                          ],
                         ),
-                        SizedBox(width: 20),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            width: 100,
-                            child: OutlineButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                              onPressed: () async {
-                                if (isPlaying == true) {
-                                  await audioPlayer.stop();
-                                  setState(() {
-                                    isPlaying = false;
-                                    label = "Play";
-                                  });
-                                } else {
-                                  await audioPlayer.play(file.path,
-                                      isLocal: true);
-                                  setState(() {
-                                    label = "Stop ";
-                                    isPlaying = true;
-                                  });
-
-                                  audioPlayer.onPlayerCompletion
-                                      .listen((event) {
-                                    setState(() {
-                                      isPlaying = false;
-                                      label = "Play";
-                                    });
-                                  });
-                                }
-                              },
-                              borderSide: BorderSide(
-                                  style: BorderStyle.solid,
-                                  color: Colors.black,
-                                  width: 1.5),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 15),
-                                child: Icon(Icons.play_arrow, size: 25,),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
 
                     // lightButton(label, () async {
-                    //   if(isPlaying == true){
+                    //   if (isPlaying == true) {
                     //     await audioPlayer.stop();
                     //     setState(() {
                     //       isPlaying = false;
                     //       label = "Play ▶";
                     //     });
-                    //   }
-                    //   else {
-                    //   await audioPlayer.play(file.path, isLocal: true);
-                    //   setState(() {
-                    //   label = "Stop ";
-                    //   isPlaying = true;
-                    //   });
-
-                    //   audioPlayer.onPlayerCompletion.listen((event) {
+                    //   } else {
+                    //     await audioPlayer.play(file.path, isLocal: true);
                     //     setState(() {
-                    //       isPlaying = false;
-                    //       label = "Play";
+                    //       label = "Stop ";
+                    //       isPlaying = true;
                     //     });
-                    //   });
+
+                    //     audioPlayer.onPlayerCompletion.listen((event) {
+                    //       setState(() {
+                    //         isPlaying = false;
+                    //         label = "Play";
+                    //       });
+                    //     });
                     //   }
                     // }),
                     SizedBox(

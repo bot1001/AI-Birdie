@@ -1,3 +1,4 @@
+import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/screens/audio_screen.dart';
 import 'package:aibirdie/screens/camera_screen.dart';
 import 'package:aibirdie/screens/dashboard.dart';
@@ -28,8 +29,7 @@ class _LandingPageState extends State<LandingPage> {
       child: Scaffold(
         // appBar: AppBar(),
         body: CameraScreen(cameras),
-        
-        
+
         // PageView.builder(
         //   itemBuilder: (context, position) {
         //     return allPages[position];
@@ -37,8 +37,6 @@ class _LandingPageState extends State<LandingPage> {
         //   itemCount: allPages.length,
         //   controller: PageController(initialPage: 1),
         // ),
-
-
       ),
       onWillPop: () async {
         // print("Back pressed");
@@ -49,6 +47,7 @@ class _LandingPageState extends State<LandingPage> {
           // desc: "Flutter is more awesome with RFlutter Alert.",
           buttons: [
             DialogButton(
+              color: Colors.red,
               child: Text(
                 "YES",
                 style: TextStyle(color: Colors.white, fontSize: 20),
@@ -60,11 +59,12 @@ class _LandingPageState extends State<LandingPage> {
               width: 120,
             ),
             DialogButton(
+              color: myGreen,
               child: Text(
                 "NO",
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
-              onPressed: (){
+              onPressed: () {
                 Navigator.of(context).pop();
               },
               width: 120,

@@ -25,6 +25,16 @@ class _AudioClassificationState extends State<AudioClassification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: Text(
+          "Pick an audio",
+          style: TextStyle(color: myGreen),
+        ),
+        elevation: 0,
+      ),
+
       // backgroundColor: myGreen,
       body: SafeArea(
           child: Stack(
@@ -41,7 +51,7 @@ class _AudioClassificationState extends State<AudioClassification> {
           ),
           Center(
             child: Padding(
-              padding: const EdgeInsets.only(top: 200.0, bottom: 20.0),
+              padding: const EdgeInsets.only(top: 100.0, bottom: 20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -81,61 +91,74 @@ class _AudioClassificationState extends State<AudioClassification> {
                   ),
                   Column(
                     children: <Widget>[
-
-                  Column(
-                    children: <Widget>[
-                  Icon(Icons.keyboard_arrow_up),
-                  Icon(Icons.keyboard_arrow_up),
-
+                      Column(
+                        children: <Widget>[
+                          Icon(
+                            Icons.keyboard_arrow_up,
+                            color: myGreen,
+                          ),
+                          Icon(
+                            Icons.keyboard_arrow_up,
+                            size: 30,
+                            color: myGreen,
+                          ),
+                        ],
+                      ),
+                      Draggable(
+                        child: CircleAvatar(
+                          radius: 35,
+                          child: Text("Select"),
+                        ),
+                        feedback: CircleAvatar(
+                          radius: 35,
+                          child: Text("Select"),
+                        ),
+                        childWhenDragging: CircleAvatar(
+                          radius: 35,
+                          backgroundColor: Colors.white,
+                        ),
+                        axis: Axis.vertical,
+                      ),
+                      Column(
+                        children: <Widget>[
+                          Icon(
+                            Icons.keyboard_arrow_down,
+                            size: 30,
+                            color: myGreen,
+                          ),
+                          Icon(
+                            Icons.keyboard_arrow_down,
+                            color: myGreen,
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                  Draggable(
-                    child: CircleAvatar(
-                      radius: 50,
-                      child: Text("Select"),
-                      
-                    ),
-                    feedback: CircleAvatar(
-                      // backgroundColor: Colors.green,
-                      radius: 50,
-                      child: Text("Select"),
-                    ),
-                    childWhenDragging: CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.white,
-                    ),
-                    axis: Axis.vertical,
-                    // dragAnchor: ,
-
-                  ),
-                                    Column(
-                    children: <Widget>[
-                  Icon(Icons.keyboard_arrow_down),
-                  Icon(Icons.keyboard_arrow_down),
-
-                    ],
-                  ),
-                    ],
-                  ),
-
                   Hero(
                     tag: 'mic',
-                    child: Container(
-                      width: 120,
-                      height: 120,
-                      child: RaisedButton(
-                          color: myGreen,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: Icon(
-                            Icons.mic,
-                            size: 40,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            myTransition(context, 1.0, 0.0, AudioRecord());
-                          }),
+                    child: DragTarget(
+                      onAccept: (value) {
+                        myTransition(context, 1.0, 0.0, AudioRecord());
+                      },
+                      builder: (a, b, c) {
+                        return Container(
+                          width: 120,
+                          height: 120,
+                          child: RaisedButton(
+                              color: myGreen,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child: Icon(
+                                Icons.mic,
+                                size: 40,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                myTransition(context, 1.0, 0.0, AudioRecord());
+                              }),
+                        );
+                      },
                     ),
                   ),
                   GestureDetector(

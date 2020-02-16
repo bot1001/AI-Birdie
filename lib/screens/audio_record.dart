@@ -18,7 +18,7 @@ class _AudioRecordState extends State<AudioRecord> {
   File file;
 
   @override
-  void initState()  {
+  void initState() {
     super.initState();
 
     startRecording();
@@ -29,13 +29,13 @@ class _AudioRecordState extends State<AudioRecord> {
         '/storage/emulated/0/AiBirdie/${DateTime.now().millisecondsSinceEpoch.toString()}.wav';
     print(filePath);
     recorder = FlutterAudioRecorder(filePath, audioFormat: AudioFormat.WAV);
-    
+
     await FlutterAudioRecorder.hasPermissions;
-    
+
     await recorder.initialized;
     await recorder.start();
     // var recording = await recorder.current(channel: 0);
-    
+
     setState(() {
       running = true;
     });
@@ -70,28 +70,28 @@ class _AudioRecordState extends State<AudioRecord> {
                         onPressed: () {}),
                   ),
                 ),
+                Container(
+                  child: YYDoubleBounce(),
+                  color: Colors.black,
+                  width: 50,
+                  height: 50,
+                ),
                 Text(
-                  "Recording audio...",
+                  "Recording...",
                   style: level2w,
                 ),
                 TikTikTimer(
                   initialDate: DateTime.now(),
                   running: running,
                   height: 150,
-                  width: 150,
+                  width: double.infinity,
                   // backgroundColor: Colors.black,
-                  timerTextStyle: level2w,
+                  timerTextStyle: level2w.copyWith(fontSize: 60),
                   borderRadius: 100,
                   // isRaised: true,
                   tracetime: (time) {
                     print(time.getCurrentSecond);
                   },
-                ),
-                Container(
-                  child: YYDoubleBounce(),
-                  color: Colors.black,
-                  width: 50,
-                  height: 50,
                 ),
                 solidButton("End Recording", () async {
                   var result = await recorder.stop();
