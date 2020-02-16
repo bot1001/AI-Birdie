@@ -25,6 +25,7 @@ class _AudioClassificationState extends State<AudioClassification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: myGreen,
       body: SafeArea(
           child: Stack(
         children: <Widget>[
@@ -44,28 +45,79 @@ class _AudioClassificationState extends State<AudioClassification> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Container(
-                    width: 120,
-                    height: 120,
-                    child: RaisedButton(
-                      color: myGreen,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: Icon(
-                        FontAwesomeIcons.solidFileAudio,
-                        size: 40,
-                        color: Colors.white,
-                      ),
-                      onPressed: () async {
-                        file = await FilePicker.getFile(type: FileType.AUDIO);
-                        if (file != null) {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => AudioIdentify(file)));
-                        }
-                      },
-                    ),
+                  DragTarget(
+                    onAccept: (val) async {
+                      file = await FilePicker.getFile(type: FileType.AUDIO);
+                      if (file != null) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => AudioIdentify(file)));
+                      }
+                    },
+                    builder: (a, b, c) {
+                      return Container(
+                        width: 120,
+                        height: 120,
+                        child: RaisedButton(
+                          color: myGreen,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: Icon(
+                            FontAwesomeIcons.solidFileAudio,
+                            size: 40,
+                            color: Colors.white,
+                          ),
+                          onPressed: () async {
+                            file =
+                                await FilePicker.getFile(type: FileType.AUDIO);
+                            if (file != null) {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => AudioIdentify(file)));
+                            }
+                          },
+                        ),
+                      );
+                    },
                   ),
+                  Column(
+                    children: <Widget>[
+
+                  Column(
+                    children: <Widget>[
+                  Icon(Icons.keyboard_arrow_up),
+                  Icon(Icons.keyboard_arrow_up),
+
+                    ],
+                  ),
+                  Draggable(
+                    child: CircleAvatar(
+                      radius: 50,
+                      child: Text("Select"),
+                      
+                    ),
+                    feedback: CircleAvatar(
+                      // backgroundColor: Colors.green,
+                      radius: 50,
+                      child: Text("Select"),
+                    ),
+                    childWhenDragging: CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.white,
+                    ),
+                    axis: Axis.vertical,
+                    // dragAnchor: ,
+
+                  ),
+                                    Column(
+                    children: <Widget>[
+                  Icon(Icons.keyboard_arrow_down),
+                  Icon(Icons.keyboard_arrow_down),
+
+                    ],
+                  ),
+                    ],
+                  ),
+
                   Hero(
                     tag: 'mic',
                     child: Container(
@@ -96,8 +148,7 @@ class _AudioClassificationState extends State<AudioClassification> {
                         decoration: BoxDecoration(
                           // color: Color(0xffe90328),
                           // color: Colors.red[700],
-                          border:
-                              Border.all(width: 5.00, color: Colors.black),
+                          border: Border.all(width: 5.00, color: Colors.black),
                           shape: BoxShape.circle,
                         ),
                       ),
