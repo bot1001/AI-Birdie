@@ -23,13 +23,12 @@ class _ImageResultState extends State<ImageResult> {
 
   
 
-
   @override
-  void initState() { 
+  void initState()  { 
     super.initState();
 
 
-    this.getJsonData();
+    // this.getJsonData();
     //Call API here
   }
 

@@ -264,6 +264,7 @@ class _PreviewPageState extends State<PreviewPage> {
 
                       widget.storage.writeData(widget.path, FileMode.append);
 
+
                       widget.storage.writeInfoData("${myBird.name}@${myBird.date}@${myBird.time}@${myBird.lat}@${myBird.long}@${myBird.location}", FileMode.append);
 
                       Navigator.push(context, MaterialPageRoute(
