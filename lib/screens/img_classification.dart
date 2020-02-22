@@ -10,20 +10,19 @@ import 'package:flutter/material.dart';
 
 class ImageClassification extends StatefulWidget {
   final Bird myBird;
-  final String path;
-  ImageClassification(this.myBird, this.path);
+  // final String path;
+  final File img;
+  ImageClassification(this.myBird, this.img);
 
   @override
   _ImageClassificationState createState() => _ImageClassificationState();
 }
 
-File img;
 
 class _ImageClassificationState extends State<ImageClassification> {
 
   @override
   void initState() { 
-    img = File(widget.path);
     super.initState();
     
   }
@@ -143,7 +142,7 @@ class _ImageClassificationState extends State<ImageClassification> {
                 // print("${widget.path}");
 
                 Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => ImageResult(img),
+                  builder: (context) => ImageResult(widget.img),
                   ),
                 );
 

@@ -21,10 +21,11 @@ String currentDT;
 Bird myBird;
 
 class PreviewPage extends StatefulWidget {
-  final String path;
+  // final String path;
+  final File img;
   final Storage storage;
 
-  PreviewPage(this.path, this.storage);
+  PreviewPage(this.img, this.storage);
 
   @override
   _PreviewPageState createState() => _PreviewPageState();
@@ -117,7 +118,7 @@ class _PreviewPageState extends State<PreviewPage> {
                       border: Border.all(color: Colors.black, width: 1.0)),
                   height: 240,
                   // child: Image
-                  child: Image.file(File(widget.path))),
+                  child: Image.file(File(widget.img.path))),
               SizedBox(
                 height: 15,
               ),
@@ -262,13 +263,13 @@ class _PreviewPageState extends State<PreviewPage> {
 
 
 
-                      widget.storage.writeData(widget.path, FileMode.append);
+                      widget.storage.writeData(widget.img.path, FileMode.append);
 
 
                       widget.storage.writeInfoData("${myBird.name}@${myBird.date}@${myBird.time}@${myBird.lat}@${myBird.long}@${myBird.location}", FileMode.append);
 
                       Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => ImageClassification(myBird, widget.path),
+                          builder: (context) => ImageClassification(myBird, widget.img),
                         ),
                       );
                     }

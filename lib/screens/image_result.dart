@@ -1,4 +1,5 @@
 // import 'dart:convert';
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -19,13 +20,21 @@ class ImageResult extends StatefulWidget {
 class _ImageResultState extends State<ImageResult> {
 
   final String url = "https://www.google.com/";
-  String classId, className;
+  // String classId, className;
+
+  var bytes;
+  String base_64, encoded;
+
 
   
 
   @override
   void initState()  { 
     super.initState();
+
+    bytes = widget.imageInputFile.readAsBytesSync();
+    base_64 = base64.encode(bytes);
+    encoded = base64Encode(bytes);
 
 
     // this.getJsonData();
@@ -54,7 +63,11 @@ class _ImageResultState extends State<ImageResult> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("Bird name"),
+        child: Container(
+          height: 200,
+          width: 300,
+          child: Image.file(widget.imageInputFile),
+        ),
       ),
     );
 

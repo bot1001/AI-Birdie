@@ -80,7 +80,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        PreviewPage(image.path, Storage()),
+                                        PreviewPage(image, Storage()),
                                   ),
                                 );
                             },
@@ -299,7 +299,7 @@ class _CameraScreenState extends State<CameraScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PreviewPage(path, Storage()),
+          builder: (context) => PreviewPage(File(path), Storage()),
         ),
       );
     } catch (e) {
