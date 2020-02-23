@@ -55,88 +55,86 @@ class _CameraScreenState extends State<CameraScreen> {
       body: Stack(
         children: <Widget>[
           _cameraPreviewWidget(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              SafeArea(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "AI Birdie",
-                      style: level1w.copyWith(fontSize: 20),
-                    ),
-                    Container(
-                      width: 60,
-                      child: Column(
-                        children: <Widget>[
-                          IconButton(
-                            onPressed: () async {
-                              File image = await ImagePicker.pickImage(
-                                  source: ImageSource.gallery);
-                              // print(image.path);
-                              if (image != null)
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        PreviewPage(image, Storage()),
-                                  ),
-                                );
-                            },
-                            icon: Icon(
-                              Icons.add_photo_alternate,
-                              color: Colors.white,
-                              size: 35,
-                            ),
+          Padding(
+            padding: EdgeInsets.only(bottom: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                SafeArea(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          "AI Birdie",
+                          style: level1w.copyWith(fontSize: 20),
+                        ),
+                        IconButton(
+                          onPressed: () async {
+                            File image = await ImagePicker.pickImage(
+                                source: ImageSource.gallery);
+                            // print(image.path);
+                            if (image != null)
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      PreviewPage(image, Storage()),
+                                ),
+                              );
+                          },
+                          icon: Icon(
+                            Icons.add_photo_alternate,
+                            color: Colors.white,
+                            size: 35,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-              SwipeDetector(
-                onSwipeLeft: () =>
-                    myTransition(context, 1.0, 0.0, AudioClassification()),
-                onSwipeRight: () =>
-                    myTransition(context, -1.0, 0.0, Dashboard()),
-                swipeConfiguration: SwipeConfiguration(
-                    horizontalSwipeMaxHeightThreshold: 100.0,
-                    horizontalSwipeMinDisplacement: 10.0,
-                    horizontalSwipeMinVelocity: 10.0),
-                child: Container(
-                  color: Colors.transparent,
-                  width: width * 0.7,
-                  height: height * 0.7,
+                SwipeDetector(
+                  onSwipeLeft: () =>
+                      myTransition(context, 1.0, 0.0, AudioClassification()),
+                  onSwipeRight: () =>
+                      myTransition(context, -1.0, 0.0, Dashboard()),
+                  swipeConfiguration: SwipeConfiguration(
+                      horizontalSwipeMaxHeightThreshold: 100.0,
+                      horizontalSwipeMinDisplacement: 10.0,
+                      horizontalSwipeMinVelocity: 10.0),
+                  child: Container(
+                    color: Colors.transparent,
+                    width: double.infinity,
+                    height: height * 0.6,
+                  ),
                 ),
-              ),
-              Column(
-                children: <Widget>[
-                  GestureDetector(
-                    child: Hero(
-                      tag: 'key',
-                      child: Container(
-                        height: 85.00,
-                        width: 85.00,
-                        decoration: BoxDecoration(
-                          // color: Color(0xffe90328),
-                          // color: Colors.red[700],
-                          border: Border.all(width: 5.00, color: Colors.white),
-                          shape: BoxShape.circle,
+                Column(
+                  children: <Widget>[
+                    GestureDetector(
+                      child: Hero(
+                        tag: 'key',
+                        child: Container(
+                          height: 75,
+                          // width: 70.00,
+                          decoration: BoxDecoration(
+                            // color: Color(0xffe90328),
+                            // color: Colors.red[700],
+                            border: Border.all(width: 5.00, color: Colors.white),
+                            shape: BoxShape.circle,
+                          ),
                         ),
                       ),
+                      onTap: () {
+                        _onCapturePressed(context);
+                      },
                     ),
-                    onTap: () {
-                      _onCapturePressed(context);
-                    },
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Container(
-                          width: 90,
-                          child: Column(
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Column(
                             children: <Widget>[
                               IconButton(
                                 onPressed: () {
@@ -157,29 +155,7 @@ class _CameraScreenState extends State<CameraScreen> {
                               )
                             ],
                           ),
-                        ),
-                      // Column(
-                      //   // mainAxisAlignment: MainAxisAlignment.end,
-                      //   children: <Widget>[
-                      //     SizedBox(height: 15,),
-                      //     // IconButton(
-                      //     //   onPressed: (){
-                      //     //     // print("object");
-
-                      //     //   },
-                      //     //   icon: Icon(Icons.keyboard_arrow_up, color: Colors.white, size: 30,),
-                      //     // ),
-                      //   ],
-                      // ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      // SizedBox(
-                      //   width: 100,
-                      // ),
-                      Container(
-                          width: 90,
-                          child: Column(
+                          Column(
                             children: <Widget>[
                               IconButton(
                                 onPressed: () => myTransition(
@@ -199,40 +175,21 @@ class _CameraScreenState extends State<CameraScreen> {
                               ),
                             ],
                           ),
-                        ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                ],
-              ),
-              // Container(
-              //   // color: Colors.red,
-              //   width: 150,
-              //   height: 70,
-              //   child: IconButton(
-              //       icon: Icon(
-              //         Icons.radio_button_unchecked,
-              //         size: 100,
-              //         semanticLabel: "aa",
-              //         color: Colors.white,
-              //       ),
-              //       onPressed: () {
-              //         _onCapturePressed(context);
-              //       }),
-              // ),
-              // SizedBox(
-              //   height: 10,
-              // ),
-            ],
+                        ],
+                      ),
+                    ),
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
-
-
 
   void _showCameraException(CameraException e) {
     print("Error: ${e.code}\n${e.description}");
