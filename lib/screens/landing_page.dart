@@ -1,17 +1,12 @@
 import 'package:aibirdie/constants.dart';
-import 'package:aibirdie/screens/audio_screen.dart';
-import 'package:aibirdie/screens/camera_screen.dart';
-import 'package:aibirdie/screens/dashboard.dart';
+// import 'package:aibirdie/screens/camera_screen.dart';
+import 'package:aibirdie/screens/cs.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 List<CameraDescription> cameras;
-List allPages = [
-  Dashboard(),
-  CameraScreen(cameras),
-  AudioScreen(),
-];
+
 
 class LandingPage extends StatefulWidget {
   LandingPage(List<CameraDescription> icameras) {
@@ -28,7 +23,7 @@ class _LandingPageState extends State<LandingPage> {
     return WillPopScope(
       child: Scaffold(
         // appBar: AppBar(),
-        body: CameraScreen(cameras),
+        body: CS(cameras),
 
         // PageView.builder(
         //   itemBuilder: (context, position) {
