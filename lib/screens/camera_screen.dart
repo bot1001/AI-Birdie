@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:aibirdie/components/storage.dart';
 import 'package:aibirdie/components/transitions.dart';
 import 'package:aibirdie/constants.dart';
-import 'package:aibirdie/screens/audio_classidication.dart';
+import 'package:aibirdie/screens/audio_classification.dart';
 // import 'package:aibirdie/screens/audio_screen.dart';
 import 'package:aibirdie/screens/dashboard.dart';
 import 'package:aibirdie/screens/preview_page.dart';
