@@ -22,24 +22,13 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Scaffold(
-        // appBar: AppBar(),
         body: CS(cameras),
-
-        // PageView.builder(
-        //   itemBuilder: (context, position) {
-        //     return allPages[position];
-        //   },
-        //   itemCount: allPages.length,
-        //   controller: PageController(initialPage: 1),
-        // ),
       ),
       onWillPop: () async {
-        // print("Back pressed");
         await Alert(
           context: context,
           type: AlertType.warning,
           title: "Are you sure to exit AI Birdie?",
-          // desc: "Flutter is more awesome with RFlutter Alert.",
           buttons: [
             DialogButton(
               color: Colors.red,
