@@ -7,6 +7,7 @@ import 'package:aibirdie/components/transitions.dart';
 import 'package:aibirdie/screens/audio_classification.dart';
 import 'package:aibirdie/screens/dashboard.dart';
 import 'package:aibirdie/screens/preview_page.dart';
+import 'package:aibirdie/screens/soft_dashboard.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -56,14 +57,11 @@ class _CSState extends State<CS> {
         child: Stack(
           children: <Widget>[
             Container(
-              child: Padding(
-                padding: const EdgeInsets.all(1.0),
-                child: Center(child: _cameraPreviewWidget(context)),
-              ),
+              child: Center(child: _cameraPreviewWidget(context)),
             ),
             Center(
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -146,7 +144,7 @@ class _CSState extends State<CS> {
                                 IconButton(
                                   onPressed: () {
                                     myTransition(
-                                        context, -1.0, 0.0, Dashboard());
+                                        context, -1.0, 0.0, SoftDashboard());
                                   },
                                   icon: Icon(
                                     Icons.dashboard,
@@ -241,8 +239,8 @@ class _CSState extends State<CS> {
     }
     return AspectRatio(
       aspectRatio: controller.value.aspectRatio,
-      child: CameraPreview(controller),
-    );
+      
+      child: CameraPreview(controller));
   }
 
   void _onCapturePressed(context) async {

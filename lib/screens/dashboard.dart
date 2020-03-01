@@ -163,6 +163,7 @@ class _DashboardState extends State<Dashboard> {
         onTap: (int index) => setState(() => _selectedPage = index),
         items: [
           BottomNavigationBarItem(
+            
               icon: Icon(Icons.dashboard, color: _selectedPage == 0 ? myGreen:null,), title: Text("Dashboard", style: _selectedPage == 0 ? level1.copyWith(color: myGreen):TextStyle(fontFamily: 'M_medium'),)),
           BottomNavigationBarItem(
               icon: Icon(Icons.history, color: _selectedPage == 1 ? myGreen:null,), title: Text("History", style: _selectedPage == 1 ? level1.copyWith(color: myGreen):TextStyle(fontFamily: 'M_medium'),)),

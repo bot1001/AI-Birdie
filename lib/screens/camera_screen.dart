@@ -239,7 +239,6 @@ class _CameraScreenState extends State<CameraScreen> {
       );
     }
     return Container(
-      color: Colors.black,
       padding: EdgeInsets.symmetric(vertical: height * 0.1),
       child: CameraPreview(controller),
     );

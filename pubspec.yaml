@@ -91,6 +91,15 @@ flutter:
     - family: M_semi_bold
       fonts:
         - asset: fonts/Montserrat-SemiBold.ttf
+    - family: OS_regular
+      fonts:
+        - asset: fonts/Open_Sans/OpenSans-Regular.ttf
+    - family: OS_semi_bold
+      fonts:
+        - asset: fonts/Open_Sans/OpenSans-SemiBold.ttf
+    - family: OS_bold
+      fonts:
+        - asset: fonts/Open_Sans/OpenSans-Bold.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
