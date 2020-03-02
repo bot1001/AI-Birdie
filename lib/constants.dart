@@ -49,6 +49,12 @@ final TextStyle level2softdp = TextStyle(
   color: darkPurple
 );
 
+final TextStyle level2softg = TextStyle(
+  fontSize: 15,
+  fontFamily: 'OS_regular',
+  color: softGreen
+);
+
 final TextStyle level2softw = TextStyle(
   fontSize: 15,
   fontFamily: 'OS_regular',

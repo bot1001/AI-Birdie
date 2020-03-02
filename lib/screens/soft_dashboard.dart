@@ -11,6 +11,9 @@ class SoftDashboard extends StatefulWidget {
 }
 
 class _SoftDashboardState extends State<SoftDashboard> {
+
+  // final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   int _selectedPage = 0;
   final _pages = [
     Dash(),
@@ -31,7 +34,7 @@ class _SoftDashboardState extends State<SoftDashboard> {
         child: Padding(
           padding: EdgeInsets.all(20.0),
           child: SingleChildScrollView(
-                      child: Column(
+            child: Column(
               // mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -39,38 +42,51 @@ class _SoftDashboardState extends State<SoftDashboard> {
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 2.00,
-                            width: 22.00,
-                            decoration: BoxDecoration(
-                              color: Color(0xff000000),
-                              borderRadius: BorderRadius.circular(4.00),
+                    GestureDetector(
+                      onTap: (){
+                        print("object");
+                        Scaffold.of(context).openDrawer();
+                        //  _scaffoldKey.currentState.openDrawer();
+                      },
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 2.00,
+                              width: 22.00,
+                              decoration: BoxDecoration(
+                                color: Color(0xff000000),
+                                borderRadius: BorderRadius.circular(4.00),
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 6.0,),
-                          Container(
-                            height: 2.00,
-                            width: 22.00,
-                            decoration: BoxDecoration(
-                              color: Color(0xff000000),
-                              borderRadius: BorderRadius.circular(4.00),
+                            SizedBox(
+                              height: 6.0,
                             ),
-                          ),                        SizedBox(height: 6.0,),
-
-                          Container(
-                            height: 2.00,
-                            width: 11.00,
-                            decoration: BoxDecoration(
-                              color: Color(0xff000000),
-                              borderRadius: BorderRadius.circular(4.00),
+                            Container(
+                              height: 2.00,
+                              width: 22.00,
+                              decoration: BoxDecoration(
+                                color: Color(0xff000000),
+                                borderRadius: BorderRadius.circular(4.00),
+                              ),
                             ),
-                          ),
-                        ]),
+                            SizedBox(
+                              height: 6.0,
+                            ),
+                            Container(
+                              height: 2.00,
+                              width: 11.00,
+                              decoration: BoxDecoration(
+                                color: Color(0xff000000),
+                                borderRadius: BorderRadius.circular(4.00),
+                              ),
+                            ),
+                          ]),
+                    ),
                     FloatingActionButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
                       backgroundColor: softGreen,
                       child: Icon(
                         Icons.arrow_forward_ios,

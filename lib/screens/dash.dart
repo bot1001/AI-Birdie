@@ -88,7 +88,25 @@ class _DashState extends State<Dash> {
             ],
             borderRadius: BorderRadius.circular(15.00),
           ),
-          child: null
+          child: Padding(
+            padding: EdgeInsets.all(30.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("Birds", style: level2softdp.copyWith(fontSize: 25),),
+                    Text("Captured", style: level2softdp.copyWith(fontSize: 25),),
+                    
+                  ],
+                ),
+                Text("24", style: level2softg.copyWith(fontSize: 55, fontWeight: FontWeight.w900),),
+              ],
+
+            ),
+          ),
         ),
         SizedBox(height: 30),
         Container(
@@ -109,6 +127,25 @@ class _DashState extends State<Dash> {
               ),
             ],
             borderRadius: BorderRadius.circular(15.00),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(30.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("Accuracy", style: level2softdp.copyWith(fontSize: 25),),
+                    Text("Level", style: level2softdp.copyWith(fontSize: 25),),
+                    
+                  ],
+                ),
+                Text("73%", style: level2softg.copyWith(fontSize: 55, fontWeight: FontWeight.w900),),
+              ],
+
+            ),
           ),
         ),
       ],
