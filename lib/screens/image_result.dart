@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 // import 'package:http/http.dart';
 
 import './aibirdie_image_api/aibirdie_image_classification.dart';
-import './aibirdie_image_api/generated/image_classification.pb.dart';
+// import './aibirdie_image_api/generated/image_classification.pb.dart';
 
 // import 'package:http/http.dart';
 
@@ -14,6 +14,7 @@ import './aibirdie_image_api/generated/image_classification.pb.dart';
 
 class ImageResult extends StatefulWidget {
   final File imageInputFile;
+  final String serverIP = '35.232.129.172';
   
 
   ImageResult(this.imageInputFile);
@@ -32,7 +33,7 @@ class _ImageResultState extends State<ImageResult> {
   void initState() {
     super.initState();
 
-    classifier = AiBirdieImageClassification('35.232.129.172');
+    classifier = AiBirdieImageClassification(widget.serverIP);
     classifier.predict(widget.imageInputFile.path).then((value){
       
       print('Response: $value');

@@ -1,4 +1,7 @@
 import 'package:aibirdie/constants.dart';
+import 'package:aibirdie/screens/chips/Image_chip.dart';
+import 'package:aibirdie/screens/chips/audio_chip.dart';
+import 'package:aibirdie/screens/chips/overview_chip.dart';
 import 'package:flutter/material.dart';
 
 class Dash extends StatefulWidget {
@@ -6,7 +9,29 @@ class Dash extends StatefulWidget {
   _DashState createState() => _DashState();
 }
 
-class _DashState extends State<Dash> {
+class _DashState extends State<Dash> with SingleTickerProviderStateMixin {
+  TabController controller;
+  int _currentIndex = 0;
+
+  final _pages = [
+    OverviewChip(),
+    ImageChip(),
+    AudioChip(),
+    
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,130 +50,125 @@ class _DashState extends State<Dash> {
             ],
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Chip(
-              label: Container(
-                width: 70,
-                child: Center(
-                  child: Text(
-                    "Overview",
-                    style: level2softw,
-                  ),
-                ),
-              ),
-              backgroundColor: softGreen,
-            ),
-            Chip(
-              label: Container(
-                width: 70,
-                child: Center(
-                  child: Text(
-                    "Image",
-                    style: level2softdp,
-                  ),
-                ),
-              ),
-              // backgroundColor: Colors.white
-            ),
-            Chip(
-              label: Container(
-                width: 70,
-                child: Center(
-                  child: Text(
-                    "Audio",
-                    style: level2softdp,
-                  ),
-                ),
-              ),
-              // backgroundColor: Colors.white
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 30,
-        ),
+
         Container(
-          height: 150.00,
-          // width: 315.00,
-          decoration: BoxDecoration(
-            color: Color(0xfff5f5f5),
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(-6.00, -6.00),
-                color: Color(0xffffffff).withOpacity(0.80),
-                blurRadius: 10,
+          height: 40,
+          child: TabBar(
+            controller: controller,
+            indicator: CustomTabIndicator(),
+            labelColor: Colors.white,
+            labelStyle: level2softw.copyWith(fontWeight: FontWeight.bold),
+            unselectedLabelColor: darkPurple,
+            unselectedLabelStyle: level2softdp,
+            onTap: (index){
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            tabs: <Widget>[
+              Tab(
+                text: "Overview",
               ),
-              BoxShadow(
-                offset: Offset(6.00, 6.00),
-                color: Color(0xff000000).withOpacity(0.20),
-                blurRadius: 10,
+              Tab(
+                text: "Image",
+              ),
+              Tab(
+                text: "Audio",
               ),
             ],
-            borderRadius: BorderRadius.circular(15.00),
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(30.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text("Birds", style: level2softdp.copyWith(fontSize: 25),),
-                    Text("Captured", style: level2softdp.copyWith(fontSize: 25),),
-                    
-                  ],
-                ),
-                Text("24", style: level2softg.copyWith(fontSize: 55, fontWeight: FontWeight.w900),),
-              ],
-
-            ),
           ),
         ),
-        SizedBox(height: 30),
-        Container(
-          height: 150.00,
-          // width: 315.00,
-          decoration: BoxDecoration(
-            color: Color(0xfff5f5f5),
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(-6.00, -6.00),
-                color: Color(0xffffffff).withOpacity(0.80),
-                blurRadius: 10,
-              ),
-              BoxShadow(
-                offset: Offset(6.00, 6.00),
-                color: Color(0xff000000).withOpacity(0.20),
-                blurRadius: 10,
-              ),
-            ],
-            borderRadius: BorderRadius.circular(15.00),
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(30.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text("Accuracy", style: level2softdp.copyWith(fontSize: 25),),
-                    Text("Level", style: level2softdp.copyWith(fontSize: 25),),
-                    
-                  ],
-                ),
-                Text("73%", style: level2softg.copyWith(fontSize: 55, fontWeight: FontWeight.w900),),
-              ],
+        SizedBox(height: 30,),
 
-            ),
-          ),
-        ),
+        _pages[_currentIndex],
+
+        // TabBarView(
+        //   controller: controller,
+        //   children: <Widget>[
+        //     Center(child: Text("Overview")),
+        //     Center(child: Text("Overview")),
+        //     Center(child: Text("Overview")),
+        //   ],
+        // ),
+
+        /* Old row */
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: <Widget>[
+        //     Chip(
+        //       label: Container(
+        //         width: 70,
+        //         child: Center(
+        //           child: Text(
+        //             "Overview",
+        //             style: level2softw,
+        //           ),
+        //         ),
+        //       ),
+        //       backgroundColor: softGreen,
+        //     ),
+        //     Chip(
+        //       label: Container(
+        //         width: 70,
+        //         child: Center(
+        //           child: Text(
+        //             "Image",
+        //             style: level2softdp,
+        //           ),
+        //         ),
+        //       ),
+        //       // backgroundColor: Colors.white
+        //     ),
+        //     Chip(
+        //       label: Container(
+        //         width: 70,
+        //         child: Center(
+        //           child: Text(
+        //             "Audio",
+        //             style: level2softdp,
+        //           ),
+        //         ),
+        //       ),
+        //       // backgroundColor: Colors.white
+        //     ),
+        //   ],
+        // ),
+
+        /* Soft containers */
+        // SizedBox(
+        //   height: 30,
+        // ),
       ],
     );
+  }
+}
+
+class CustomTabIndicator extends Decoration {
+  @override
+  _CustomPainter createBoxPainter([VoidCallback onChanged]) {
+    return new _CustomPainter(this, onChanged);
+  }
+}
+
+class _CustomPainter extends BoxPainter {
+  final CustomTabIndicator decoration;
+
+  _CustomPainter(this.decoration, VoidCallback onChanged)
+      : assert(decoration != null),
+        super(onChanged);
+
+  @override
+  void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
+    assert(configuration != null);
+    assert(configuration.size != null);
+
+    //offset is the position from where the decoration should be drawn.
+    //configuration.size tells us about the height and width of the tab.
+    final Rect rect = offset & configuration.size;
+    final Paint paint = Paint();
+    paint.color = softGreen;
+    paint.style = PaintingStyle.fill;
+    canvas.drawRRect(
+        RRect.fromRectAndRadius(rect, Radius.circular(30.0)), paint);
   }
 }
