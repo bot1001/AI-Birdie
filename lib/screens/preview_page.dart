@@ -133,7 +133,7 @@ class _PreviewPageState extends State<PreviewPage> {
               TextField(
                 decoration: InputDecoration(
                   hintText: 'For eg. Dove',
-                  labelText: 'Enter bird name',
+                  labelText: 'Enter bird name(Optional)',
                   labelStyle: level1,
                   hintStyle: level1,
                 ),
@@ -214,8 +214,7 @@ class _PreviewPageState extends State<PreviewPage> {
                     // print("object");
                     // saveData();
                     // print("Path is: " + widget.path);
-                    if (_nameController.text == "" ||
-                        _dateController.text == "" ||
+                    if (_dateController.text == "" ||
                         _timeController.text == "") {
                       Alert(
                         // closeFunction: (){
@@ -245,7 +244,7 @@ class _PreviewPageState extends State<PreviewPage> {
                         ],
                       ).show();
                     } else {
-                      myBird.name = _nameController.text;
+                      myBird.name = _nameController.text == "" ? "Capture details" : _nameController.text;
                       myBird.date = this._dateController.text;
                       myBird.time = this._timeController.text;
                       myBird.lat = this.lat;
@@ -276,7 +275,7 @@ class _PreviewPageState extends State<PreviewPage> {
                     // Navigator.of(context).pop();
                   },
                   // color: Color(0xff047bfe),
-                  color: myBlue,
+                  color: softGreen,
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 15),
                     child: Row(
