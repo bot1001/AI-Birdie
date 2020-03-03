@@ -32,12 +32,15 @@ class _ImageResultState extends State<ImageResult> {
   void initState() {
     super.initState();
 
-    // classifier = AiBirdieImageClassification('127.0.0.1');
-    // classifier.predict(widget.imageInputFile.path).then((value){
+    classifier = AiBirdieImageClassification('35.232.129.172');
+    classifier.predict(widget.imageInputFile.path).then((value){
       
-    //   print('Response: $response');
+      print('Response: $value');
+      setState(() {
+        response = value;
+      });
 
-    // });
+    });
     
 
   }
