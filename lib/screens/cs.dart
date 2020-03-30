@@ -42,7 +42,6 @@ class _CSState extends State<CS> {
 
   @override
   Widget build(BuildContext context) {
-
     if (!controller.value.isInitialized) {
       return Container(
         child: Center(
@@ -55,9 +54,12 @@ class _CSState extends State<CS> {
       backgroundColor: Colors.black,
       body: SafeArea(
         child: Stack(
+          fit: StackFit.passthrough,
           children: <Widget>[
             Container(
-              child: Center(child: _cameraPreviewWidget(context)),
+
+              child: _cameraPreviewWidget(context)
+                ,
             ),
             Center(
               child: Padding(
@@ -237,10 +239,14 @@ class _CSState extends State<CS> {
         'Loading',
       );
     }
-    return AspectRatio(
-      aspectRatio: controller.value.aspectRatio,
-      
-      child: CameraPreview(controller));
+    return Transform.scale(
+      scale: 1.2,
+          child: Center(
+        child: AspectRatio(
+              aspectRatio: controller.value.aspectRatio,
+              child: CameraPreview(controller)),
+      ),
+    );
   }
 
   void _onCapturePressed(context) async {
