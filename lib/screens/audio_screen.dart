@@ -58,7 +58,7 @@ class _AudioScreenState extends State<AudioScreen> {
                         IconButton(
                           onPressed: () async {
                             file =
-                                await FilePicker.getFile(type: FileType.AUDIO);
+                                await FilePicker.getFile(type: FileType.audio);
                             // print(file.path);
                             setState(() {});
                           },
