@@ -1,11 +1,11 @@
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:aibirdie/components/transitions.dart';
 import 'package:aibirdie/constants.dart';
 // import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/screens/audio_identify.dart';
 import 'package:aibirdie/screens/audio_record.dart';
-import 'package:audioplayers/audioplayers.dart';
+// import 'package:audioplayers/audioplayers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,10 +17,10 @@ class AudioClassification extends StatefulWidget {
 }
 
 class _AudioClassificationState extends State<AudioClassification> {
-  File file;
-  bool isPlaying;
-  IconData playIcon = Icons.play_arrow;
-  AudioPlayer audioPlayer = AudioPlayer();
+  // File file;
+  // bool isPlaying;
+  // IconData playIcon = Icons.play_arrow;
+  // AudioPlayer audioPlayer = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -37,23 +37,21 @@ class _AudioClassificationState extends State<AudioClassification> {
 
       // backgroundColor: myGreen,
       body: SafeArea(
-          child: Stack(
-        children: <Widget>[
-          SwipeDetector(
-            onSwipeRight: () => Navigator.of(context).pop(),
-            swipeConfiguration: SwipeConfiguration(
-                horizontalSwipeMaxHeightThreshold: 100.0,
-                horizontalSwipeMinDisplacement: 10.0,
-                horizontalSwipeMinVelocity: 10.0),
-            child: Container(
-              color: Colors.white,
+        child: Stack(
+          children: <Widget>[
+            SwipeDetector(
+              onSwipeRight: () => Navigator.of(context).pop(),
+              swipeConfiguration: SwipeConfiguration(
+                  horizontalSwipeMaxHeightThreshold: 100.0,
+                  horizontalSwipeMinDisplacement: 10.0,
+                  horizontalSwipeMinVelocity: 10.0),
+              child: Container(
+                color: Colors.white,
+              ),
             ),
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 100.0, bottom: 20.0),
+            Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   DragTarget(
                     onAccept: (val) async {
@@ -65,8 +63,8 @@ class _AudioClassificationState extends State<AudioClassification> {
                     },
                     builder: (a, b, c) {
                       return Container(
-                        width: 120,
-                        height: 120,
+                        width: 100,
+                        height: 100,
                         child: RaisedButton(
                           color: myGreen,
                           shape: RoundedRectangleBorder(
@@ -74,12 +72,12 @@ class _AudioClassificationState extends State<AudioClassification> {
                           ),
                           child: Icon(
                             FontAwesomeIcons.solidFileAudio,
-                            size: 40,
+                            size: 30,
                             color: Colors.white,
                           ),
                           onPressed: () async {
-                            file =
-                                await FilePicker.getFile(type: FileType.audio);
+                            file = await FilePicker.getFile(
+                                type: FileType.audio);
                             if (file != null) {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => AudioIdentify(file)));
@@ -142,8 +140,8 @@ class _AudioClassificationState extends State<AudioClassification> {
                       },
                       builder: (a, b, c) {
                         return Container(
-                          width: 120,
-                          height: 120,
+                          width: 100,
+                          height: 100,
                           child: RaisedButton(
                               color: myGreen,
                               shape: RoundedRectangleBorder(
@@ -151,11 +149,12 @@ class _AudioClassificationState extends State<AudioClassification> {
                               ),
                               child: Icon(
                                 Icons.mic,
-                                size: 40,
+                                size: 30,
                                 color: Colors.white,
                               ),
                               onPressed: () {
-                                myTransition(context, 1.0, 0.0, AudioRecord());
+                                myTransition(
+                                    context, 1.0, 0.0, AudioRecord());
                               }),
                         );
                       },
@@ -171,7 +170,8 @@ class _AudioClassificationState extends State<AudioClassification> {
                         decoration: BoxDecoration(
                           // color: Color(0xffe90328),
                           // color: Colors.red[700],
-                          border: Border.all(width: 5.00, color: Colors.black),
+                          border:
+                              Border.all(width: 5.00, color: Colors.black),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -181,9 +181,9 @@ class _AudioClassificationState extends State<AudioClassification> {
                 ],
               ),
             ),
-          ),
-        ],
-      )),
+          ],
+        ),
+      ),
     );
   }
 }
