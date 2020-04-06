@@ -1,5 +1,5 @@
+
 import 'package:aibirdie/constants.dart';
-// import 'package:aibirdie/screens/camera_screen.dart';
 import 'package:aibirdie/screens/cs.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,9 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
+  
   bool exitApp = false;
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
