@@ -10,6 +10,7 @@ import 'package:aibirdie/screens/preview_page.dart';
 import 'package:aibirdie/screens/soft_dashboard.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -25,6 +26,7 @@ class CS extends StatefulWidget {
 
 class _CSState extends State<CS> {
   CameraController controller;
+  var sca = 1.0;
 
   // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -54,13 +56,9 @@ class _CSState extends State<CS> {
       backgroundColor: Colors.black,
       body: SafeArea(
         child: Stack(
-          fit: StackFit.passthrough,
+          // fit: StackFit.passthrough,
           children: <Widget>[
-            Container(
-
-              child: _cameraPreviewWidget(context)
-                ,
-            ),
+            _cameraPreviewWidget(context),
             Center(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
@@ -239,12 +237,25 @@ class _CSState extends State<CS> {
         'Loading',
       );
     }
-    return Transform.scale(
-      scale: 1.2,
-          child: Center(
-        child: AspectRatio(
+    return MeasureSize(
+      onChange: (size) {
+          // print('Screen height ${MediaQuery.of(context).size.aspectRatio}');
+          // print('Widget height ${size.height}');
+          // print('Scale $sca');
+            setState(() {
+              sca = MediaQuery.of(context).size.height / size.longestSide;
+            });
+      },
+
+      // onChange: (size) => setState(() => sca = MediaQuery.of(context).size.height / size.longestSide),
+
+      child: Transform.scale(
+        scale: sca,
+        child: Center(
+          child: AspectRatio(
               aspectRatio: controller.value.aspectRatio,
               child: CameraPreview(controller)),
+        ),
       ),
     );
   }
@@ -266,5 +277,48 @@ class _CSState extends State<CS> {
     } catch (e) {
       print(e);
     }
+  }
+}
+
+//
+
+typedef void OnWidgetSizeChange(Size size);
+
+class MeasureSize extends StatefulWidget {
+  final Widget child;
+  final OnWidgetSizeChange onChange;
+
+  const MeasureSize({
+    Key key,
+    @required this.onChange,
+    @required this.child,
+  }) : super(key: key);
+
+  @override
+  _MeasureSizeState createState() => _MeasureSizeState();
+}
+
+class _MeasureSizeState extends State<MeasureSize> {
+  @override
+  Widget build(BuildContext context) {
+    SchedulerBinding.instance.addPostFrameCallback(postFrameCallback);
+    return Container(
+      key: widgetKey,
+      child: widget.child,
+    );
+  }
+
+  var widgetKey = GlobalKey();
+  var oldSize;
+
+  void postFrameCallback(_) {
+    var context = widgetKey.currentContext;
+    if (context == null) return;
+
+    var newSize = context.size;
+    if (oldSize == newSize) return;
+
+    oldSize = newSize;
+    widget.onChange(newSize);
   }
 }
