@@ -38,7 +38,7 @@ dependencies:
   share: ^0.6.3+5
   flutter_email_sender: ^2.2.2
   url_launcher: ^5.4.1
-  swipedetector: ^1.2.0
+  # swipedetector: ^1.2.0
   flutter_animation_set: ^0.0.4
   flutter_timer: ^0.0.6
   modal_progress_hud: ^0.1.3

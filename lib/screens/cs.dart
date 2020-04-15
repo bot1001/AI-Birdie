@@ -5,7 +5,7 @@ import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/components/transitions.dart';
 // import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/screens/audio_classification.dart';
-import 'package:aibirdie/screens/dashboard.dart';
+// import 'package:aibirdie/screens/dashboard.dart';
 import 'package:aibirdie/screens/preview_page.dart';
 import 'package:aibirdie/screens/soft_dashboard.dart';
 import 'package:camera/camera.dart';
@@ -14,7 +14,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:swipedetector/swipedetector.dart';
+// import 'package:swipedetector/swipedetector.dart';
 
 class CS extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -34,6 +34,7 @@ class _CSState extends State<CS> {
   void initState() {
     super.initState();
     _initCameraController(widget.cameras[0]).then((void v) {});
+    print("camera initiated");
   }
 
   @override
@@ -94,26 +95,26 @@ class _CSState extends State<CS> {
                         )
                       ],
                     ),
-                    Expanded(
-                      child: Container(
-                        color: Colors.transparent,
-                        child: SwipeDetector(
-                          onSwipeLeft: () => myTransition(
-                              context, 1.0, 0.0, AudioClassification()),
-                          onSwipeRight: () =>
-                              myTransition(context, -1.0, 0.0, Dashboard()),
-                          swipeConfiguration: SwipeConfiguration(
-                              horizontalSwipeMaxHeightThreshold: 100.0,
-                              horizontalSwipeMinDisplacement: 10.0,
-                              horizontalSwipeMinVelocity: 10.0),
-                          child: Container(
-                            color: Colors.transparent,
-                            width: double.infinity,
-                            // height: height * 0.6,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Expanded(
+                    //   child: Container(
+                    //     color: Colors.red,
+                    //     child: SwipeDetector(
+                    //       onSwipeLeft: () => myTransition(
+                    //           context, 1.0, 0.0, AudioClassification()),
+                    //       onSwipeRight: () =>
+                    //           myTransition(context, -1.0, 0.0, Dashboard()),
+                    //       swipeConfiguration: SwipeConfiguration(
+                    //           horizontalSwipeMaxHeightThreshold: 100.0,
+                    //           horizontalSwipeMinDisplacement: 10.0,
+                    //           horizontalSwipeMinVelocity: 10.0),
+                    //       child: Container(
+                    //         color: Colors.transparent,
+                    //         width: double.infinity,
+                    //         // height: height * 0.6,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     Column(
                       children: <Widget>[
                         GestureDetector(

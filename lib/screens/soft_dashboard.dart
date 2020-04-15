@@ -4,7 +4,7 @@ import 'package:aibirdie/screens/my_notes.dart';
 import 'package:aibirdie/screens/settings.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+// import 'package:aibirdie/screens/landing_page.dart';
 
 
 
@@ -103,7 +103,9 @@ _scaffoldKey.currentState.openDrawer();                      //  _scaffoldKey.cu
                   ),
                   FloatingActionButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      // LandingPage
+                      // controller.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+                      
                     },
                     backgroundColor: softGreen,
                     child: Icon(

@@ -9,7 +9,7 @@ import 'package:aibirdie/screens/audio_record.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:swipedetector/swipedetector.dart';
+// import 'package:swipedetector/swipedetector.dart';
 
 class AudioClassification extends StatefulWidget {
   @override
@@ -39,16 +39,7 @@ class _AudioClassificationState extends State<AudioClassification> {
       body: SafeArea(
         child: Stack(
           children: <Widget>[
-            SwipeDetector(
-              onSwipeRight: () => Navigator.of(context).pop(),
-              swipeConfiguration: SwipeConfiguration(
-                  horizontalSwipeMaxHeightThreshold: 100.0,
-                  horizontalSwipeMinDisplacement: 10.0,
-                  horizontalSwipeMinVelocity: 10.0),
-              child: Container(
-                color: Colors.white,
-              ),
-            ),
+           
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
