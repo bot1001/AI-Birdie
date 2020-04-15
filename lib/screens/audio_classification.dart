@@ -5,6 +5,7 @@ import 'package:aibirdie/constants.dart';
 // import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/screens/audio_identify.dart';
 import 'package:aibirdie/screens/audio_record.dart';
+import 'package:aibirdie/screens/landing_page.dart';
 // import 'package:audioplayers/audioplayers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -167,7 +168,9 @@ class _AudioClassificationState extends State<AudioClassification> {
                         ),
                       ),
                     ),
-                    onTap: () => Navigator.of(context).pop(),
+                    onTap: () => LandingPage.controller.animateToPage(1,
+                          duration: Duration(milliseconds: 300),
+                          curve: Curves.easeInOut),
                   ),
                 ],
               ),

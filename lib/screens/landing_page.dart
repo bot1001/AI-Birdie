@@ -11,6 +11,8 @@ List<CameraDescription> cameras;
 
 
 class LandingPage extends StatefulWidget {
+  static PageController controller = PageController(initialPage: 1,keepPage: false);
+
   LandingPage(List<CameraDescription> icameras) {
     cameras = icameras;
   }
@@ -20,7 +22,6 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   
-  var controller = PageController(initialPage: 1,keepPage: false);
   var _currentPage = 1;
   var _pages = [
     SoftDashboard(),
@@ -34,7 +35,7 @@ class _LandingPageState extends State<LandingPage> {
       onWillPop: _willPopCallback,
       child: Scaffold(
         body: PageView.builder(
-          controller: controller,
+          controller: LandingPage.controller,
           itemCount: _pages.length,
           itemBuilder: ((BuildContext context, int index) => _pages[index]),
           onPageChanged: ((index) => setState(() => _currentPage = index)),
@@ -49,7 +50,7 @@ class _LandingPageState extends State<LandingPage> {
       if(_currentPage == 1)
         return true;
       else
-        controller.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+        LandingPage.controller.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
       return false;
     }
 }

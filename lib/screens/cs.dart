@@ -2,12 +2,13 @@ import 'dart:io';
 
 import 'package:aibirdie/components/storage.dart';
 import 'package:aibirdie/constants.dart';
-import 'package:aibirdie/components/transitions.dart';
+// import 'package:aibirdie/components/transitions.dart';
 // import 'package:aibirdie/constants.dart';
-import 'package:aibirdie/screens/audio_classification.dart';
+// import 'package:aibirdie/screens/audio_classification.dart';
+import 'package:aibirdie/screens/landing_page.dart';
 // import 'package:aibirdie/screens/dashboard.dart';
 import 'package:aibirdie/screens/preview_page.dart';
-import 'package:aibirdie/screens/soft_dashboard.dart';
+// import 'package:aibirdie/screens/soft_dashboard.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -34,7 +35,7 @@ class _CSState extends State<CS> {
   void initState() {
     super.initState();
     _initCameraController(widget.cameras[0]).then((void v) {});
-    print("camera initiated");
+    // print("camera initiated");
   }
 
   @override
@@ -143,10 +144,13 @@ class _CSState extends State<CS> {
                             Column(
                               children: <Widget>[
                                 IconButton(
-                                  onPressed: () {
-                                    myTransition(
-                                        context, -1.0, 0.0, SoftDashboard());
-                                  },
+                                  onPressed: (()=> LandingPage.controller.animateToPage(0,
+                          duration: Duration(milliseconds: 300),
+                          curve: Curves.easeInOut)),
+                                  // onPressed: () {
+                                  //   myTransition(
+                                  //       context, -1.0, 0.0, SoftDashboard());
+                                  // },
                                   icon: Icon(
                                     Icons.dashboard,
                                     color: Colors.white,
@@ -165,8 +169,11 @@ class _CSState extends State<CS> {
                             Column(
                               children: <Widget>[
                                 IconButton(
-                                  onPressed: () => myTransition(
-                                      context, 1.0, 0.0, AudioClassification()),
+                                  onPressed: (()=>LandingPage.controller.animateToPage(2,
+                          duration: Duration(milliseconds: 300),
+                          curve: Curves.easeInOut)),
+                                  // onPressed: () => myTransition(
+                                  //     context, 1.0, 0.0, AudioClassification()),
                                   icon: Icon(
                                     Icons.audiotrack,
                                     color: Colors.white,
@@ -244,6 +251,7 @@ class _CSState extends State<CS> {
           // print('Widget height ${size.height}');
           // print('Scale $sca');
             setState(() {
+              // print(MediaQuery.of(context).size.aspectRatio);
               sca = MediaQuery.of(context).size.height / size.longestSide;
             });
       },
@@ -251,7 +259,7 @@ class _CSState extends State<CS> {
       // onChange: (size) => setState(() => sca = MediaQuery.of(context).size.height / size.longestSide),
 
       child: Transform.scale(
-        scale: sca,
+        scale: MediaQuery.of(context).size.aspectRatio <= (9/16) ? 1.26 : sca,
         child: Center(
           child: AspectRatio(
               aspectRatio: controller.value.aspectRatio,

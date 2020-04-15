@@ -4,9 +4,8 @@ import 'package:aibirdie/screens/my_notes.dart';
 import 'package:aibirdie/screens/settings.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-// import 'package:aibirdie/screens/landing_page.dart';
-
-
+import 'package:aibirdie/screens/landing_page.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -17,7 +16,6 @@ class SoftDashboard extends StatefulWidget {
 
 class _SoftDashboardState extends State<SoftDashboard>
     with SingleTickerProviderStateMixin {
-
   TabController controller;
 
   @override
@@ -44,7 +42,6 @@ class _SoftDashboardState extends State<SoftDashboard>
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      // backgroundColor: Color(0xfff5f5f5),
       drawer: Drawer(
         child: Container(
           child: Center(child: Text("This is drawer")),
@@ -52,7 +49,7 @@ class _SoftDashboardState extends State<SoftDashboard>
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(10.0),
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,41 +58,47 @@ class _SoftDashboardState extends State<SoftDashboard>
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
+                  // RaisedButton(
+                  //     onPressed: (()=>_scaffoldKey.currentState.openDrawer()),
+
+                  //     // color: Colors.transparent,
+                  //     child: Image.asset(
+                  //       'images/menu.png',
+                  //       width: 25,
+                  //       // height: 25,
+                  //     ),
+                  //   ),
                   GestureDetector(
                     onTap: () {
                       print("object");
-_scaffoldKey.currentState.openDrawer();                      //  _scaffoldKey.currentState.openDrawer();
+                      _scaffoldKey.currentState.openDrawer();
                     },
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
+                            margin: EdgeInsets.only(bottom: 6.0),
                             height: 2.00,
                             width: 22.00,
                             decoration: BoxDecoration(
-                              color: Color(0xff000000),
+                              color: Colors.black,
                               borderRadius: BorderRadius.circular(4.00),
                             ),
-                          ),
-                          SizedBox(
-                            height: 6.0,
                           ),
                           Container(
+                            margin: EdgeInsets.only(bottom: 6.0),
                             height: 2.00,
                             width: 22.00,
                             decoration: BoxDecoration(
-                              color: Color(0xff000000),
+                              color: Colors.black,
                               borderRadius: BorderRadius.circular(4.00),
                             ),
-                          ),
-                          SizedBox(
-                            height: 6.0,
                           ),
                           Container(
                             height: 2.00,
                             width: 11.00,
                             decoration: BoxDecoration(
-                              color: Color(0xff000000),
+                              color: Colors.black,
                               borderRadius: BorderRadius.circular(4.00),
                             ),
                           ),
@@ -104,8 +107,9 @@ _scaffoldKey.currentState.openDrawer();                      //  _scaffoldKey.cu
                   FloatingActionButton(
                     onPressed: () {
                       // LandingPage
-                      // controller.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-                      
+                      LandingPage.controller.animateToPage(1,
+                          duration: Duration(milliseconds: 300),
+                          curve: Curves.easeInOut);
                     },
                     backgroundColor: softGreen,
                     child: Icon(
@@ -115,8 +119,7 @@ _scaffoldKey.currentState.openDrawer();                      //  _scaffoldKey.cu
                   )
                 ],
               ),
-             
-                _pages[_selectedPage],
+              _pages[_selectedPage],
             ],
           ),
         ),
@@ -127,8 +130,8 @@ _scaffoldKey.currentState.openDrawer();                      //  _scaffoldKey.cu
         child: TabBar(
           indicatorColor: softGreen,
           // dragStartBehavior: DragStartBehavior.start,
-          indicator: CircleTabIndicator(color: softGreen, radius: 3),
-          onTap: (index){
+          // indicator: CircleTabIndicator(color: softGreen, radius: 3),
+          onTap: (index) {
             setState(() {
               _selectedPage = index;
             });
@@ -140,16 +143,22 @@ _scaffoldKey.currentState.openDrawer();                      //  _scaffoldKey.cu
           tabs: <Widget>[
             Tab(
               icon: Icon(Icons.dashboard),
-              child: SizedBox(height: 0,),
+              child: SizedBox(
+                height: 0,
+              ),
             ),
             Tab(
               icon: Icon(Icons.note),
-              child: SizedBox(height: 0,),
+              child: SizedBox(
+                height: 0,
+              ),
               // child: SizedBox(height: currentTabIndex == 1 ? 10 : 0,),
             ),
             Tab(
               icon: Icon(Icons.settings),
-              child: SizedBox(height: 0,),
+              child: SizedBox(
+                height: 0,
+              ),
               // child: SizedBox(height: currentTabIndex == 2 ? 10 : 0,),
             ),
           ],
