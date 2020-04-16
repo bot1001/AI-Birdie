@@ -1,4 +1,3 @@
-
 // import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/screens/audio_classification.dart';
 import 'package:aibirdie/screens/cs.dart';
@@ -9,9 +8,9 @@ import 'package:flutter/material.dart';
 
 List<CameraDescription> cameras;
 
-
 class LandingPage extends StatefulWidget {
-  static PageController controller = PageController(initialPage: 1,keepPage: false);
+  static PageController controller =
+      PageController(initialPage: 1, keepPage: false);
 
   LandingPage(List<CameraDescription> icameras) {
     cameras = icameras;
@@ -21,7 +20,6 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-  
   var _currentPage = 1;
   var _pages = [
     SoftDashboard(),
@@ -41,16 +39,16 @@ class _LandingPageState extends State<LandingPage> {
           onPageChanged: ((index) => setState(() => _currentPage = index)),
         ),
       ),
-        // return new Future(() => exitApp);
+      // return new Future(() => exitApp);
     );
   }
 
-
-    Future<bool> _willPopCallback() async {
-      if(_currentPage == 1)
-        return true;
-      else
-        LandingPage.controller.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-      return false;
-    }
+  Future<bool> _willPopCallback() async {
+    if (_currentPage == 1)
+      return true;
+    else
+      LandingPage.controller.animateToPage(1,
+          duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+    return false;
+  }
 }

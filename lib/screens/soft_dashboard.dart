@@ -6,6 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/screens/landing_page.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -41,6 +42,87 @@ class _SoftDashboardState extends State<SoftDashboard>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+
+        preferredSize: Size.fromHeight(100),
+              child: AppBar(
+
+
+          backgroundColor: Color(0xfffafafa),
+          // backgroundColor: Colors.red,
+          // bottom: PreferredSize(
+          //   child: Text("data"),
+          //   preferredSize: Size.fromHeight(50),
+          
+          // ),
+
+          elevation: 0.0,
+          actions: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(right: 10, top: 10),
+              child: FloatingActionButton(             
+                  elevation: 0.0,
+                  onPressed: () {
+                    // LandingPage
+                    LandingPage.controller.animateToPage(1,
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeInOut);
+                  },
+                  backgroundColor: softGreen,
+                  child: Icon(
+                    Icons.arrow_forward_ios,
+                    size: 15,
+                  ),
+                ),
+            )
+          ],
+          leading: Padding(
+            padding: EdgeInsets.only(top: 35,),
+            child: RawMaterialButton(
+              // padding: EdgeInsets.only(top: 20),
+              // elevation: 0.0,
+              // fillColor: Colors.green,
+              // color: Color(0xfffafafa),
+              onPressed: () {
+                _scaffoldKey.currentState.openDrawer();
+              },
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: 6.0),
+                      height: 2.00,
+                      width: 22.00,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(4.00),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 6.0),
+                      height: 2.00,
+                      width: 22.00,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(4.00),
+                      ),
+                    ),
+                    Container(
+                      height: 2.00,
+                      width: 11.00,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(4.00),
+                      ),
+                    ),
+                  ]),
+            ),
+          ),
+
+          // backgroundColor: Color(0xfffafafa),
+        ),
+      ),
       key: _scaffoldKey,
       drawer: Drawer(
         child: Container(
@@ -49,76 +131,12 @@ class _SoftDashboardState extends State<SoftDashboard>
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(20.0),
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Row(
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  // RaisedButton(
-                  //     onPressed: (()=>_scaffoldKey.currentState.openDrawer()),
-
-                  //     // color: Colors.transparent,
-                  //     child: Image.asset(
-                  //       'images/menu.png',
-                  //       width: 25,
-                  //       // height: 25,
-                  //     ),
-                  //   ),
-                  GestureDetector(
-                    onTap: () {
-                      print("object");
-                      _scaffoldKey.currentState.openDrawer();
-                    },
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(bottom: 6.0),
-                            height: 2.00,
-                            width: 22.00,
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(4.00),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(bottom: 6.0),
-                            height: 2.00,
-                            width: 22.00,
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(4.00),
-                            ),
-                          ),
-                          Container(
-                            height: 2.00,
-                            width: 11.00,
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(4.00),
-                            ),
-                          ),
-                        ]),
-                  ),
-                  FloatingActionButton(
-                    onPressed: () {
-                      // LandingPage
-                      LandingPage.controller.animateToPage(1,
-                          duration: Duration(milliseconds: 300),
-                          curve: Curves.easeInOut);
-                    },
-                    backgroundColor: softGreen,
-                    child: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 15,
-                    ),
-                  )
-                ],
-              ),
+ 
               _pages[_selectedPage],
             ],
           ),
