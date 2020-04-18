@@ -5,8 +5,6 @@ import 'package:aibirdie/screens/settings.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/screens/landing_page.dart';
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -42,112 +40,75 @@ class _SoftDashboardState extends State<SoftDashboard>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-
-        preferredSize: Size.fromHeight(100),
-              child: AppBar(
-
-
-          backgroundColor: Color(0xfffafafa),
-          // backgroundColor: Colors.red,
-          // bottom: PreferredSize(
-          //   child: Text("data"),
-          //   preferredSize: Size.fromHeight(50),
-          
-          // ),
-
-          elevation: 0.0,
-          actions: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(right: 10, top: 10),
-              child: FloatingActionButton(             
-                  elevation: 0.0,
-                  onPressed: () {
-                    // LandingPage
-                    LandingPage.controller.animateToPage(1,
-                        duration: Duration(milliseconds: 300),
-                        curve: Curves.easeInOut);
-                  },
-                  backgroundColor: softGreen,
-                  child: Icon(
-                    Icons.arrow_forward_ios,
-                    size: 15,
-                  ),
-                ),
-            )
-          ],
-          leading: Padding(
-            padding: EdgeInsets.only(top: 35,),
-            child: RawMaterialButton(
-              // padding: EdgeInsets.only(top: 20),
-              // elevation: 0.0,
-              // fillColor: Colors.green,
-              // color: Color(0xfffafafa),
-              onPressed: () {
-                _scaffoldKey.currentState.openDrawer();
-              },
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: 6.0),
-                      height: 2.00,
-                      width: 22.00,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(4.00),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 6.0),
-                      height: 2.00,
-                      width: 22.00,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(4.00),
-                      ),
-                    ),
-                    Container(
-                      height: 2.00,
-                      width: 11.00,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(4.00),
-                      ),
-                    ),
-                  ]),
+      appBar: AppBar(
+        backgroundColor: Color(0xfffafafa),
+        elevation: 0.0,
+        leading: _menuButton(),
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(right: 10, top: 15),
+            child: FloatingActionButton(
+              elevation: 0.0,
+              onPressed: (() => LandingPage.controller.animateToPage(1,
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeInOut)),
+              backgroundColor: softGreen,
+              child: Icon(
+                Icons.arrow_forward_ios,
+                size: 15,
+              ),
             ),
-          ),
-
-          // backgroundColor: Color(0xfffafafa),
-        ),
+          )
+        ],
       ),
       key: _scaffoldKey,
       drawer: Drawer(
-        child: Container(
-          child: Center(child: Text("This is drawer")),
-        ),
+        child: Column(
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              // arrowColor: myGreen,
+              accountEmail: Text("email@xyz.com"),
+              accountName: Text("Jane Doe"),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor: Colors.white,
+                child:
+                    Icon(Icons.account_circle, size: 70, color: Colors.green),
+              ),
+            ),
+
+
+          ],
+        )
       ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
- 
-              _pages[_selectedPage],
-            ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: _pages[_selectedPage],
           ),
         ),
       ),
       bottomNavigationBar: Container(
-        // height: 70,
-        color: darkPurple,
-        child: TabBar(
+          decoration: BoxDecoration(
+            // borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10.0,
+                spreadRadius: 2.0,
+                offset: Offset(
+                  0.0, // horizontal, move right 10
+                  -10.0, // vertical, move down 10
+                ),
+              ),
+            ],
+            // color: darkPurple,
+          ),
+
+/*
+
+TabBar(
           indicatorColor: softGreen,
-          // dragStartBehavior: DragStartBehavior.start,
           // indicator: CircleTabIndicator(color: softGreen, radius: 3),
           onTap: (index) {
             setState(() {
@@ -161,64 +122,99 @@ class _SoftDashboardState extends State<SoftDashboard>
           tabs: <Widget>[
             Tab(
               icon: Icon(Icons.dashboard),
-              child: SizedBox(
-                height: 0,
-              ),
+              text: "Dashboard",
             ),
             Tab(
               icon: Icon(Icons.note),
-              child: SizedBox(
-                height: 0,
-              ),
+              text: "Notes",
               // child: SizedBox(height: currentTabIndex == 1 ? 10 : 0,),
             ),
             Tab(
               icon: Icon(Icons.settings),
-              child: SizedBox(
-                height: 0,
-              ),
+              text: "Settings",
               // child: SizedBox(height: currentTabIndex == 2 ? 10 : 0,),
             ),
           ],
         ),
-      ),
 
-      // Container(
-      //   height: 70,
-      //   child: BottomNavigationBar(
-      //       backgroundColor: darkPurple,
-      //       onTap: (int index) => setState(() => _selectedPage = index),
-      //       items: [
-      //         BottomNavigationBarItem(
-      //             icon: Icon(
-      //               Icons.dashboard,
-      //               color: _selectedPage == 0 ? softGreen : Colors.white,
-      //             ),
-      //             title: Text(
-      //               "•",
-      //               style: _selectedPage == 0 ? level2g : level1dp,
-      //             )),
-      //         BottomNavigationBarItem(
-      //             icon: Icon(
-      //               FontAwesomeIcons.stickyNote,
-      //               color: _selectedPage == 1 ? softGreen : Colors.white,
-      //             ),
-      //             title: Text(
-      //               "•",
-      //               style: _selectedPage == 1 ? level2g : level1dp,
-      //             )),
-      //         BottomNavigationBarItem(
-      //             icon: Icon(
-      //               Icons.settings,
-      //               color: _selectedPage == 2 ? softGreen : Colors.white,
-      //             ),
-      //             title: Text(
-      //               "•",
-      //               style: _selectedPage == 2 ? level2g : level1dp,
-      //             )),
-      //       ]
-      //   ),
-      // ),
+
+
+
+
+*/
+
+          child: BottomNavigationBar(
+            backgroundColor: darkPurple,
+            selectedItemColor: softGreen,
+            selectedLabelStyle: level2softg.copyWith(fontSize: 12),
+            // selectedIconTheme: IconThemeData(size: 25),
+            currentIndex: _selectedPage,
+            showUnselectedLabels: false,
+            unselectedItemColor: Colors.grey,
+
+            onTap: (index) {
+              setState(() {
+                _selectedPage = index;
+              });
+            },
+
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.dashboard),
+                title: Text("Dashboard"),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.note),
+                title: Text("Notes"),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                title: Text("Settings"),
+              ),
+            ],
+          )),
+    );
+  }
+
+  Widget _menuButton() {
+    return Padding(
+      padding: EdgeInsets.only(
+        top: 15,
+      ),
+      child: RawMaterialButton(
+        onPressed: (() => _scaffoldKey.currentState.openDrawer()),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.only(bottom: 6.0),
+                height: 2.00,
+                width: 22.00,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(4.00),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 6.0),
+                height: 2.00,
+                width: 16.5,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(4.00),
+                ),
+              ),
+              Container(
+                height: 2.00,
+                width: 11.00,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(4.00),
+                ),
+              ),
+            ]),
+      ),
     );
   }
 }

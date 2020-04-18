@@ -50,7 +50,7 @@ class _HistoryState extends State<History> {
       });
     });
 
-    print("\nInfos************");
+    // print("\nInfos************");
     for(String i in infos){
       print(i);
     }
