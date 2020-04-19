@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:aibirdie/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -57,24 +59,28 @@ Surat Karuna''';
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        // backgroundColor: Colors.white,
+        backgroundColor: darkPurple,
         // elevation: 0.0,
         title: Text("Veterinary Services Helpline", style: level2w.copyWith(fontSize: 20),),
       ),
-      body: Center(
-        child: ListView.builder(
-          itemCount: names.length,
-          itemBuilder: (BuildContext context, int index){
-            return ListTile(
-              title: Text("${names[index]}"),
-              subtitle: Text("${contacts[index]}"),
-              trailing: IconButton(icon: Icon(FontAwesomeIcons.phoneAlt, color: Colors.green,), onPressed: (){
-                launch("tel://${contacts[index]}");
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Image.asset('images/injured_bird.png'),
+          ListView.builder(
+              itemCount: names.length,
+              itemBuilder: (BuildContext context, int index){
+                return ListTile(
+                  title: Text("${names[index]}", style: level2softdp,),
+                  subtitle: Text("${contacts[index]}", style: level2softdp,),
+                  trailing: IconButton(icon: Icon(FontAwesomeIcons.phoneAlt, color: softGreen,), onPressed: (){
+                    launch("tel://${contacts[index]}");
 
-              }),
-            );
-          },
-        ),
+                  }),
+                );
+              },
+            ),
+        ],
       ),
     );
   }

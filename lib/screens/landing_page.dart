@@ -3,6 +3,7 @@ import 'package:aibirdie/screens/audio_classification.dart';
 import 'package:aibirdie/screens/cs.dart';
 import 'package:aibirdie/screens/soft_dashboard.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 // import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -24,6 +25,7 @@ class _LandingPageState extends State<LandingPage> {
   var _pages = [
     SoftDashboard(),
     CS(cameras),
+    // Container(),
     AudioClassification(),
   ];
 
@@ -33,9 +35,14 @@ class _LandingPageState extends State<LandingPage> {
       onWillPop: _willPopCallback,
       child: Scaffold(
         body: PageView.builder(
+          dragStartBehavior: DragStartBehavior.down,
           controller: LandingPage.controller,
           itemCount: _pages.length,
-          itemBuilder: ((BuildContext context, int index) => _pages[index]),
+          itemBuilder: (BuildContext context, int index){
+
+          return _pages[index];
+          },
+
           onPageChanged: ((index) => setState(() => _currentPage = index)),
         ),
       ),
@@ -49,6 +56,7 @@ class _LandingPageState extends State<LandingPage> {
     else
       LandingPage.controller.animateToPage(1,
           duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+      
     return false;
   }
 }

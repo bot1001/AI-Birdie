@@ -40,7 +40,7 @@ final TextStyle level1dp = TextStyle(
 final TextStyle level2w = TextStyle(
   fontSize: 25,
   color: Colors.white,
-  // fontFamily: 'M_medium'
+  fontFamily: 'OS_regular'
 );
 
 final TextStyle level2softdp = TextStyle(
