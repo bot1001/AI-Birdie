@@ -20,7 +20,7 @@ final TextStyle level1 = TextStyle(
 final TextStyle level1w = TextStyle(
   color: Colors.white,
   fontSize: 15,
-  // fontFamily: 'M_medium'
+  fontFamily: 'OS_regular'
 );
 
 final TextStyle level2 = TextStyle(
@@ -42,6 +42,11 @@ final TextStyle level2w = TextStyle(
   color: Colors.white,
   fontFamily: 'OS_regular'
 );
+final TextStyle level2softg = TextStyle(
+  fontSize: 25,
+  color: softGreen,
+  fontFamily: 'OS_regular'
+);
 
 final TextStyle level2softdp = TextStyle(
   fontSize: 15,
@@ -49,11 +54,6 @@ final TextStyle level2softdp = TextStyle(
   color: darkPurple
 );
 
-final TextStyle level2softg = TextStyle(
-  fontSize: 15,
-  fontFamily: 'OS_regular',
-  color: softGreen
-);
 
 final TextStyle level2softw = TextStyle(
   fontSize: 15,

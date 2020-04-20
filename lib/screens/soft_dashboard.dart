@@ -45,6 +45,7 @@ class _SoftDashboardState extends State<SoftDashboard>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // resizeToAvoidBottomInset: false,        
       appBar: AppBar(
         backgroundColor: Color(0xfffafafa),
         elevation: 0.0,
@@ -211,43 +212,6 @@ class _SoftDashboardState extends State<SoftDashboard>
             // color: darkPurple,
           ),
 
-/*
-
-TabBar(
-          indicatorColor: softGreen,
-          // indicator: CircleTabIndicator(color: softGreen, radius: 3),
-          onTap: (index) {
-            setState(() {
-              _selectedPage = index;
-            });
-          },
-
-          unselectedLabelColor: Colors.grey,
-          labelColor: softGreen,
-          controller: controller,
-          tabs: <Widget>[
-            Tab(
-              icon: Icon(Icons.dashboard),
-              text: "Dashboard",
-            ),
-            Tab(
-              icon: Icon(Icons.note),
-              text: "Notes",
-              // child: SizedBox(height: currentTabIndex == 1 ? 10 : 0,),
-            ),
-            Tab(
-              icon: Icon(Icons.settings),
-              text: "Settings",
-              // child: SizedBox(height: currentTabIndex == 2 ? 10 : 0,),
-            ),
-          ],
-        ),
-
-
-
-
-
-*/
 
           child: BottomNavigationBar(
             backgroundColor: darkPurple,

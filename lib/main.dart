@@ -1,5 +1,7 @@
 // import 'dart:io';
 
+// import 'package:aibirdie/constants.dart';
+import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/screens/landing_page.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'AI Birdie',
-      theme: ThemeData(),
+      theme: ThemeData(
+        // primarySwatch: Color(0xff1D1B27),
+        primaryColor: darkPurple
+      ),
       home: LandingPage(cameras),
       debugShowCheckedModeBanner: false,
     );
