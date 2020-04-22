@@ -27,7 +27,7 @@ dependencies:
   datetime_picker_formfield: ^0.4.3
   geolocator: ^5.1.5
   camera: ^0.5.7+4
-  path_provider: ^1.5.1
+  path_provider: ^1.6.7
   path: ^1.6.4
   rflutter_alert: ^1.0.3
   font_awesome_flutter: ^8.5.0

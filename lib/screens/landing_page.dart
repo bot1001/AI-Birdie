@@ -35,6 +35,7 @@ class _LandingPageState extends State<LandingPage> {
       onWillPop: _willPopCallback,
       child: Scaffold(
         body: PageView.builder(
+
           dragStartBehavior: DragStartBehavior.down,
           controller: LandingPage.controller,
           itemCount: _pages.length,
