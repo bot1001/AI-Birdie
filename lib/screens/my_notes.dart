@@ -20,13 +20,12 @@ class _MyNotesState extends State<MyNotes> {
 
     readContentsByLine().then((value) {
       setState(() {
-        if(value.length == 0){
+        if (value.length == 0) {
           noNotes = true;
-
         }
         // if (value[0] == "Exception") {
         //   _notes = [];
-         else {
+        else {
           _notes = value;
           noNotes = false;
         }
@@ -141,7 +140,6 @@ class _MyNotesState extends State<MyNotes> {
         noNotes == true
             ? noNotesWidget()
             : Container(
-              
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
@@ -149,67 +147,9 @@ class _MyNotesState extends State<MyNotes> {
                   // initialItemCount: _notes.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
-                        
-                        margin: EdgeInsets.only(bottom: 15),
-                        // height: 300,
-                        decoration: BoxDecoration(
-                          color: Color(0xfff5f5f5),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(-6.00, -6.00),
-                              color: Color(0xffffffff).withOpacity(0.80),
-                              blurRadius: 10,
-                            ),
-                            BoxShadow(
-                              offset: Offset(6.00, 6.00),
-                              color: Color(0xff000000).withOpacity(0.20),
-                              blurRadius: 10,
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(15.00),
-                        ),
-
-                        child: ListTile(
-                          leading: Text("${index + 1}"),
-                          title: Text(_notes[index]),
-                          trailing: IconButton(
-                            icon: Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                            ),
-                            onPressed: () {
-                              _notes.removeAt(index);
-                              String temp = "";
-                              for (var everyNote in _notes) {
-                                temp = temp + everyNote + "\n";
-                              }
-                              clearFile();
-                              appendContent(temp);
-                              readContentsByLine().then((value) {
-                                setState(() {
-                                  _notes = value;
-                                });
-                                if (_notes.length == 0) {
-                                  print("All notes deleted");
-                                  setState(() {
-                                    noNotes = true;
-                                  });
-                                }
-                              });
-                            },
-                          ),
-                        ),
-                      );
-                  },
-                ),
-              ),
-      ],
-    );
-  }
-
-  Widget noNotesWidget() {
-    return Container(
-                            decoration: BoxDecoration(
+                      margin: EdgeInsets.only(bottom: 15),
+                      // height: 300,
+                      decoration: BoxDecoration(
                         color: Color(0xfff5f5f5),
                         boxShadow: [
                           BoxShadow(
@@ -226,24 +166,88 @@ class _MyNotesState extends State<MyNotes> {
                         borderRadius: BorderRadius.circular(15.00),
                       ),
 
-      height: MediaQuery.of(context).size.height * 0.3,
+                      child: ListTile(
+                        leading: Text("${index + 1}"),
+                        title: Text(_notes[index]),
+                        trailing: IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ),
+                          onPressed: () async {
+                            _notes.removeAt(index);
+                            String temp = "";
+                            for (var everyNote in _notes) {
+                              temp = temp + everyNote + "\n";
+                            }
+                            clearFile();
+                            appendContent(temp);
+
+                            readContentsByLine().then((value) {
+                              setState(() {
+                                _notes = value;
+                              });
+                              if (_notes.length == 0) {
+                                print("All notes deleted");
+                                setState(() {
+                                  noNotes = true;
+                                });
+                              }
+
+                            });
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+      ],
+    );
+  }
+
+  Widget noNotesWidget() {
+    return Container(
+        decoration: BoxDecoration(
+          color: Color(0xfff5f5f5),
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(-6.00, -6.00),
+              color: Color(0xffffffff).withOpacity(0.80),
+              blurRadius: 10,
+            ),
+            BoxShadow(
+              offset: Offset(6.00, 6.00),
+              color: Color(0xff000000).withOpacity(0.20),
+              blurRadius: 10,
+            ),
+          ],
+          borderRadius: BorderRadius.circular(15.00),
+        ),
+        height: MediaQuery.of(context).size.height * 0.3,
         // color: Colors.red,
         child: Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        Icon(Icons.text_fields, size: 40, color: softGreen,),
-        Column(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-
-        Text("You have not added any notes yet.", style: level2softdp,),
-        Text("Click on \"Add note\" to start.", style: level2softdp,),
+            Icon(
+              Icons.text_fields,
+              size: 40,
+              color: softGreen,
+            ),
+            Column(
+              children: <Widget>[
+                Text(
+                  "You have not added any notes yet.",
+                  style: level2softdp,
+                ),
+                Text(
+                  "Click on \"Add note\" to start.",
+                  style: level2softdp,
+                ),
+              ],
+            ),
           ],
-        ),
-      ],
-    )
-        )
-      );
-
+        )));
   }
 }
