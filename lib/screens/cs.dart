@@ -8,6 +8,8 @@ import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/screens/landing_page.dart';
 // import 'package:aibirdie/screens/dashboard.dart';
 import 'package:aibirdie/screens/preview_page.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
+// import 'package:audioplayers/audioplay ers.dart';
 // import 'package:aibirdie/screens/soft_dashboard.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +30,10 @@ class CS extends StatefulWidget {
 class _CSState extends State<CS> {
   CameraController controller;
   var sca = 1.0;
-
+  var animatedHeight = 80.0;
+  var animatedMargin = 10.0;
+  var animatedColor;
+  var animatedBorder = Colors.white;
   // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -36,6 +41,12 @@ class _CSState extends State<CS> {
     super.initState();
     _initCameraController(widget.cameras[0]).then((void v) {});
     // print("camera initiated");
+    setState(() {
+      animatedHeight = 80.0;
+      animatedMargin = 5.0;
+      animatedColor = null;
+      animatedBorder = Colors.white;
+    });
   }
 
   @override
@@ -47,143 +58,165 @@ class _CSState extends State<CS> {
   @override
   Widget build(BuildContext context) {
     // if (!controller.value.isInitialized) {
-      return !controller.value.isInitialized ?   Container(
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
-      ) : 
-    // }
+    return !controller.value.isInitialized
+        ? Container(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          )
+        :
+        // }
 
-     Scaffold(
-      backgroundColor: Colors.black,
-      body: SafeArea(
-        child: Stack(
-          // fit: StackFit.passthrough,
-          children: <Widget>[
-            _cameraPreviewWidget(context),
-            Center(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Row(
+        Scaffold(
+            backgroundColor: Colors.black,
+            body: SafeArea(
+              child: Stack(
+                // fit: StackFit.passthrough,
+                children: <Widget>[
+                  _cameraPreviewWidget(context),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: 10, bottom: 20, left: 20, right: 20),
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          "AI Birdie",
-                          style: level1w.copyWith(fontSize: 20),
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.add_photo_alternate,
-                            color: Colors.white,
-                            size: 35,
-                          ),
-                          onPressed: () async {
-                            File image = await ImagePicker.pickImage(
-                                source: ImageSource.gallery);
-                            // print(image.path);
-                            if (image != null)
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      PreviewPage(image, Storage()),
-                                ),
-                              );
-                          },
-                        )
-                      ],
-                    ),
-                    // Expanded(
-                    //   child: Container(
-                    //     color: Colors.red,
-                    //     child: SwipeDetector(
-                    //       onSwipeLeft: () => myTransition(
-                    //           context, 1.0, 0.0, AudioClassification()),
-                    //       onSwipeRight: () =>
-                    //           myTransition(context, -1.0, 0.0, Dashboard()),
-                    //       swipeConfiguration: SwipeConfiguration(
-                    //           horizontalSwipeMaxHeightThreshold: 100.0,
-                    //           horizontalSwipeMinDisplacement: 10.0,
-                    //           horizontalSwipeMinVelocity: 10.0),
-                    //       child: Container(
-                    //         color: Colors.transparent,
-                    //         width: double.infinity,
-                    //         // height: height * 0.6,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    Column(
-                      children: <Widget>[
-                        GestureDetector(
-                          child: Hero(
-                            tag: 'key',
-                            child: Container(
-                              height: 80,
-                              // width: 70.00,
-                              decoration: BoxDecoration(
-                              
-                                border: Border.all(
-                                    width: 5.00, color: Colors.white),
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                          ),
-                          onTap: () {
-                            _onCapturePressed(context);
-                          },
-                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Column(
-                              children: <Widget>[
-                                IconButton(
-                                  onPressed: (()=> LandingPage.controller.animateToPage(0,
-                          duration: Duration(milliseconds: 300),
-                          curve: Curves.easeInOut)),
-                                  // onPressed: () {
-                                  //   myTransition(
-                                  //       context, -1.0, 0.0, SoftDashboard());
-                                  // },
-                                  icon: Icon(
-                                    Icons.dashboard,
-                                    color: Colors.white,
-                                    size: 35,
-                                  ),
-                                ),
-                                Text(
-                                  "Dashboard",
-                                  style: level1.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13),
-                                )
-                              ],
+                            Text(
+                              "AI Birdie",
+                              style: level1w.copyWith(fontSize: 20),
                             ),
-                            Column(
-                              children: <Widget>[
-                                IconButton(
-                                  onPressed: (()=>LandingPage.controller.animateToPage(2,
-                          duration: Duration(milliseconds: 300),
-                          curve: Curves.easeInOut)),
-                                  // onPressed: () => myTransition(
-                                  //     context, 1.0, 0.0, AudioClassification()),
-                                  icon: Icon(
-                                    Icons.audiotrack,
-                                    color: Colors.white,
-                                    size: 30,
+                            IconButton(
+                              icon: Icon(
+                                Icons.add_photo_alternate,
+                                color: Colors.white,
+                                size: 35,
+                              ),
+                              onPressed: () async {
+                                File image = await ImagePicker.pickImage(
+                                    source: ImageSource.gallery);
+                                // print(image.path);
+                                if (image != null)
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          PreviewPage(image, Storage()),
+                                    ),
+                                  );
+                              },
+                            )
+                          ],
+                        ),
+                        // Expanded(
+                        //   child: Container(
+                        //     color: Colors.red,
+                        //     child: SwipeDetector(
+                        //       onSwipeLeft: () => myTransition(
+                        //           context, 1.0, 0.0, AudioClassification()),
+                        //       onSwipeRight: () =>
+                        //           myTransition(context, -1.0, 0.0, Dashboard()),
+                        //       swipeConfiguration: SwipeConfiguration(
+                        //           horizontalSwipeMaxHeightThreshold: 100.0,
+                        //           horizontalSwipeMinDisplacement: 10.0,
+                        //           horizontalSwipeMinVelocity: 10.0),
+                        //       child: Container(
+                        //         color: Colors.transparent,
+                        //         width: double.infinity,
+                        //         // height: height * 0.6,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        Column(
+                          children: <Widget>[
+                            GestureDetector(
+                              child: Hero(
+                                tag: 'key',
+                                child: AnimatedContainer(
+                                  // child: Icon(Icons.camera, size: 80,),
+                                  curve: Curves.bounceOut,
+                                  duration: Duration(milliseconds: 300),
+                                  margin:
+                                      EdgeInsets.only(bottom: animatedMargin),
+                                  height: animatedHeight,
+                                  // width: 70.00,
+                                  decoration: BoxDecoration(
+                                    color: animatedColor,
+                                    border: Border.all(
+                                        width: 5.00, color: animatedBorder),
+                                    shape: BoxShape.circle,
                                   ),
                                 ),
-                                Text(
-                                  "Audio",
-                                  style: level1.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13),
+                              ),
+                              onTap: () {
+
+                                AssetsAudioPlayer.playAndForget(Audio('images/shutter.wav'), volume: 0.1);
+
+                                setState(() {
+                                  animatedHeight = 90;
+                                  animatedMargin = 0;
+                                  animatedColor = Colors.red;
+                                  animatedBorder = Colors.black;
+                                });
+                                _onCapturePressed(context);
+                              },
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    IconButton(
+                                      onPressed: (() => LandingPage.controller
+                                          .animateToPage(0,
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              curve: Curves.easeInOut)),
+                                      // onPressed: () {
+                                      //   myTransition(
+                                      //       context, -1.0, 0.0, SoftDashboard());
+                                      // },
+                                      icon: Icon(
+                                        Icons.dashboard,
+                                        color: Colors.white,
+                                        size: 35,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Dashboard",
+                                      style: level1.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    IconButton(
+                                      onPressed: (() => LandingPage.controller
+                                          .animateToPage(2,
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              curve: Curves.easeInOut)),
+                                      // onPressed: () => myTransition(
+                                      //     context, 1.0, 0.0, AudioClassification()),
+                                      icon: Icon(
+                                        Icons.audiotrack,
+                                        color: Colors.white,
+                                        size: 30,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Audio",
+                                      style: level1.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -191,14 +224,11 @@ class _CSState extends State<CS> {
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 
   void _showCameraException(CameraException e) {
@@ -245,19 +275,19 @@ class _CSState extends State<CS> {
     }
     return MeasureSize(
       onChange: (size) {
-          // print('Screen height ${MediaQuery.of(context).size.aspectRatio}');
-          // print('Widget height ${size.height}');
-          // print('Scale $sca');
-            setState(() {
-              // print(MediaQuery.of(context).size.aspectRatio);
-              sca = MediaQuery.of(context).size.height / size.longestSide;
-            });
+        // print('Screen height ${MediaQuery.of(context).size.aspectRatio}');
+        // print('Widget height ${size.height}');
+        // print('Scale $sca');
+        setState(() {
+          // print(MediaQuery.of(context).size.aspectRatio);
+          sca = MediaQuery.of(context).size.height / size.longestSide;
+        });
       },
 
       // onChange: (size) => setState(() => sca = MediaQuery.of(context).size.height / size.longestSide),
 
       child: Transform.scale(
-        scale: MediaQuery.of(context).size.aspectRatio <= (9/16) ? 1.26 : sca,
+        scale: MediaQuery.of(context).size.aspectRatio <= (9 / 16) ? 1.26 : sca,
         child: Center(
           child: AspectRatio(
               aspectRatio: controller.value.aspectRatio,
@@ -268,11 +298,9 @@ class _CSState extends State<CS> {
   }
 
   void _onCapturePressed(context) async {
-
-
-
     try {
-      final path = '/storage/emulated/0/AiBirdie/Images/${DateTime.now().toString()}.png';
+      final path =
+          '/storage/emulated/0/AiBirdie/Images/${DateTime.now().toString()}.png';
 
       await controller.takePicture(path);
 
@@ -282,6 +310,12 @@ class _CSState extends State<CS> {
           builder: (context) => PreviewPage(File(path), Storage()),
         ),
       );
+      setState(() {
+        animatedHeight = 80.0;
+        animatedMargin = 5.0;
+        animatedColor = null;
+        animatedBorder = Colors.white;
+      });
     } catch (e) {
       print(e);
     }
