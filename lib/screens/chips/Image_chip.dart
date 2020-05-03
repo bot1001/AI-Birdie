@@ -8,25 +8,22 @@ class ImageChip extends StatefulWidget {
   @override
   _ImageChipState createState() => _ImageChipState();
 }
+
 final Storage storage = Storage();
 
 class _ImageChipState extends State<ImageChip> {
-
-
-   String data;
+  String data;
   String info;
+
+  var images = [];
 
   static var imageCollections = [];
   static var infos = [];
 
-
-
-
-
-
-
-    @override
+  @override
   void initState() {
+    readImages();
+
     storage.readData().then((String value) {
       setState(() {
         value = value.trim();
@@ -34,7 +31,6 @@ class _ImageChipState extends State<ImageChip> {
           data = value;
           data = data.trim();
           imageCollections = data.split("\n");
-
         }
         // _hud = false;
       });
@@ -52,110 +48,126 @@ class _ImageChipState extends State<ImageChip> {
       });
     });
 
-    print("Imagecollection: $imageCollections");
-    print("Infos: $infos");
+    // print("Imagecollection: $imageCollections");
+    // print("Infos: $infos");
 
     // data.split(pattern)
     super.initState();
   }
 
+  void readImages() async {
+    var myPath = '/storage/emulated/0/AiBirdie/Images';
+    Directory imgDir = Directory(myPath);
+    var temp = imgDir.list();
 
+    images = await temp.toList();
+  }
 
+  void deleteImage(index) {
 
+    File f = images[index];
+    f.delete();
+    setState(() {
+    readImages();
+      
+    });
 
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ListView.builder(
-        
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: imageCollections.length,
-        itemBuilder: (BuildContext context, int index){
+        itemCount: images.length ?? 0,
+        itemBuilder: (BuildContext context, int index) {
           return Card(
-                      
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Image.file(
-                                  File(imageCollections[index]),
-                                  width: 50,
-                                ),
-                                // Text(imageCollections[index]),
-
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Column(
-                                  children: <Widget>[
-                                    Text("Bird name"),
-                                    // Text(_name.toString()),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        Text("Date: "),
-                                        // Text(_date.toString()),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      children: <Widget>[
-                                        Text("Time: "),
-                                        // Text(_time.toString()),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      children: <Widget>[
-                                        Text("Location: "),
-                                        // Text(_location.toString()),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  imageCollections.removeAt(index);
-                                  storage.writeData("", FileMode.write);
-                                  for (String i in imageCollections) {
-                                    storage.writeData(i, FileMode.append);
-                                  }
-                                });
-                              },
-                            ),
-                          ],
-                        ),
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Image.file(
+                        images[index],
+                        width: 50,
                       ),
-                      // ),
-                    );
-        },
 
+                      // Image.file(
+                      //   File(imageCollections[index]),
+                      //   width: 50,
+                      // ),
+                      // Text(imageCollections[index]),
+
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Column(
+                        children: <Widget>[
+                          Text("Bird name"),
+                          // Text(_name.toString()),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Text("Date: "),
+                              // Text(_date.toString()),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text("Time: "),
+                              // Text(_time.toString()),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text("Location: "),
+                              // Text(_location.toString()),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onPressed: () => deleteImage(index),
+                    // onPressed: () {
+                    //   setState(() {
+                    //     imageCollections.removeAt(index);
+                    //     storage.writeData("", FileMode.write);
+                    //     for (String i in imageCollections) {
+                    //       storage.writeData(i, FileMode.append);
+                    //     }
+                    //   });
+                    // },
+                  ),
+                ],
+              ),
+            ),
+            // ),
+          );
+        },
       ),
     );
   }

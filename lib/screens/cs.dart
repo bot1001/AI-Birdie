@@ -13,8 +13,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
+// import 'package:path/path.dart';
+// import 'package:path_provider/path_provider.dart';
 // import 'package:swipedetector/swipedetector.dart';
 
 class CS extends StatefulWidget {
@@ -125,8 +125,7 @@ class _CSState extends State<CS> {
                               height: 80,
                               // width: 70.00,
                               decoration: BoxDecoration(
-                                // color: Color(0xffe90328),
-                                // color: Colors.red[700],
+                              
                                 border: Border.all(
                                     width: 5.00, color: Colors.white),
                                 shape: BoxShape.circle,
@@ -134,7 +133,6 @@ class _CSState extends State<CS> {
                             ),
                           ),
                           onTap: () {
-                            // print('haltu kem bandh thai gayu?');
                             _onCapturePressed(context);
                           },
                         ),
@@ -270,11 +268,12 @@ class _CSState extends State<CS> {
   }
 
   void _onCapturePressed(context) async {
+
+
+
     try {
-      final path = join(
-        (await getApplicationDocumentsDirectory()).path,
-        '${DateTime.now().millisecondsSinceEpoch}.png',
-      );
+      final path = '/storage/emulated/0/AiBirdie/Images/${DateTime.now().toString()}.png';
+
       await controller.takePicture(path);
 
       Navigator.push(

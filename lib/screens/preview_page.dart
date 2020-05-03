@@ -31,6 +31,7 @@ class PreviewPage extends StatefulWidget {
   _PreviewPageState createState() => _PreviewPageState();
 }
 
+String state;
 class _PreviewPageState extends State<PreviewPage> {
   @override
   void initState() {
@@ -48,7 +49,6 @@ class _PreviewPageState extends State<PreviewPage> {
     myBird = Bird();
   }
 
-  String state;
 
   // File imageFile;
   String lat = "Latitude", long = "Longitude";
