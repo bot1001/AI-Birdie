@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:aibirdie/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +9,23 @@ class OverviewChip extends StatefulWidget {
 }
 
 class _OverviewChipState extends State<OverviewChip> {
+  int birdsCaptured = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    setBirdsCapturedCount();
+  }
+
+  Future<void> setBirdsCapturedCount()  async {
+    Directory imgDir = Directory('/storage/emulated/0/AiBirdie/Images');
+    var temp = imgDir.list();
+    var images = await temp.toList();
+    setState(() {
+      birdsCaptured = images.length;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -50,7 +69,7 @@ class _OverviewChipState extends State<OverviewChip> {
                   ],
                 ),
                 Text(
-                  "24",
+                  "$birdsCaptured",
                   style: level2softg.copyWith(
                       fontSize: 55, fontWeight: FontWeight.w900),
                 ),

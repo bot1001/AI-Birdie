@@ -1,4 +1,6 @@
 // import 'package:aibirdie/constants.dart';
+import 'dart:io';
+
 import 'package:aibirdie/screens/audio_classification.dart';
 import 'package:aibirdie/screens/cs.dart';
 import 'package:aibirdie/screens/soft_dashboard.dart';
@@ -28,6 +30,20 @@ class _LandingPageState extends State<LandingPage> {
     // Container(),
     AudioClassification(),
   ];
+
+
+  @override
+  void initState() {
+    super.initState();
+
+      Directory aibirdie = Directory('/storage/emulated/0/AiBirdie');
+  Directory imageDir = Directory('/storage/emulated/0/AiBirdie/Images');
+  Directory audioDir = Directory('/storage/emulated/0/AiBirdie/Audios');
+
+  aibirdie.create();
+  imageDir.create();
+  audioDir.create();
+  }
 
   @override
   Widget build(BuildContext context) {

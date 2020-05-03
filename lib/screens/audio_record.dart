@@ -26,7 +26,7 @@ class _AudioRecordState extends State<AudioRecord> {
 
   Future startRecording() async {
     final String filePath =
-        '/storage/emulated/0/AiBirdie/${DateTime.now().millisecondsSinceEpoch.toString()}.wav';
+        '/storage/emulated/0/AiBirdie/Audios/${DateTime.now().millisecondsSinceEpoch.toString()}.wav';
     print(filePath);
     recorder = FlutterAudioRecorder(filePath, audioFormat: AudioFormat.WAV);
 

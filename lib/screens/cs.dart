@@ -46,15 +46,15 @@ class _CSState extends State<CS> {
 
   @override
   Widget build(BuildContext context) {
-    if (!controller.value.isInitialized) {
-      return Container(
+    // if (!controller.value.isInitialized) {
+      return !controller.value.isInitialized ?   Container(
         child: Center(
-          child: Text("Controller not initialized yet."),
+          child: CircularProgressIndicator(),
         ),
-      );
-    }
+      ) : 
+    // }
 
-    return Scaffold(
+     Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
         child: Stack(

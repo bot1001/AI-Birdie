@@ -107,6 +107,7 @@ class _SoftDashboardState extends State<SoftDashboard>
           ),
           onTap: (() => Alert(
         context: context,
+        
         type: AlertType.info,
         style: AlertStyle(
             animationDuration: Duration(milliseconds: 500),
@@ -114,6 +115,7 @@ class _SoftDashboardState extends State<SoftDashboard>
             descStyle: level2softdp,
             titleStyle: level1dp.copyWith(fontSize: 25)),
         title: "AI Birdie",
+
         desc:
             "A mobile app for image and audio classification of birds.\n\nLEVERAGING THE POWER OF AI TO DEMOCRATIZE ORNITHOLOGY\n\n1.\t\tFor visual identification, our objective is to develop algorithms for:\nA.\tBird Detection in images\nB.\tBird Identification from images\n\n2.\t\tFor acoustic identification, our objective is to develop algorithms for:\nA.\tBird Detection in audio clip\nB.\tSpecies Identification in audio clip",
         buttons: [
