@@ -17,7 +17,6 @@ class AudioIdentify extends StatefulWidget {
 }
 
 class _AudioIdentifyState extends State<AudioIdentify> {
-  var running = false;
 
   bool isPlaying;
   // IconData playIcon = Icons.play_arrow;
@@ -59,32 +58,7 @@ class _AudioIdentifyState extends State<AudioIdentify> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   crossAxisAlignment: CrossAxisAlignment.center,
-                    //   children: <Widget>[
-                    //     Container(
-                    //       width: 200,
-                    //       decoration: BoxDecoration(
-                    //         // color: Color(0xffffffff),
-                    //         border: Border.all(
-                    //           width: 1.00,
-                    //           color: Colors.black,
-                    //         ),
-                    //         borderRadius: BorderRadius.circular(31.00),
-                    //       ),
-                    //       child: Center(
-                    //         child: TikTikTimer(
-                    //           height: 50,
-                    //           width: 100,
-                    //           initialDate: DateTime.now(),
-                    //           backgroundColor: Colors.white,
-                    //           timerTextStyle: level2,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
+                 
 
                     Container(
                       height: 50,
@@ -128,28 +102,6 @@ class _AudioIdentifyState extends State<AudioIdentify> {
                       ),
                     ),
 
-                    // lightButton(label, () async {
-                    //   if (isPlaying == true) {
-                    //     await audioPlayer.stop();
-                    //     setState(() {
-                    //       isPlaying = false;
-                    //       label = "Play ▶";
-                    //     });
-                    //   } else {
-                    //     await audioPlayer.play(file.path, isLocal: true);
-                    //     setState(() {
-                    //       label = "Stop ";
-                    //       isPlaying = true;
-                    //     });
-
-                    //     audioPlayer.onPlayerCompletion.listen((event) {
-                    //       setState(() {
-                    //         isPlaying = false;
-                    //         label = "Play";
-                    //       });
-                    //     });
-                    //   }
-                    // }),
                     SizedBox(
                       height: 20,
                     ),

@@ -60,7 +60,7 @@ class _DashState extends State<Dash> with SingleTickerProviderStateMixin {
             controller: controller,
             indicator: BoxDecoration(
               color: softGreen,
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(100),
             ),
             // indicator: CustomTabIndicator(),
             labelColor: Colors.white,

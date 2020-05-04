@@ -44,6 +44,7 @@ dependencies:
   # shared_preferences: ^0.5.6+3
   permission_handler: ^5.0.0+hotfix.4
   assets_audio_player: ^1.4.0
+  intl: ^0.15.8
 
 
   grpc: ^2.1.3

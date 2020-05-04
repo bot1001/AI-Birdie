@@ -1,23 +1,14 @@
 import 'dart:io';
-
 import 'package:aibirdie/components/storage.dart';
 import 'package:aibirdie/constants.dart';
-// import 'package:aibirdie/components/transitions.dart';
-// import 'package:aibirdie/constants.dart';
-// import 'package:aibirdie/screens/audio_classification.dart';
 import 'package:aibirdie/screens/landing_page.dart';
-// import 'package:aibirdie/screens/dashboard.dart';
 import 'package:aibirdie/screens/preview_page.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
-// import 'package:audioplayers/audioplay ers.dart';
-// import 'package:aibirdie/screens/soft_dashboard.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
-// import 'package:path/path.dart';
-// import 'package:path_provider/path_provider.dart';
-// import 'package:swipedetector/swipedetector.dart';
+
 
 class CS extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -151,9 +142,7 @@ class _CSState extends State<CS> {
                                 ),
                               ),
                               onTap: () {
-
-                                AssetsAudioPlayer.playAndForget(Audio('images/shutter.wav'), volume: 0.1);
-
+                                AssetsAudioPlayer.playAndForget(Audio('images/camera_click.ogg'), volume: 0.5);
                                 setState(() {
                                   animatedHeight = 90;
                                   animatedMargin = 0;
@@ -174,10 +163,6 @@ class _CSState extends State<CS> {
                                               duration:
                                                   Duration(milliseconds: 300),
                                               curve: Curves.easeInOut)),
-                                      // onPressed: () {
-                                      //   myTransition(
-                                      //       context, -1.0, 0.0, SoftDashboard());
-                                      // },
                                       icon: Icon(
                                         Icons.dashboard,
                                         color: Colors.white,
@@ -322,10 +307,8 @@ class _CSState extends State<CS> {
   }
 }
 
-//
-
+//Measure size for responsive camera screen
 typedef void OnWidgetSizeChange(Size size);
-
 class MeasureSize extends StatefulWidget {
   final Widget child;
   final OnWidgetSizeChange onChange;
