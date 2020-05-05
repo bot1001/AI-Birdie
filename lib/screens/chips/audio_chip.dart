@@ -69,7 +69,9 @@ class _AudioChipState extends State<AudioChip> with SingleTickerProviderStateMix
                   }
                 },
                 child: AnimatedContainer(
-                  padding: EdgeInsets.symmetric(vertical: isPlaying[index] == true ? 25 : 0,),
+                  
+                  padding: EdgeInsets.symmetric(vertical: isPlaying[index] == true ? 20 : 0,),
+
                   duration: Duration(milliseconds: 300),
 
                   margin: EdgeInsets.only(bottom: 15),
