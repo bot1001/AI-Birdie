@@ -158,11 +158,15 @@ class _CSState extends State<CS> {
                                 Column(
                                   children: <Widget>[
                                     IconButton(
-                                      onPressed: (() => LandingPage.controller
+                                      onPressed: (){
+
+                                       LandingPage.controller
                                           .animateToPage(0,
                                               duration:
                                                   Duration(milliseconds: 300),
-                                              curve: Curves.easeInOut)),
+                                              curve: Curves.easeInOut);
+                                              // controller.dispose();
+                                      },
                                       icon: Icon(
                                         Icons.dashboard,
                                         color: Colors.white,
@@ -260,9 +264,6 @@ class _CSState extends State<CS> {
     }
     return MeasureSize(
       onChange: (size) {
-        // print('Screen height ${MediaQuery.of(context).size.aspectRatio}');
-        // print('Widget height ${size.height}');
-        // print('Scale $sca');
         setState(() {
           // print(MediaQuery.of(context).size.aspectRatio);
           sca = MediaQuery.of(context).size.height / size.longestSide;
@@ -271,12 +272,14 @@ class _CSState extends State<CS> {
 
       // onChange: (size) => setState(() => sca = MediaQuery.of(context).size.height / size.longestSide),
 
-      child: Transform.scale(
-        scale: MediaQuery.of(context).size.aspectRatio <= (9 / 16) ? 1.26 : sca,
-        child: Center(
-          child: AspectRatio(
-              aspectRatio: controller.value.aspectRatio,
-              child: CameraPreview(controller)),
+      child: ClipRect(
+              child: Transform.scale(
+          scale: MediaQuery.of(context).size.aspectRatio <= (9 / 16) ? 1.26 : sca,
+          child: Center(
+              child: AspectRatio(
+                  aspectRatio: controller.value.aspectRatio,
+                  child: CameraPreview(controller)),
+            ),
         ),
       ),
     );

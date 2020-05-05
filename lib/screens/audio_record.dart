@@ -86,7 +86,7 @@ class _AudioRecordState extends State<AudioRecord> {
                   height: 150,
                   width: double.infinity,
                   // backgroundColor: Colors.black,
-                  timerTextStyle: level2w.copyWith(fontSize: 60),
+                  timerTextStyle: level2softw.copyWith(fontSize: 60),
                   borderRadius: 100,
                   // isRaised: true,
                   tracetime: (time) {
