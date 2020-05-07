@@ -28,10 +28,11 @@ class _AudioClassificationState extends State<AudioClassification> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xfffafafa),
         title: Text(
           "Pick an audio",
-          style: TextStyle(color: myGreen),
+          style:
+              level2softg.copyWith(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         elevation: 0,
       ),
@@ -40,7 +41,6 @@ class _AudioClassificationState extends State<AudioClassification> {
       body: SafeArea(
         child: Stack(
           children: <Widget>[
-           
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -68,8 +68,8 @@ class _AudioClassificationState extends State<AudioClassification> {
                             color: Colors.white,
                           ),
                           onPressed: () async {
-                            file = await FilePicker.getFile(
-                                type: FileType.audio);
+                            file =
+                                await FilePicker.getFile(type: FileType.audio);
                             if (file != null) {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => AudioIdentify(file)));
@@ -97,11 +97,17 @@ class _AudioClassificationState extends State<AudioClassification> {
                       Draggable(
                         child: CircleAvatar(
                           radius: 35,
-                          child: Text("Select"),
+                          child: Text(
+                            "Select",
+                            style: level2softw,
+                          ),
                         ),
                         feedback: CircleAvatar(
                           radius: 35,
-                          child: Text("Select"),
+                          child: Text(
+                            "Select",
+                            style: level2softw,
+                          ),
                         ),
                         childWhenDragging: CircleAvatar(
                           radius: 35,
@@ -145,8 +151,7 @@ class _AudioClassificationState extends State<AudioClassification> {
                                 color: Colors.white,
                               ),
                               onPressed: () {
-                                myTransition(
-                                    context, 1.0, 0.0, AudioRecord());
+                                myTransition(context, 1.0, 0.0, AudioRecord());
                               }),
                         );
                       },
@@ -162,15 +167,14 @@ class _AudioClassificationState extends State<AudioClassification> {
                         decoration: BoxDecoration(
                           // color: Color(0xffe90328),
                           // color: Colors.red[700],
-                          border:
-                              Border.all(width: 5.00, color: Colors.black),
+                          border: Border.all(width: 5.00, color: Colors.black),
                           shape: BoxShape.circle,
                         ),
                       ),
                     ),
                     onTap: () => LandingPage.controller.animateToPage(1,
-                          duration: Duration(milliseconds: 300),
-                          curve: Curves.easeInOut),
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeInOut),
                   ),
                 ],
               ),

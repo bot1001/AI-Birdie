@@ -83,7 +83,7 @@ class _ImageChipState extends State<ImageChip> {
                         ),
                         Padding(
                           padding:
-                               EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                              EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                           child: CircleAvatar(
                             radius: 15,
                             backgroundColor: softGreen,
@@ -137,11 +137,12 @@ class _ImageChipState extends State<ImageChip> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                fullscreenDialog: false,
-                                builder: (context) => ImageFull(
-                                  inp: images[index],
-                                ),
-                              ),
+                                  fullscreenDialog: false,
+                                  builder: (context) {
+                                    return ImageFull(
+                                      inp: images[index],
+                                    );
+                                  }),
                             );
                           },
                           child: Padding(
@@ -161,11 +162,9 @@ class _ImageChipState extends State<ImageChip> {
                             ),
                           ),
                         ),
-                    titleWidget(images[index]),
+                        titleWidget(images[index]),
                       ],
                     ),
-
-
                     IconButton(
                         icon: Icon(
                           Icons.delete,
@@ -183,8 +182,11 @@ class _ImageChipState extends State<ImageChip> {
   }
 
   Widget titleWidget(File f) {
-    return Text(DateFormat("dd MMM, yyyy").format(f.lastModifiedSync()) +
-        " " +
-        DateFormat("H:m").format(f.lastModifiedSync()), style: level2softdp,);
+    return Text(
+      DateFormat("dd MMM, yyyy").format(f.lastModifiedSync()) +
+          " " +
+          DateFormat("H:mm").format(f.lastModifiedSync()),
+      style: level2softdp,
+    );
   }
 }

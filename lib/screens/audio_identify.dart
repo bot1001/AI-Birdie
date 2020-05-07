@@ -17,7 +17,6 @@ class AudioIdentify extends StatefulWidget {
 }
 
 class _AudioIdentifyState extends State<AudioIdentify> {
-
   bool isPlaying;
   // IconData playIcon = Icons.play_arrow;
   AudioPlayer audioPlayer = AudioPlayer();
@@ -53,13 +52,11 @@ class _AudioIdentifyState extends State<AudioIdentify> {
                 ),
                 Text(
                   "Recording saved",
-                  style: level2,
+                  style: level2softdp.copyWith(fontSize: 25),
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                 
-
                     Container(
                       height: 50,
                       width: double.infinity,
@@ -86,7 +83,8 @@ class _AudioIdentifyState extends State<AudioIdentify> {
                           children: <Widget>[
                             TikTikTimer(
                                 backgroundColor: Colors.white,
-                                timerTextStyle: level2.copyWith(fontSize: 20),
+                                timerTextStyle:
+                                    level2softdp.copyWith(fontSize: 20),
                                 height: 50,
                                 width: 100,
                                 running: isPlaying,
@@ -101,7 +99,6 @@ class _AudioIdentifyState extends State<AudioIdentify> {
                         ),
                       ),
                     ),
-
                     SizedBox(
                       height: 20,
                     ),

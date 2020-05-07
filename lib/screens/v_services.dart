@@ -1,4 +1,4 @@
-import 'dart:ui';
+// import 'dart:ui';
 
 import 'package:aibirdie/constants.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class VServices extends StatelessWidget {
-
   static String namesData = '''Ahmedabad Animal Care Cheritable Trust
 Amreli Comando Bird Helpline
 Bhavnagar Animal Helpline
@@ -52,8 +51,6 @@ Surat Karuna''';
   final List names = namesData.split('\n').toList();
   final List contacts = contactsData.split('\n').toList();
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,25 +58,38 @@ Surat Karuna''';
         centerTitle: true,
         backgroundColor: darkPurple,
         // elevation: 0.0,
-        title: Text("Veterinary Services Helpline", style: level2w.copyWith(fontSize: 20),),
+        title: Text(
+          "Veterinary Services Helpline",
+          style: level2w.copyWith(fontSize: 20),
+        ),
       ),
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          Image.asset('images/injured_bird.png'),
+          // Image.asset('images/injured_bird.png'),
           ListView.builder(
-              itemCount: names.length,
-              itemBuilder: (BuildContext context, int index){
-                return ListTile(
-                  title: Text("${names[index]}", style: level2softdp,),
-                  subtitle: Text("${contacts[index]}", style: level2softdp,),
-                  trailing: IconButton(icon: Icon(FontAwesomeIcons.phoneAlt, color: softGreen,), onPressed: (){
-                    launch("tel://${contacts[index]}");
-
-                  }),
-                );
-              },
-            ),
+            itemCount: names.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                title: Text(
+                  "${names[index]}",
+                  style: level2softdp,
+                ),
+                subtitle: Text(
+                  "${contacts[index]}",
+                  style: level2softdp,
+                ),
+                trailing: IconButton(
+                    icon: Icon(
+                      FontAwesomeIcons.phoneAlt,
+                      color: softGreen,
+                    ),
+                    onPressed: () {
+                      launch("tel://${contacts[index]}");
+                    }),
+              );
+            },
+          ),
         ],
       ),
     );

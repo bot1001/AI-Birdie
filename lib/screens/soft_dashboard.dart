@@ -45,7 +45,7 @@ class _SoftDashboardState extends State<SoftDashboard>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomInset: false,        
+      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Color(0xfffafafa),
         elevation: 0.0,
@@ -69,126 +69,130 @@ class _SoftDashboardState extends State<SoftDashboard>
       ),
       key: _scaffoldKey,
       drawer: Drawer(
-      child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-      children: <Widget>[
-        UserAccountsDrawerHeader(
-          decoration: BoxDecoration(),
-          accountEmail: Text(
-            "email@xyz.com",
-            style: level2softdp,
-          ),
-          accountName: Text(
-            "Jane Doe",
-            style: level1dp,
-          ),
-          currentAccountPicture: CircleAvatar(
-            backgroundColor: Colors.white,
-            child: Icon(Icons.account_circle, size: 70, color: darkPurple),
-          ),
-        ),
-
-        // Row(
-
-        //   children: <Widget>[
-        //     SizedBox(width: 15,),
-        //     Text("OTHER", style: level1dp.copyWith(fontWeight: FontWeight.bold),),
-        //   ],
-        // ),
-        ListTile(
-          leading: Icon(
-            Icons.info_outline,
-            color: darkPurple,
-          ),
-          title: Text(
-            "About AI-Birdie",
-            style: level2softdp,
-          ),
-          onTap: (() => Alert(
-        context: context,
-        
-        type: AlertType.info,
-        style: AlertStyle(
-            animationDuration: Duration(milliseconds: 500),
-            animationType: AnimationType.grow,
-            descStyle: level2softdp,
-            titleStyle: level1dp.copyWith(fontSize: 25)),
-        title: "AI Birdie",
-
-        desc:
-            "A mobile app for image and audio classification of birds.\n\nLEVERAGING THE POWER OF AI TO DEMOCRATIZE ORNITHOLOGY\n\n1.\t\tFor visual identification, our objective is to develop algorithms for:\nA.\tBird Detection in images\nB.\tBird Identification from images\n\n2.\t\tFor acoustic identification, our objective is to develop algorithms for:\nA.\tBird Detection in audio clip\nB.\tSpecies Identification in audio clip",
-        buttons: [
-          DialogButton(
-            child: Text(
-              "OK",
-              style: level1w,
+          child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              decoration: BoxDecoration(),
+              accountEmail: Text(
+                "email@xyz.com",
+                style: level2softdp,
+              ),
+              accountName: Text(
+                "Jane Doe",
+                style: level1dp,
+              ),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor: Colors.white,
+                child: Icon(Icons.account_circle, size: 70, color: darkPurple),
+              ),
             ),
-            color: softGreen,
-            onPressed: () => Navigator.pop(context),
-            width: 120,
-          )
-        ],
-      ).show()),
-        ),
-        ListTile(
-          leading: Icon(
-            // Icons.share,
-            FontAwesomeIcons.shareSquare,
-            color: darkPurple,
-          ),
-          title: Text(
-            "Tell a friend",
-            style: level2softdp,
-          ),
-          onTap: (() => Share.share(
-      "Hey! Check out this amazing app. It is called AI Birdie.")),
-        ),
-        ListTile(
-          leading: Icon(
-            Icons.mail_outline,
-            color: darkPurple,
-          ),
-          title: Text(
-            "Send us feedback",
-            style: level2softdp,
-          ),
-          onTap: () async {
-            final Email email = Email(
-      body: 'Write your feedback here.',
-      subject: 'Feedback for AI Birdie app',
-      recipients: ['jsonani98@gmail.com'],
-      isHTML: false,
-            );
 
-            await FlutterEmailSender.send(email);
-          },
-        ),
-        ListTile(
-          // enabled: true,
-          leading: Icon(
-              Icons.healing,
-              color: darkPurple,
+            // Row(
+
+            //   children: <Widget>[
+            //     SizedBox(width: 15,),
+            //     Text("OTHER", style: level1dp.copyWith(fontWeight: FontWeight.bold),),
+            //   ],
+            // ),
+            ListTile(
+              leading: Icon(
+                Icons.info_outline,
+                color: darkPurple,
+              ),
+              title: Text(
+                "About AI-Birdie",
+                style: level2softdp,
+              ),
+              onTap: (() => Alert(
+                    context: context,
+                    type: AlertType.info,
+                    style: AlertStyle(
+                        animationDuration: Duration(milliseconds: 500),
+                        animationType: AnimationType.grow,
+                        descStyle: level2softdp,
+                        titleStyle: level1dp.copyWith(fontSize: 25)),
+                    title: "AI Birdie",
+                    desc:
+                        "A mobile app for image and audio classification of birds.\n\nLEVERAGING THE POWER OF AI TO DEMOCRATIZE ORNITHOLOGY\n\n1.\t\tFor visual identification, our objective is to develop algorithms for:\nA.\tBird Detection in images\nB.\tBird Identification from images\n\n2.\t\tFor acoustic identification, our objective is to develop algorithms for:\nA.\tBird Detection in audio clip\nB.\tSpecies Identification in audio clip",
+                    buttons: [
+                      DialogButton(
+                        child: Text(
+                          "OK",
+                          style: level1w,
+                        ),
+                        color: softGreen,
+                        onPressed: () => Navigator.pop(context),
+                        width: 120,
+                      )
+                    ],
+                  ).show()),
             ),
-          title: Text(
-            "Veterinary Services",
-            style: level2softdp,
-          ),
-          onTap: () {
-            Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => VServices()),
-            );
-          },
-        ),
+            ListTile(
+              leading: Icon(
+                // Icons.share,
+                FontAwesomeIcons.shareSquare,
+                color: darkPurple,
+              ),
+              title: Text(
+                "Tell a friend",
+                style: level2softdp,
+              ),
+              onTap: (() => Share.share(
+                  "Hey! Check out this amazing app. It is called AI Birdie.")),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.mail_outline,
+                color: darkPurple,
+              ),
+              title: Text(
+                "Send us feedback",
+                style: level2softdp,
+              ),
+              onTap: () async {
+                final Email email = Email(
+                  body: 'Write your feedback here.',
+                  subject: 'Feedback for AI Birdie app',
+                  recipients: ['jsonani98@gmail.com'],
+                  isHTML: false,
+                );
+
+                await FlutterEmailSender.send(email);
+              },
+            ),
+            ListTile(
+              // enabled: true,
+              leading: Icon(
+                Icons.healing,
+                color: darkPurple,
+              ),
+              title: Text(
+                "Veterinary Services",
+                style: level2softdp,
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => VServices()),
+                );
+              },
+            ),
             ListTile(
               // enabled: false,
 
-              leading: Icon(Icons.settings, color: darkPurple,),
-              title: Text("Settings", style: level2softdp,),
+              leading: Icon(
+                Icons.settings,
+                color: darkPurple,
+              ),
+              title: Text(
+                "Settings",
+                style: level2softdp,
+              ),
             ),
-      ],
-            ),
-          )),
+          ],
+        ),
+      )),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -213,8 +217,6 @@ class _SoftDashboardState extends State<SoftDashboard>
             ],
             // color: darkPurple,
           ),
-
-
           child: BottomNavigationBar(
             backgroundColor: darkPurple,
             selectedItemColor: softGreen,
@@ -240,8 +242,8 @@ class _SoftDashboardState extends State<SoftDashboard>
                 title: Text("Notes"),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
-                title: Text("Settings"),
+                icon: Icon(Icons.playlist_add_check),
+                title: Text("Wishlist"),
               ),
             ],
           )),

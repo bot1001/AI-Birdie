@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 class CS extends StatefulWidget {
   final List<CameraDescription> cameras;
   CS(this.cameras);
@@ -76,7 +75,8 @@ class _CSState extends State<CS> {
                           children: <Widget>[
                             Text(
                               "AI Birdie",
-                              style: level1w.copyWith(fontSize: 20),
+                              style: level2softw.copyWith(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             IconButton(
                               icon: Icon(
@@ -142,7 +142,9 @@ class _CSState extends State<CS> {
                                 ),
                               ),
                               onTap: () {
-                                AssetsAudioPlayer.playAndForget(Audio('images/camera_click.ogg'), volume: 0.5);
+                                AssetsAudioPlayer.playAndForget(
+                                    Audio('images/camera_click.ogg'),
+                                    volume: 0.5);
                                 setState(() {
                                   animatedHeight = 90;
                                   animatedMargin = 0;
@@ -158,14 +160,12 @@ class _CSState extends State<CS> {
                                 Column(
                                   children: <Widget>[
                                     IconButton(
-                                      onPressed: (){
-
-                                       LandingPage.controller
-                                          .animateToPage(0,
-                                              duration:
-                                                  Duration(milliseconds: 300),
-                                              curve: Curves.easeInOut);
-                                              // controller.dispose();
+                                      onPressed: () {
+                                        LandingPage.controller.animateToPage(0,
+                                            duration:
+                                                Duration(milliseconds: 300),
+                                            curve: Curves.easeInOut);
+                                        // controller.dispose();
                                       },
                                       icon: Icon(
                                         Icons.dashboard,
@@ -175,10 +175,9 @@ class _CSState extends State<CS> {
                                     ),
                                     Text(
                                       "Dashboard",
-                                      style: level1.copyWith(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13),
+                                      style: level2softw.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     )
                                   ],
                                 ),
@@ -200,10 +199,9 @@ class _CSState extends State<CS> {
                                     ),
                                     Text(
                                       "Audio",
-                                      style: level1.copyWith(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13),
+                                      style: level2softw.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -273,13 +271,14 @@ class _CSState extends State<CS> {
       // onChange: (size) => setState(() => sca = MediaQuery.of(context).size.height / size.longestSide),
 
       child: ClipRect(
-              child: Transform.scale(
-          scale: MediaQuery.of(context).size.aspectRatio <= (9 / 16) ? 1.26 : sca,
+        child: Transform.scale(
+          scale:
+              MediaQuery.of(context).size.aspectRatio <= (9 / 16) ? 1.26 : sca,
           child: Center(
-              child: AspectRatio(
-                  aspectRatio: controller.value.aspectRatio,
-                  child: CameraPreview(controller)),
-            ),
+            child: AspectRatio(
+                aspectRatio: controller.value.aspectRatio,
+                child: CameraPreview(controller)),
+          ),
         ),
       ),
     );
@@ -312,6 +311,7 @@ class _CSState extends State<CS> {
 
 //Measure size for responsive camera screen
 typedef void OnWidgetSizeChange(Size size);
+
 class MeasureSize extends StatefulWidget {
   final Widget child;
   final OnWidgetSizeChange onChange;
