@@ -1,3 +1,4 @@
+import 'package:aibirdie/components/dimissed_background.dart';
 import 'package:aibirdie/components/storage_1.dart';
 import 'package:aibirdie/constants.dart';
 import 'package:flutter/material.dart';
@@ -156,9 +157,11 @@ class _MyNotesState extends State<MyNotes> {
                       borderRadius: BorderRadius.circular(15.00),
                     ),
                     child: Dismissible(
-                                          key: Key('$index'),
-
-                                          child: ListTile(
+                      direction: DismissDirection.startToEnd,
+                      background: dismissedBackground(),
+                      onDismissed: ((dismissDirection) => deleteNoteAt(index)),
+                      key: UniqueKey(),
+                      child: ListTile(
                         leading: Text("${index + 1}"),
                         title: Text(_notes[index]),
                         trailing: IconButton(
@@ -166,20 +169,7 @@ class _MyNotesState extends State<MyNotes> {
                             Icons.delete,
                             color: Colors.red,
                           ),
-                          onPressed: () async {
-                            _notes.removeAt(index);
-                            String temp = "";
-                            for (var everyNote in _notes)
-                              temp = temp + everyNote + "\n";
-                            await clearFile();
-                            await appendContent(temp);
-                            var value = await readContentsByLine();
-                            setState(() => _notes = value);
-                            if (_notes.length == 0) {
-                              print("All notes deleted");
-                              setState(() => noNotes = true);
-                            }
-                          },
+                          onPressed: (() => deleteNoteAt(index)),
                         ),
                       ),
                     ),
@@ -188,6 +178,20 @@ class _MyNotesState extends State<MyNotes> {
               ),
       ],
     );
+  }
+
+  Future<void> deleteNoteAt(int index) async {
+    _notes.removeAt(index);
+    String temp = "";
+    for (var everyNote in _notes) temp = temp + everyNote + "\n";
+    await clearFile();
+    await appendContent(temp);
+    var value = await readContentsByLine();
+    setState(() => _notes = value);
+    if (_notes.length == 0) {
+      print("All notes deleted");
+      setState(() => noNotes = true);
+    }
   }
 
   Widget noNotesWidget() {

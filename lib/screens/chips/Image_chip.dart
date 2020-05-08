@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:aibirdie/components/dimissed_background.dart';
 import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/screens/chips/image_full.dart';
 import 'package:flutter/material.dart';
@@ -31,9 +32,9 @@ class _ImageChipState extends State<ImageChip> {
     setState(() {});
   }
 
-  void deleteImage(index) {
+  Future<void> deleteImage(index) async {
     File f = images[index];
-    f.delete();
+    await f.delete();
     readImages();
   }
 
@@ -127,53 +128,60 @@ class _ImageChipState extends State<ImageChip> {
                   ],
                   borderRadius: BorderRadius.circular(15.00),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  fullscreenDialog: false,
-                                  builder: (context) {
-                                    return ImageFull(
-                                      inp: images[index],
-                                    );
-                                  }),
-                            );
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Material(
-                              elevation: 5.0,
-                              // color: Colors.transparent,
-                              borderRadius: BorderRadius.circular(100),
-                              child: Hero(
-                                tag: '${images[index].path}',
-                                child: CircleAvatar(
-                                  radius: 28,
-                                  backgroundImage: FileImage(images[index]),
-                                  backgroundColor: Colors.transparent,
+                child: Dismissible(
+                  key: UniqueKey(),
+                  background: dismissedBackground(),
+                  onDismissed: (a) {
+                    deleteImage(index);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    fullscreenDialog: false,
+                                    builder: (context) {
+                                      return ImageFull(
+                                        inp: images[index],
+                                      );
+                                    }),
+                              );
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Material(
+                                elevation: 5.0,
+                                // color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(100),
+                                child: Hero(
+                                  tag: '${images[index].path}',
+                                  child: CircleAvatar(
+                                    radius: 28,
+                                    backgroundImage: FileImage(images[index]),
+                                    backgroundColor: Colors.transparent,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        titleWidget(images[index]),
-                      ],
-                    ),
-                    IconButton(
-                        icon: Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                        ),
-                        onPressed: () {
-                          deleteImage(index);
-                        }),
-                  ],
+                          titleWidget(images[index]),
+                        ],
+                      ),
+                      IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ),
+                          onPressed: () {
+                            deleteImage(index);
+                          }),
+                    ],
+                  ),
                 ),
                 // ),
               );

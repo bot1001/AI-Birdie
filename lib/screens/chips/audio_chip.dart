@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 // import 'package:aibirdie/constants.dart';
+import 'package:aibirdie/components/dimissed_background.dart';
 import 'package:aibirdie/constants.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +92,7 @@ class _AudioChipState extends State<AudioChip>
                 child: Dismissible(
                   
 
-                  background: dismissedBackground(index),
+                  background: dismissedBackground(),
                   key: Key(audios[index].path),
                   direction: DismissDirection.startToEnd,
                   onDismissed: (dismissDirection) {
@@ -221,31 +222,7 @@ class _AudioChipState extends State<AudioChip>
           );
   }
 
-  Widget dismissedBackground(index) {
-    return Expanded(
-          child: Container(
-        // height: 100,
-        // margin: EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.red,
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(-6.00, -6.00),
-              color: Color(0xffffffff).withOpacity(0.80),
-              blurRadius: 10,
-            ),
-            BoxShadow(
-              offset: Offset(6.00, 6.00),
-              color: Color(0xff000000).withOpacity(0.20),
-              blurRadius: 10,
-            ),
-          ],
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Center(child: Text("Deleted", style: level2softw,),),
-      ),
-    );
-  }
+  
 
   Widget dancingBars() {
     if (4 <= 4) {}
