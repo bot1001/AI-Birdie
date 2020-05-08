@@ -35,8 +35,12 @@ class _AudioChipState extends State<AudioChip>
   @override
   void dispose() {
     audioPlayer.stop();
+    rotationController.dispose();
     super.dispose();
   }
+
+
+  
 
   Future<void> readAudios() async {
     Directory audDir = Directory('/storage/emulated/0/AiBirdie/Audios');
@@ -114,7 +118,12 @@ class _AudioChipState extends State<AudioChip>
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(100)),
-                                    onPressed: (() => playAudio(index)),
+                                    onPressed: (){
+                                      rotationController.stop();
+                                      playAudio(index);
+
+                                    },
+
                                     child: Icon(
                                       Icons.music_note,
                                       // FontAwesomeIcons.stop,
@@ -131,7 +140,12 @@ class _AudioChipState extends State<AudioChip>
                                 color: softGreen,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(100)),
-                                onPressed: (() => playAudio(index)),
+                                onPressed: (){
+                                      rotationController.repeat();
+
+                                playAudio(index);
+
+                                },
                                 child: Icon(
                                   FontAwesomeIcons.play,
 
@@ -247,7 +261,6 @@ class _AudioChipState extends State<AudioChip>
   }
 
   void playAudio(int index) {
-    rotationController.repeat();
 
     //This is very complicated method, do not even try to understand it..
     //Even if I look back at this afterwhile, I won't get it 😂😂😂
@@ -266,7 +279,6 @@ class _AudioChipState extends State<AudioChip>
     if (isPlaying[index] == true) {
       audioPlayer.stop();
       setState(() => isPlaying[index] = false);
-      // rotationController.stop();
     } else {
       setState(() => isPlaying[index] = true);
       audioPlayer.onAudioPositionChanged.listen((a) =>
@@ -278,7 +290,6 @@ class _AudioChipState extends State<AudioChip>
     }
     audioPlayer.onPlayerCompletion
         .listen((event) => setState(() => isPlaying[index] = false));
-    // rotationController.stop();
   }
 
   Widget noRecordingWidget(BuildContext context) {

@@ -36,6 +36,8 @@ class _AudioIdentifyState extends State<AudioIdentify> {
 
           if (file.path.substring(file.path.length - 4) == ".wav") {
             Navigator.of(context).pop();
+            Navigator.of(context).pop();
+            print("object");
           }
 
           return new Future(() => true);
