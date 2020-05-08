@@ -17,6 +17,15 @@ class _DashState extends State<Dash> with SingleTickerProviderStateMixin {
     "Images you have captured",
     "Audio clips recorded"
   ];
+  var dynamicIcon = [
+    Image.asset('images/dash.png', width: 80,),
+    Image.asset('images/dash.png', width: 80,),
+    Image.asset('images/dash.png', width: 80,),
+    
+    // Icon(Icons.view_quilt, size: 30,),
+    // Icon(Icons.audiotrack, size: 30,),
+    
+  ];
 
   final _pages = [
     OverviewChip(),
@@ -43,14 +52,22 @@ class _DashState extends State<Dash> with SingleTickerProviderStateMixin {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.symmetric(vertical: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            
             children: <Widget>[
-              Text(
-                "Dashboard",
-                style: TextStyle(fontSize: 35, fontFamily: 'OS_semi_bold'),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Dashboard",
+                    style: TextStyle(fontSize: 35, fontFamily: 'OS_semi_bold'),
+                  ),
+                  Text(_lines[_currentIndex], style: level2softdp),
+                ],
               ),
-              Text(_lines[_currentIndex], style: level2softdp),
+              dynamicIcon[_currentIndex],
             ],
           ),
         ),
@@ -82,10 +99,6 @@ class _DashState extends State<Dash> with SingleTickerProviderStateMixin {
               ),
             ],
           ),
-
-
-
-
         ),
         SizedBox(
           height: 30,
@@ -94,4 +107,6 @@ class _DashState extends State<Dash> with SingleTickerProviderStateMixin {
       ],
     );
   }
+
+  
 }
