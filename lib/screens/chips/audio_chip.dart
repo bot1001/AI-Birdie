@@ -39,9 +39,6 @@ class _AudioChipState extends State<AudioChip>
     super.dispose();
   }
 
-
-  
-
   Future<void> readAudios() async {
     Directory audDir = Directory('/storage/emulated/0/AiBirdie/Audios');
     var temp = audDir.list();
@@ -66,39 +63,44 @@ class _AudioChipState extends State<AudioChip>
             physics: NeverScrollableScrollPhysics(),
             itemCount: audios.length,
             itemBuilder: (BuildContext context, int index) {
-              return Dismissible(
-                key: Key(audios[index].path),
-                onDismissed: (a) {
-                  deleteAudio(index);
-                  if (isPlaying[index] == true) {
-                    audioPlayer.stop();
-                  }
-                },
-                child: AnimatedContainer(
-                  padding: EdgeInsets.symmetric(
-                    vertical: isPlaying[index] == true ? 20 : 0,
-                  ),
-                  duration: Duration(milliseconds: 300),
-                  margin: EdgeInsets.only(bottom: 15),
-                  decoration: BoxDecoration(
-                    color: isPlaying[index] == true
-                        ? Color(0xff1c1c1e)
-                        // Color(0xff242424)
-                        : Color(0xfff5f5f5),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(-6.00, -6.00),
-                        color: Color(0xffffffff).withOpacity(0.80),
-                        blurRadius: 10,
-                      ),
-                      BoxShadow(
-                        offset: Offset(6.00, 6.00),
-                        color: Color(0xff000000).withOpacity(0.20),
-                        blurRadius: 10,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(15),
-                  ),
+              return AnimatedContainer(
+                padding: EdgeInsets.symmetric(
+                  vertical: isPlaying[index] == true ? 20 : 0,
+                ),
+                duration: Duration(milliseconds: 300),
+                margin: EdgeInsets.only(bottom: 15),
+                decoration: BoxDecoration(
+                  color: isPlaying[index] == true
+                      ? Color(0xff1c1c1e)
+                      // Color(0xff242424)
+                      : Color(0xfff5f5f5),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(-6.00, -6.00),
+                      color: Color(0xffffffff).withOpacity(0.80),
+                      blurRadius: 10,
+                    ),
+                    BoxShadow(
+                      offset: Offset(6.00, 6.00),
+                      color: Color(0xff000000).withOpacity(0.20),
+                      blurRadius: 10,
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Dismissible(
+                  
+
+                  background: dismissedBackground(index),
+                  key: Key(audios[index].path),
+                  direction: DismissDirection.startToEnd,
+                  onDismissed: (dismissDirection) {
+                    deleteAudio(index);
+
+                    if (isPlaying[index] == true) {
+                      audioPlayer.stop();
+                    }
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -118,12 +120,10 @@ class _AudioChipState extends State<AudioChip>
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(100)),
-                                    onPressed: (){
+                                    onPressed: () {
                                       rotationController.stop();
                                       playAudio(index);
-
                                     },
-
                                     child: Icon(
                                       Icons.music_note,
                                       // FontAwesomeIcons.stop,
@@ -140,11 +140,10 @@ class _AudioChipState extends State<AudioChip>
                                 color: softGreen,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(100)),
-                                onPressed: (){
-                                      rotationController.repeat();
+                                onPressed: () {
+                                  rotationController.repeat();
 
-                                playAudio(index);
-
+                                  playAudio(index);
                                 },
                                 child: Icon(
                                   FontAwesomeIcons.play,
@@ -168,16 +167,15 @@ class _AudioChipState extends State<AudioChip>
                                 value: isPlaying[index] ? seekPosition : 0,
                                 min: 0,
                                 max: audioDuration,
-                                // divisions: 4,
-                                onChanged: (value) {
-                                  setState(() {
-                                    seekPosition = value;
-                                  });
-                                },
-
+                                onChanged: ((value) {
+                                  if (isPlaying[index])
+                                    setState(() => seekPosition = value);
+                                }),
                                 onChangeEnd: (value) {
-                                  audioPlayer
-                                      .seek(Duration(seconds: value.toInt()));
+                                  if (isPlaying[index]) {
+                                    audioPlayer
+                                        .seek(Duration(seconds: value.toInt()));
+                                  }
                                 },
                               ),
                               isPlaying[index]
@@ -223,6 +221,32 @@ class _AudioChipState extends State<AudioChip>
           );
   }
 
+  Widget dismissedBackground(index) {
+    return Expanded(
+          child: Container(
+        // height: 100,
+        // margin: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.red,
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(-6.00, -6.00),
+              color: Color(0xffffffff).withOpacity(0.80),
+              blurRadius: 10,
+            ),
+            BoxShadow(
+              offset: Offset(6.00, 6.00),
+              color: Color(0xff000000).withOpacity(0.20),
+              blurRadius: 10,
+            ),
+          ],
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Center(child: Text("Deleted", style: level2softw,),),
+      ),
+    );
+  }
+
   Widget dancingBars() {
     if (4 <= 4) {}
     return Row(crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
@@ -261,7 +285,6 @@ class _AudioChipState extends State<AudioChip>
   }
 
   void playAudio(int index) {
-
     //This is very complicated method, do not even try to understand it..
     //Even if I look back at this afterwhile, I won't get it 😂😂😂
 

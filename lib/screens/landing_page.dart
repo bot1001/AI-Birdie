@@ -39,10 +39,13 @@ class _LandingPageState extends State<LandingPage> {
       Directory aibirdie = Directory('/storage/emulated/0/AiBirdie');
   Directory imageDir = Directory('/storage/emulated/0/AiBirdie/Images');
   Directory audioDir = Directory('/storage/emulated/0/AiBirdie/Audios');
+  Directory notesDir = Directory('/storage/emulated/0/AiBirdie/Notes');
+  
 
   aibirdie.create();
   imageDir.create();
   audioDir.create();
+  notesDir.create();
   }
 
   @override

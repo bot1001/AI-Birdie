@@ -10,24 +10,29 @@ class OverviewChip extends StatefulWidget {
 class _OverviewChipState extends State<OverviewChip> {
   int imagesCaptured = 0;
   int audioRecorded = 0;
+  int notesSaved = 0;
 
   @override
   void initState() {
     super.initState();
-    setBirdCount();
+    setAllCount();
   }
 
-  Future<void> setBirdCount() async {
+  Future<void> setAllCount() async {
     Directory imgDir = Directory('/storage/emulated/0/AiBirdie/Images');
     var temp = imgDir.list();
     var images = await temp.toList();
     Directory audDir = Directory('/storage/emulated/0/AiBirdie/Audios');
     var temp2 = audDir.list();
     var audios = await temp2.toList();
+    File noteFile = File('/storage/emulated/0/AiBirdie/Notes/notes.txt');
+    var allNotes = await noteFile.readAsLines();
+
 
     setState(() {
       imagesCaptured = images.length;
       audioRecorded = audios.length;
+      notesSaved = allNotes.length;
     });
   }
 
@@ -233,7 +238,7 @@ class _OverviewChipState extends State<OverviewChip> {
                         ],
                       ),
                       Text(
-                        "3",
+                        "$notesSaved",
                         style: level2softg.copyWith(
                             fontSize: 40, fontWeight: FontWeight.w900),
                       ),

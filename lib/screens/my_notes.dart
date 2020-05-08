@@ -16,28 +16,23 @@ class _MyNotesState extends State<MyNotes> {
   @override
   void initState() {
     super.initState();
-    // clearFile();
+    readFile();
+  }
 
-    readContentsByLine().then((value) {
-      setState(() {
-        if (value.length == 0) {
-          noNotes = true;
-        }
-        // if (value[0] == "Exception") {
-        //   _notes = [];
-        else {
-          _notes = value;
-          noNotes = false;
-        }
-      });
+  void readFile() async {
+    var value = await readContentsByLine();
+    setState(() {
+      if (value.length == 0) {
+        noNotes = true;
+      } else {
+        _notes = value;
+        noNotes = false;
+      }
     });
   }
 
-  // int _notesCount;
-
   @override
   Widget build(BuildContext context) {
-    // Animation<Offset> custom = Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset(0.0, 0.0)).animate(animation);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -52,7 +47,6 @@ class _MyNotesState extends State<MyNotes> {
                 children: <Widget>[
                   Text(
                     "My Notes",
-                    // "$noNotes",
                     style: TextStyle(fontSize: 35, fontFamily: 'OS_semi_bold'),
                   ),
                   Text("Save your notes here", style: level2softdp),
@@ -104,13 +98,12 @@ class _MyNotesState extends State<MyNotes> {
                                 RaisedButton(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
-                                  onPressed: () {
-                                    appendContent("$_textInput\n");
-                                    readContentsByLine().then((value) {
-                                      setState(() {
-                                        _notes = value;
-                                        noNotes = false;
-                                      });
+                                  onPressed: () async {
+                                    await appendContent("$_textInput\n");
+                                    var value = await readContentsByLine();
+                                    setState(() {
+                                      _notes = value;
+                                      noNotes = false;
                                     });
                                     Navigator.of(context).pop();
                                   },
@@ -139,34 +132,33 @@ class _MyNotesState extends State<MyNotes> {
         ),
         noNotes == true
             ? noNotesWidget()
-            : Container(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: _notes.length,
-                  // initialItemCount: _notes.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      margin: EdgeInsets.only(bottom: 15),
-                      // height: 300,
-                      decoration: BoxDecoration(
-                        color: Color(0xfff5f5f5),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(-6.00, -6.00),
-                            color: Color(0xffffffff).withOpacity(0.80),
-                            blurRadius: 10,
-                          ),
-                          BoxShadow(
-                            offset: Offset(6.00, 6.00),
-                            color: Color(0xff000000).withOpacity(0.20),
-                            blurRadius: 10,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(15.00),
-                      ),
+            : ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: _notes.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    decoration: BoxDecoration(
+                      color: Color(0xfff5f5f5),
+                      boxShadow: [
+                        BoxShadow(
+                          offset: Offset(-6.00, -6.00),
+                          color: Color(0xffffffff).withOpacity(0.80),
+                          blurRadius: 10,
+                        ),
+                        BoxShadow(
+                          offset: Offset(6.00, 6.00),
+                          color: Color(0xff000000).withOpacity(0.20),
+                          blurRadius: 10,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(15.00),
+                    ),
+                    child: Dismissible(
+                                          key: Key('$index'),
 
-                      child: ListTile(
+                                          child: ListTile(
                         leading: Text("${index + 1}"),
                         title: Text(_notes[index]),
                         trailing: IconButton(
@@ -177,30 +169,22 @@ class _MyNotesState extends State<MyNotes> {
                           onPressed: () async {
                             _notes.removeAt(index);
                             String temp = "";
-                            for (var everyNote in _notes) {
+                            for (var everyNote in _notes)
                               temp = temp + everyNote + "\n";
+                            await clearFile();
+                            await appendContent(temp);
+                            var value = await readContentsByLine();
+                            setState(() => _notes = value);
+                            if (_notes.length == 0) {
+                              print("All notes deleted");
+                              setState(() => noNotes = true);
                             }
-                            clearFile();
-                            appendContent(temp);
-
-                            readContentsByLine().then((value) {
-                              setState(() {
-                                _notes = value;
-                              });
-                              if (_notes.length == 0) {
-                                print("All notes deleted");
-                                setState(() {
-                                  noNotes = true;
-                                });
-                              }
-
-                            });
                           },
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
       ],
     );
