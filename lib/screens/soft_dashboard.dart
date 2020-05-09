@@ -1,7 +1,7 @@
 import 'package:aibirdie/constants.dart';
+import 'package:aibirdie/screens/checklist.dart';
 import 'package:aibirdie/screens/dash.dart';
 import 'package:aibirdie/screens/my_notes.dart';
-import 'package:aibirdie/screens/settings.dart';
 import 'package:aibirdie/screens/v_services.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +39,7 @@ class _SoftDashboardState extends State<SoftDashboard>
   final _pages = [
     Dash(),
     MyNotes(),
-    Settings(),
+    CheckList(),
   ];
 
   @override

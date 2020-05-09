@@ -67,7 +67,7 @@ class _DashState extends State<Dash> with SingleTickerProviderStateMixin {
                   Text(_lines[_currentIndex], style: level2softdp),
                 ],
               ),
-              dynamicIcon[_currentIndex],
+              // dynamicIcon[_currentIndex],
             ],
           ),
         ),

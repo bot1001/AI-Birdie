@@ -31,21 +31,23 @@ class _LandingPageState extends State<LandingPage> {
     AudioClassification(),
   ];
 
-
   @override
   void initState() {
     super.initState();
+    createDirectories();
+  }
 
-      Directory aibirdie = Directory('/storage/emulated/0/AiBirdie');
-  Directory imageDir = Directory('/storage/emulated/0/AiBirdie/Images');
-  Directory audioDir = Directory('/storage/emulated/0/AiBirdie/Audios');
-  Directory notesDir = Directory('/storage/emulated/0/AiBirdie/Notes');
-  
-
-  aibirdie.create();
-  imageDir.create();
-  audioDir.create();
-  notesDir.create();
+  void createDirectories() async {
+    Directory aibirdie = Directory('/storage/emulated/0/AiBirdie');
+    Directory imageDir = Directory('/storage/emulated/0/AiBirdie/Images');
+    Directory audioDir = Directory('/storage/emulated/0/AiBirdie/Audios');
+    Directory notesDir = Directory('/storage/emulated/0/AiBirdie/Notes');
+    File notesFile = File('/storage/emulated/0/AiBirdie/Notes/notes.txt');
+    await aibirdie.create();
+    await imageDir.create();
+    await audioDir.create();
+    await notesDir.create();
+    await notesFile.writeAsString('');
   }
 
   @override
@@ -54,15 +56,12 @@ class _LandingPageState extends State<LandingPage> {
       onWillPop: _willPopCallback,
       child: Scaffold(
         body: PageView.builder(
-
           dragStartBehavior: DragStartBehavior.down,
           controller: LandingPage.controller,
           itemCount: _pages.length,
-          itemBuilder: (BuildContext context, int index){
-
-          return _pages[index];
+          itemBuilder: (BuildContext context, int index) {
+            return _pages[index];
           },
-
           onPageChanged: ((index) => setState(() => _currentPage = index)),
         ),
       ),
@@ -76,7 +75,7 @@ class _LandingPageState extends State<LandingPage> {
     else
       LandingPage.controller.animateToPage(1,
           duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-      
+
     return false;
   }
 }

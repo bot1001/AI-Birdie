@@ -10,13 +10,14 @@ List<CameraDescription> cameras;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
-  [
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await [
     Permission.storage,
     Permission.camera,
     Permission.microphone,
   ].request();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(MyApp());
+      runApp(MyApp());
+  
 }
 
 class MyApp extends StatelessWidget {

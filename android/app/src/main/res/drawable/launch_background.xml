@@ -8,9 +8,8 @@
 
     <item>
     <bitmap
-        android:gravity="fill"
-        android:src="@drawable/icimage" />
-       
+        android:src="@drawable/icimage"/>
+
 
     </item>
 </layer-list>
