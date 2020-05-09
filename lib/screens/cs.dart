@@ -1,8 +1,10 @@
 import 'dart:io';
-import 'package:aibirdie/components/storage.dart';
+// import 'package:aibirdie/components/storage.dart';
 import 'package:aibirdie/constants.dart';
+import 'package:aibirdie/screens/image_result.dart';
+// import 'package:aibirdie/screens/img_classification.dart';
 import 'package:aibirdie/screens/landing_page.dart';
-import 'package:aibirdie/screens/preview_page.dart';
+// import 'package:aibirdie/screens/preview_page.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +46,6 @@ class _CSState extends State<CS> {
     controller?.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -94,8 +95,14 @@ class _CSState extends State<CS> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          PreviewPage(image, Storage()),
+                                          ImageResult(image),
                                     ),
+
+/*  original */
+                                    // MaterialPageRoute(
+                                    //   builder: (context) =>
+                                    //       PreviewPage(image, Storage()),
+                                    // ),
                                   );
                               },
                             )
@@ -294,9 +301,15 @@ class _CSState extends State<CS> {
 
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (context) => PreviewPage(File(path), Storage()),
+
+       MaterialPageRoute(
+          builder: (context) => ImageResult(File(path)),
         ),
+
+        /**original */
+        // MaterialPageRoute(
+        //   builder: (context) => PreviewPage(File(path), Storage()),
+        // ),
       );
       setState(() {
         animatedHeight = 80.0;

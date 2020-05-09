@@ -362,7 +362,7 @@ class _AudioChipState extends State<AudioChip>
     return Text(
       DateFormat("dd MMM, yyyy").format(f.lastModifiedSync()) +
           " " +
-          DateFormat("H:m").format(f.lastModifiedSync()),
+          DateFormat("H:mm").format(f.lastModifiedSync()),
       style: isPlaying[index] == true ? level2softw : level2softdp,
     );
   }

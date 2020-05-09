@@ -243,7 +243,7 @@ class _SoftDashboardState extends State<SoftDashboard>
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.playlist_add_check),
-                title: Text("Wishlist"),
+                title: Text("Checklist"),
               ),
             ],
           )),

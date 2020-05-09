@@ -189,7 +189,7 @@ class _OverviewChipState extends State<OverviewChip> {
                   ],
                 ),
                 Text(
-                  "73%",
+                  "84%",
                   style: level2softg.copyWith(
                       fontSize: 40, fontWeight: FontWeight.w900),
                 ),

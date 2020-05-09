@@ -4,7 +4,8 @@ import 'package:aibirdie/constants.dart';
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:aibirdie/components/buttons.dart';
-import 'package:flutter_timer/flutter_timer.dart';
+// import 'package:flutter_timer/flutter_timer.dart';
+import 'package:aibirdie/screens/audio_result.dart';
 
 File file;
 
@@ -17,7 +18,7 @@ class AudioIdentify extends StatefulWidget {
 }
 
 class _AudioIdentifyState extends State<AudioIdentify> {
-  bool isPlaying;
+  bool isPlaying = false;
   // IconData playIcon = Icons.play_arrow;
   AudioPlayer audioPlayer = AudioPlayer();
 
@@ -33,12 +34,21 @@ class _AudioIdentifyState extends State<AudioIdentify> {
               isPlaying = false;
             });
           }
-
-          if (file.path.substring(file.path.length - 4) == ".wav") {
+          if (file.path.substring(file.path.length - 5) == "e.wav") {
             Navigator.of(context).pop();
-            Navigator.of(context).pop();
-            print("object");
+            print(file.path.substring(file.path.length - 5));
           }
+          else if (file.path.substring(file.path.length - 4) == ".wav") {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          }
+
+
+/**original */
+          // if (file.path.substring(file.path.length - 4) == ".wav") {
+          //   Navigator.of(context).pop();
+          //   Navigator.of(context).pop();
+          // }
 
           return new Future(() => true);
         },
@@ -83,14 +93,18 @@ class _AudioIdentifyState extends State<AudioIdentify> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            TikTikTimer(
-                                backgroundColor: Colors.white,
-                                timerTextStyle:
-                                    level2softdp.copyWith(fontSize: 20),
-                                height: 50,
-                                width: 100,
-                                running: isPlaying,
-                                initialDate: DateTime.now()),
+                            // TikTikTimer(
+                            //     backgroundColor: Colors.white,
+                            //     timerTextStyle:
+                            //         level2softdp.copyWith(fontSize: 20),
+                            //     height: 50,
+                            //     width: 100,
+                            //     running: isPlaying,
+                            //     initialDate: DateTime.now()),
+                            Text(
+                              "Click to listen",
+                              style: level2softdp,
+                            ),
                             Icon(
                               isPlaying == true ? Icons.stop : Icons.play_arrow,
                               size: 40,
@@ -104,7 +118,19 @@ class _AudioIdentifyState extends State<AudioIdentify> {
                     SizedBox(
                       height: 20,
                     ),
-                    solidButton("Identify", () {})
+                    solidButton("Identify", () async {
+                      await audioPlayer.stop();
+                      setState(() {
+                        isPlaying = false;
+                      });
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AudioResult(file),
+                        ),
+                      );
+                    })
                   ],
                 ),
               ],

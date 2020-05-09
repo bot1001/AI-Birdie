@@ -163,7 +163,7 @@ class _MyNotesState extends State<MyNotes> {
                       key: UniqueKey(),
                       child: ListTile(
                         // leading: Text("${index + 1}"),
-                        title: Text(_notes[index]),
+                        title: Text(_notes[index], style: level2softdp,),
                         trailing: IconButton(
                           icon: Icon(
                             Icons.delete,
