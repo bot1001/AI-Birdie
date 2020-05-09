@@ -11,6 +11,7 @@ class _OverviewChipState extends State<OverviewChip> {
   int imagesCaptured = 0;
   int audioRecorded = 0;
   int notesSaved = 0;
+  int checkListCount = 0;
 
   @override
   void initState() {
@@ -27,12 +28,15 @@ class _OverviewChipState extends State<OverviewChip> {
     var audios = await temp2.toList();
     File noteFile = File('/storage/emulated/0/AiBirdie/Notes/notes.txt');
     var allNotes = await noteFile.readAsLines();
+    File checkListFile = File('/storage/emulated/0/AiBirdie/Notes/checklist.txt');
+    var checkList = await checkListFile.readAsLines();
 
 
     setState(() {
       imagesCaptured = images.length;
       audioRecorded = audios.length;
       notesSaved = allNotes.length;
+      checkListCount = checkList.length;
     });
   }
 
@@ -290,7 +294,7 @@ class _OverviewChipState extends State<OverviewChip> {
                         ],
                       ),
                       Text(
-                        "4",
+                        "$checkListCount",
                         style: level2softg.copyWith(
                             fontSize: 40, fontWeight: FontWeight.w900),
                       ),

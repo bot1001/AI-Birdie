@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:aibirdie/components/dimissed_background.dart';
 import 'package:aibirdie/components/storage_1.dart';
 import 'package:aibirdie/constants.dart';
@@ -11,6 +13,7 @@ class MyNotes extends StatefulWidget {
 
 class _MyNotesState extends State<MyNotes> {
   final controller = TextEditingController();
+  final notesFile = File('/storage/emulated/0/AiBirdie/Notes/notes.txt');
   var noNotes = true;
 
   var _notes = [];
@@ -18,11 +21,12 @@ class _MyNotesState extends State<MyNotes> {
   @override
   void initState() {
     super.initState();
-    readFile();
+    readNotesFile();
   }
 
-  void readFile() async {
-    var value = await readContentsByLine();
+  void readNotesFile() async {
+
+    var value = await readContentsByLine(notesFile);
     setState(() {
       if (value.length == 0) {
         noNotes = true;
@@ -99,8 +103,8 @@ class _MyNotesState extends State<MyNotes> {
               onSubmitted: (newText) async {
                 controller.clear();
                 if (newText.trim() != '') {
-                  await appendContent("${newText.trim()}\n");
-                  var value = await readContentsByLine();
+                  await appendContent(notesFile, "${newText.trim()}\n");
+                  var value = await readContentsByLine(notesFile);
                   setState(() {
                     _notes = value;
                     noNotes = false;
@@ -180,9 +184,9 @@ class _MyNotesState extends State<MyNotes> {
     _notes.removeAt(index);
     String temp = "";
     for (var everyNote in _notes) temp = temp + everyNote + "\n";
-    await clearFile();
-    await appendContent(temp);
-    var value = await readContentsByLine();
+    await clearFile(notesFile);
+    await appendContent(notesFile, temp);
+    var value = await readContentsByLine(notesFile);
     setState(() => _notes = value);
     if (_notes.length == 0) {
       print("All notes deleted");
