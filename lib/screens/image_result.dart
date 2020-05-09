@@ -45,8 +45,6 @@ class _ImageResultState extends State<ImageResult> {
     classifier = AiBirdieImageClassification(widget.serverIP);
     classifier.predict(widget.imageInputFile.path).then((value) {
       result = value;
-      // print('RRRRRR:  \n\n ${result.results}');
-
       var response = result.results;
       // print(a);
       setState(() {

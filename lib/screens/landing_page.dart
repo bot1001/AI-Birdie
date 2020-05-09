@@ -43,11 +43,11 @@ class _LandingPageState extends State<LandingPage> {
     Directory audioDir = Directory('/storage/emulated/0/AiBirdie/Audios');
     Directory notesDir = Directory('/storage/emulated/0/AiBirdie/Notes');
     File notesFile = File('/storage/emulated/0/AiBirdie/Notes/notes.txt');
-    await aibirdie.create();
-    await imageDir.create();
-    await audioDir.create();
-    await notesDir.create();
-    await notesFile.writeAsString('');
+    if (!await aibirdie.exists()) await aibirdie.create();
+    if (!await imageDir.exists()) await imageDir.create();
+    if (!await audioDir.exists()) await audioDir.create();
+    if (!await notesDir.exists()) await notesDir.create();
+    if (!await notesFile.exists()) await notesFile.writeAsString('');
   }
 
   @override

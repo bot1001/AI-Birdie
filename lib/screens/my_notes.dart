@@ -57,7 +57,6 @@ class _MyNotesState extends State<MyNotes> {
               Icon(
                 FontAwesomeIcons.edit,
                 size: 30,
-
               ),
             ],
           ),
@@ -81,12 +80,11 @@ class _MyNotesState extends State<MyNotes> {
             borderRadius: BorderRadius.circular(15.00),
           ),
           height: 60,
-          
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Center(
             child: TextField(
               controller: controller,
-              
+
               style: level2softw,
               cursorColor: darkPurple,
               decoration: InputDecoration(
@@ -100,12 +98,25 @@ class _MyNotesState extends State<MyNotes> {
               // onChanged: ((newText) => setState(() => _textInput = newText)),
               onSubmitted: (newText) async {
                 controller.clear();
-                await appendContent("$newText\n");
-                var value = await readContentsByLine();
-                setState(() {
-                  _notes = value;
-                  noNotes = false;
-                });
+                if (newText.trim() != '') {
+                  await appendContent("${newText.trim()}\n");
+                  var value = await readContentsByLine();
+                  setState(() {
+                    _notes = value;
+                    noNotes = false;
+                  });
+                } else {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    action: SnackBarAction(label: 'OK', onPressed: (){}),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    backgroundColor: darkPurple,
+                    behavior: SnackBarBehavior.floating,
+                      content: Text(
+                    'Empty note cannot be added to the list.',
+                    style: level2softw,
+                  )));
+                }
+
                 // Navigator.of(context).pop();
               },
             ),

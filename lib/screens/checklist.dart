@@ -1,5 +1,6 @@
 import 'package:aibirdie/constants.dart';
 import 'package:flutter/material.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CheckList extends StatefulWidget {
   @override
@@ -34,7 +35,7 @@ class _CheckListState extends State<CheckList> {
               FloatingActionButton(
                 
                 backgroundColor: softGreen,
-                // child: Icon(FontAwesomeIcons, color: darkPurple,),
+                child: Icon(Icons.add,),
                 onPressed: () {}),
             ],
           ),
