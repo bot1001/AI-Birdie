@@ -1,8 +1,8 @@
-import 'package:aibirdie/constants.dart';
-import 'package:aibirdie/screens/chips/Image_chip.dart';
-import 'package:aibirdie/screens/chips/audio_chip.dart';
-import 'package:aibirdie/screens/chips/overview_chip.dart';
 import 'package:flutter/material.dart';
+import 'package:aibirdie/constants.dart';
+import 'package:aibirdie/screens/Dashboard/chips/Image_chip.dart';
+import 'package:aibirdie/screens/Dashboard/chips/audio_chip.dart';
+import 'package:aibirdie/screens/Dashboard/chips/overview_chip.dart';
 
 class Dash extends StatefulWidget {
   @override

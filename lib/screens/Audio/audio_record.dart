@@ -1,12 +1,11 @@
 import 'dart:io';
-
-import 'package:aibirdie/components/buttons.dart';
-import 'package:aibirdie/constants.dart';
-import 'package:aibirdie/screens/audio_identify.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animation_set/widget/transition_animations.dart';
-import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
+import 'package:aibirdie/constants.dart';
+import 'package:aibirdie/components/buttons.dart';
 import 'package:flutter_timer/flutter_timer.dart';
+import 'package:aibirdie/screens/Audio/audio_identify.dart';
+import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
+import 'package:flutter_animation_set/widget/transition_animations.dart';
 
 class AudioRecord extends StatefulWidget {
   @override
@@ -27,7 +26,6 @@ class _AudioRecordState extends State<AudioRecord> {
   Future startRecording() async {
     final String filePath =
         '/storage/emulated/0/AiBirdie/Audios/${DateTime.now().millisecondsSinceEpoch.toString()}.wav';
-    print(filePath);
     recorder = FlutterAudioRecorder(filePath, audioFormat: AudioFormat.WAV);
 
     await FlutterAudioRecorder.hasPermissions;
@@ -89,9 +87,9 @@ class _AudioRecordState extends State<AudioRecord> {
                   timerTextStyle: level2softw.copyWith(fontSize: 60),
                   borderRadius: 100,
                   // isRaised: true,
-                  tracetime: (time) {
-                    print(time.getCurrentSecond);
-                  },
+                  // tracetime: (time) {
+                  //   print(time.getCurrentSecond);
+                  // },
                 ),
                 solidButton("End Recording", () async {
                   var result = await recorder.stop();

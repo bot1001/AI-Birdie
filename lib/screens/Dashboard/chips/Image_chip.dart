@@ -1,9 +1,9 @@
 import 'dart:io';
-import 'package:aibirdie/components/dimissed_background.dart';
-import 'package:aibirdie/constants.dart';
-import 'package:aibirdie/screens/chips/image_full.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import 'package:aibirdie/constants.dart';
+import 'package:aibirdie/components/dimissed_background.dart';
+import 'package:aibirdie/screens/Dashboard/chips/image_full.dart';
 
 class ImageChip extends StatefulWidget {
   @override

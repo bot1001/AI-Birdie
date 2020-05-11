@@ -1,15 +1,12 @@
 import 'dart:io';
 import 'dart:math';
-
-// import 'package:aibirdie/constants.dart';
-import 'package:aibirdie/components/dimissed_background.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/material.dart';
-// import 'package:flutter_animation_set/widget/transition_animations.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
+import 'package:aibirdie/components/dimissed_background.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AudioChip extends StatefulWidget {
   @override

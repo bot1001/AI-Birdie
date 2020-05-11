@@ -1,16 +1,12 @@
-// import 'dart:io';
-
-import 'package:aibirdie/components/transitions.dart';
-import 'package:aibirdie/constants.dart';
-// import 'package:aibirdie/constants.dart';
-import 'package:aibirdie/screens/audio_identify.dart';
-import 'package:aibirdie/screens/audio_record.dart';
-import 'package:aibirdie/screens/landing_page.dart';
-// import 'package:audioplayers/audioplayers.dart';
-import 'package:file_picker/file_picker.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:aibirdie/constants.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:aibirdie/screens/landing_page.dart';
+import 'package:aibirdie/components/transitions.dart';
+import 'package:aibirdie/screens/Audio/audio_record.dart';
+import 'package:aibirdie/screens/Audio/audio_identify.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-// import 'package:swipedetector/swipedetector.dart';
 
 class AudioClassification extends StatefulWidget {
   @override
@@ -18,7 +14,7 @@ class AudioClassification extends StatefulWidget {
 }
 
 class _AudioClassificationState extends State<AudioClassification> {
-  // File file;
+  File file;
   // bool isPlaying;
   // IconData playIcon = Icons.play_arrow;
   // AudioPlayer audioPlayer = AudioPlayer();

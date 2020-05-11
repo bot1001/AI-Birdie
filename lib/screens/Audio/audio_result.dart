@@ -1,102 +1,58 @@
-// import 'dart:convert';
-// import 'dart:convert';
-// import 'dart:convert';
-// import 'dart:convert';
-import 'dart:async';
 import 'dart:io';
-// import 'package:aibirdie/screens/img_classification.dart';
-import 'package:aibirdie/constants.dart';
-import 'package:aibirdie/screens/aibirdie_image_api/generated/image_classification.pbgrpc.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:aibirdie/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-// import 'package:http/http.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-import './aibirdie_image_api/aibirdie_image_classification.dart';
-import './aibirdie_image_api/generated/image_classification.pb.dart';
-
-// import 'package:http/http.dart';
-
-class ImageResult extends StatefulWidget {
-  final File imageInputFile;
-  final String serverIP = '35.232.129.172';
-
-  ImageResult(this.imageInputFile);
-
+class AudioResult extends StatefulWidget {
+  final File file;
+  AudioResult(this.file);
   @override
-  _ImageResultState createState() => _ImageResultState();
+  AudioResultState createState() => AudioResultState();
 }
 
-class _ImageResultState extends State<ImageResult> {
-  AiBirdieImageClassification classifier;
-  var response;
-  ImageClassificationResponse result;
-
+class AudioResultState extends State<AudioResult> {
   bool _showSpinner = true;
-
   var labels = [];
   var accuracy = [];
 
+
   @override
   void initState() {
-    Timer(Duration(seconds: 2), () {
+
+    Timer(Duration(seconds: 2), (){
       setState(() {
         _showSpinner = false;
-        labels = [
-          'Black And White Warbler',
-          'Baird Sparrow',
-          'Brown Creeper',
-          'Evening Grosbeak',
-          'Heermann Gull'
-        ];
-        accuracy = ['78%', '11%', '4%', '2%', '0.5%'];
+        labels = ['Rock Bunting','Chestnutcrowned Laughingthrush','Bspotted Nutcracker'];
+        accuracy = ['90%','89.02%','85.65%'];
       });
     });
     super.initState();
-
-    /**original */
-    // classifier = AiBirdieImageClassification(widget.serverIP);
-    // print('aaama gayu che aa');
-    // classifier.predict(widget.imageInputFile.path).then((value) {
-    //   result = value;
-    //   var response = result.results;
-    //   // print(a);
-    //   setState(() {
-    //     response.forEach((f) {
-    //       labels.add(f.label);
-    //       accuracy.add('${(f.percent * 100).toString().substring(0, 5)} %');
-    //     });
-    //     _showSpinner = false;
-    //   });
-
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ModalProgressHUD(
-        // color: darkPurple,
-        progressIndicator: CircularProgressIndicator(),
-
         inAsyncCall: _showSpinner,
         child: SafeArea(
           child: Stack(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(top: 100),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "Results",
-                      style: level2softg.copyWith(
-                          fontSize: 35, fontFamily: 'OS_semi_bold'),
-                    ),
-                  ],
+            padding: EdgeInsets.only(top: 100),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "Results",
+                  style: level2softg.copyWith(
+                      fontSize: 35, fontFamily: 'OS_semi_bold'),
                 ),
-              ),
-              ListView.builder(
+              ],
+            ),
+          ),
+          ListView.builder(
                 padding: EdgeInsets.only(top: 200),
                 itemCount: labels.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -106,23 +62,19 @@ class _ImageResultState extends State<ImageResult> {
                           style: AlertStyle(
                               titleStyle: level2softdp.copyWith(
                                   fontSize: 25, fontWeight: FontWeight.bold)),
-                          title: 'Black And White Warbler',
+                          title: 'Rock Bunting',
                           type: AlertType.info,
                           content: Column(
                             children: <Widget>[
                               Text(
-                                "The black-and-white warbler is a species of New World warbler, and the only member of its genus, Mniotilta. It breeds in northern and eastern North America and winters in Florida, Central America, and the West Indies down to Peru. This species is a very rare vagrant to western Europe.",
+                                "It breeds in northwest Africa, southern Europe east to central Asia, and the Himalayas.This bird is 16 cm in length. The breeding male has chestnut upperparts, unmarked deep buff underparts, and a pale grey head marked with black striping. The female rock bunting is a washed-out version of the male, with paler underparts, a grey-brown back and a less contrasted head. The juvenile is similar to the female, but with a streaked head.The rock bunting breeds in open dry rocky mountainous areas.",
                                 style: level2softdp,
                                 textAlign: TextAlign.justify,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
-                                  Text("Learn more",
-                                      style: level2softdp.copyWith(
-                                        color: Colors.blue,
-                                        decoration: TextDecoration.underline,
-                                      )),
+                                  Text("Learn more", style: level2softdp.copyWith(color: Colors.blue, decoration: TextDecoration.underline,)),
                                 ],
                               ),
                             ],
@@ -141,7 +93,7 @@ class _ImageResultState extends State<ImageResult> {
                           ]);
                       show.show();
                     },
-                    child: Container(
+                                      child: Container(
                         child: Center(
                           child: Padding(
                             padding: EdgeInsets.symmetric(
@@ -171,8 +123,7 @@ class _ImageResultState extends State<ImageResult> {
                             ),
                           ),
                         ),
-                        margin:
-                            EdgeInsets.only(bottom: 20, left: 30, right: 30),
+                        margin: EdgeInsets.only(bottom: 20, left: 30, right: 30),
                         height: 70,
                         decoration: BoxDecoration(
                           color: Color(0xfff5f5f5),
@@ -193,8 +144,13 @@ class _ImageResultState extends State<ImageResult> {
                   );
                 },
               ),
+
             ],
+
           ),
+          
+
+
         ),
       ),
     );

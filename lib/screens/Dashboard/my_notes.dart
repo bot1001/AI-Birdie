@@ -1,9 +1,8 @@
 import 'dart:io';
-
-import 'package:aibirdie/components/dimissed_background.dart';
-import 'package:aibirdie/components/storage_1.dart';
-import 'package:aibirdie/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:aibirdie/constants.dart';
+import 'package:aibirdie/components/storage.dart';
+import 'package:aibirdie/components/dimissed_background.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyNotes extends StatefulWidget {

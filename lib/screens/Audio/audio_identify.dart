@@ -1,11 +1,9 @@
-// import 'package:aibirdie/screens/audio_classidication.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
-import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:aibirdie/components/buttons.dart';
-// import 'package:flutter_timer/flutter_timer.dart';
-import 'package:aibirdie/screens/audio_result.dart';
+import 'package:aibirdie/screens/Audio/audio_result.dart';
 
 File file;
 

@@ -1,24 +1,23 @@
-import 'package:aibirdie/constants.dart';
-import 'package:aibirdie/screens/checklist.dart';
-import 'package:aibirdie/screens/dash.dart';
-import 'package:aibirdie/screens/my_notes.dart';
-import 'package:aibirdie/screens/v_services.dart';
-import 'package:flutter/gestures.dart';
+import 'package:share/share.dart';
 import 'package:flutter/material.dart';
+import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/screens/landing_page.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:aibirdie/screens/Dashboard/dash.dart';
+import 'package:aibirdie/screens/Dashboard/my_notes.dart';
+import 'package:aibirdie/screens/Dashboard/checklist.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:share/share.dart';
+import 'package:aibirdie/screens/Dashboard/drawer/v_services.dart';
 
 final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-class SoftDashboard extends StatefulWidget {
+class DashBoard extends StatefulWidget {
   @override
-  _SoftDashboardState createState() => _SoftDashboardState();
+  _DashBoardState createState() => _DashBoardState();
 }
 
-class _SoftDashboardState extends State<SoftDashboard>
+class _DashBoardState extends State<DashBoard>
     with SingleTickerProviderStateMixin {
   TabController controller;
 
@@ -45,28 +44,33 @@ class _SoftDashboardState extends State<SoftDashboard>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Color(0xfffafafa),
         elevation: 0.0,
         leading: _menuButton(),
-        actions: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(right: 10, top: 15),
-            child: FloatingActionButton(
-              elevation: 0.0,
-              onPressed: (() => LandingPage.controller.animateToPage(1,
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.easeInOut)),
-              backgroundColor: softGreen,
-              child: Icon(
-                Icons.arrow_forward_ios,
-                size: 15,
-              ),
-            ),
-          )
-        ],
+        // actions: <Widget>[
+        //   Padding(
+        //     padding: EdgeInsets.only(right: 10, top: 15),
+        //     child: FloatingActionButton(
+        //       elevation: 0.0,
+        //       onPressed: (() => LandingPage.controller.animateToPage(1,
+        //           duration: Duration(milliseconds: 300),
+        //           curve: Curves.easeInOut)),
+        //       backgroundColor: softGreen,
+        //       child: Icon(
+        //         Icons.arrow_forward_ios,
+        //         size: 15,
+        //       ),
+        //     ),
+        //   )
+        // ],
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.camera),
+        backgroundColor: darkPurple,
+        onPressed: (() => LandingPage.controller.animateToPage(1,
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeInOut)),),
       key: _scaffoldKey,
       drawer: Drawer(
           child: Padding(
@@ -266,24 +270,25 @@ class _SoftDashboardState extends State<SoftDashboard>
                 height: 2.00,
                 width: 22.0,
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: darkPurple,
                   borderRadius: BorderRadius.circular(4.00),
                 ),
               ),
               Container(
                 margin: EdgeInsets.only(bottom: 6.0),
                 height: 2.00,
-                width: 16.5,
+                width: 15.0,
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: darkPurple,
                   borderRadius: BorderRadius.circular(4.00),
                 ),
               ),
               Container(
                 height: 2.00,
-                width: 11.00,
+                // width: 11.00,
+                width: 22.0,
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: darkPurple,
                   borderRadius: BorderRadius.circular(4.00),
                 ),
               ),

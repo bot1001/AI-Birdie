@@ -1,11 +1,9 @@
 import 'dart:io';
-
-import 'package:aibirdie/components/dimissed_background.dart';
-import 'package:aibirdie/components/storage_1.dart';
-import 'package:aibirdie/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:aibirdie/constants.dart';
+import 'package:aibirdie/components/storage.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:aibirdie/components/dimissed_background.dart';
 
 class CheckList extends StatefulWidget {
   @override

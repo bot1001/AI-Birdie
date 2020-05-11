@@ -1,13 +1,10 @@
-// import 'package:aibirdie/constants.dart';
 import 'dart:io';
-
-import 'package:aibirdie/screens/audio_classification.dart';
-import 'package:aibirdie/screens/cs.dart';
-import 'package:aibirdie/screens/soft_dashboard.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-// import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:aibirdie/screens/dashboard.dart';
+import 'package:aibirdie/screens/Image/camera_screen.dart';
+import 'package:aibirdie/screens/Audio/audio_classification.dart';
 
 List<CameraDescription> cameras;
 
@@ -25,8 +22,8 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   var _currentPage = 1;
   var _pages = [
-    SoftDashboard(),
-    CS(cameras),
+    DashBoard(),
+    CameraScreen(cameras),
     // Container(),
     AudioClassification(),
   ];

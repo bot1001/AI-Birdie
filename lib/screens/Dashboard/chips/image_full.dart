@@ -1,7 +1,6 @@
 import 'dart:io';
-
-import 'package:aibirdie/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:aibirdie/constants.dart';
 
 class ImageFull extends StatelessWidget {
   final File inp;

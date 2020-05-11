@@ -1,25 +1,22 @@
 import 'dart:io';
-// import 'package:aibirdie/components/storage.dart';
-import 'package:aibirdie/constants.dart';
-import 'package:aibirdie/screens/image_result.dart';
-// import 'package:aibirdie/screens/img_classification.dart';
-import 'package:aibirdie/screens/landing_page.dart';
-// import 'package:aibirdie/screens/preview_page.dart';
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:aibirdie/constants.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:aibirdie/screens/landing_page.dart';
+import 'package:aibirdie/screens/Image/image_result.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 
-class CS extends StatefulWidget {
+class CameraScreen extends StatefulWidget {
   final List<CameraDescription> cameras;
-  CS(this.cameras);
+  CameraScreen(this.cameras);
 
   @override
-  _CSState createState() => _CSState();
+  _CameraScreenState createState() => _CameraScreenState();
 }
 
-class _CSState extends State<CS> {
+class _CameraScreenState extends State<CameraScreen> {
   CameraController controller;
   var sca = 1.0;
   var animatedHeight = 80.0;
