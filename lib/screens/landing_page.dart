@@ -24,7 +24,6 @@ class _LandingPageState extends State<LandingPage> {
   var _pages = [
     DashBoard(),
     CameraScreen(cameras),
-    // Container(),
     AudioClassification(),
   ];
 
