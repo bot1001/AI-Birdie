@@ -1,7 +1,12 @@
 import 'dart:io';
-import 'dart:async';
+// import 'dart:async';
+import 'package:aibirdie/APIs/aibirdie_audio_api/request.dart';
+// import 'package:aibirdie/screens/Audio/audio_identify.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
+// import 'package:http/http.dart';
+// import 'package:http/http.dart' as http;
+// import 'package:http/http.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -16,20 +21,53 @@ class AudioResultState extends State<AudioResult> {
   bool _showSpinner = true;
   var labels = [];
   var accuracy = [];
+  AiBirdieAudioClassification abac;
 
 
   @override
   void initState() {
 
-    Timer(Duration(seconds: 2), (){
-      setState(() {
-        _showSpinner = false;
-        labels = ['Rock Bunting','Chestnutcrowned Laughingthrush','Bspotted Nutcracker'];
-        accuracy = ['90%','89.02%','85.65%'];
-      });
-    });
+    // Timer(Duration(seconds: 2), (){
+    //   setState(() {
+    //     _showSpinner = false;
+    //     labels = ['Rock Bunting','Chestnutcrowned Laughingthrush','Bspotted Nutcracker'];
+    //     accuracy = ['90%','89.02%','85.65%'];
+    //   });
+    // });
+
+    predictBird();
+
+
     super.initState();
   }
+
+
+
+
+
+
+
+
+
+
+
+
+  void predictBird() async {
+    abac = AiBirdieAudioClassification(inputFile: widget.file); 
+    final Map<String, dynamic> aa = await abac.predict();
+    print('AAAA: $aa');
+  }
+
+
+
+
+
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
