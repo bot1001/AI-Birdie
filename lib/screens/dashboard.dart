@@ -1,3 +1,5 @@
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:share/share.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
@@ -9,6 +11,7 @@ import 'package:aibirdie/screens/Dashboard/checklist.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:aibirdie/screens/Dashboard/drawer/v_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -20,11 +23,33 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard>
     with SingleTickerProviderStateMixin {
   TabController controller;
+  bool signedIn = false;
+  GoogleSignIn googleSignIn = GoogleSignIn(signInOption: SignInOption.standard);
+  SharedPreferences prefs;
+  String userEmail;
+  String userAccountName;
+  String userPhotoURL = "https://image.flaticon.com/icons/svg/2922/2922523.svg";
+  bool showSpinner = false;
 
   @override
   void initState() {
     super.initState();
     controller = TabController(length: 3, vsync: this);
+
+    getSignInStatus();
+  }
+
+
+  void getSignInStatus() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      signedIn = prefs.getBool('SignInStatus');
+    });
+    setState(() {
+      userEmail = prefs.getString('userEmail');
+      userAccountName = prefs.getString('userAccountName');
+      userPhotoURL = prefs.getString('userPhotoURL');
+    });
   }
 
   @override
@@ -69,134 +94,131 @@ class _DashBoardState extends State<DashBoard>
         child: Icon(Icons.camera),
         backgroundColor: darkPurple,
         onPressed: (() => LandingPage.controller.animateToPage(1,
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.easeInOut)),),
+            duration: Duration(milliseconds: 300), curve: Curves.easeInOut)),
+      ),
       key: _scaffoldKey,
-      drawer: Drawer(
+      drawer: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: Drawer(
+            child: SafeArea(
           child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              decoration: BoxDecoration(),
-              accountEmail: Text(
-                "email@xyz.com",
-                style: level2softdp,
-              ),
-              accountName: Text(
-                "Jane Doe",
-                style: level1dp,
-              ),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Icon(Icons.account_circle, size: 70, color: darkPurple),
-              ),
-            ),
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: <Widget>[
+                signedIn ? signedInWidget() : notSignedInWidget(),
+                signedIn ? Container() : signInWithGoogleButton(),
+                ListTile(
+                  leading: Icon(
+                    Icons.info_outline,
+                    color: darkPurple,
+                  ),
+                  title: Text(
+                    "About AI-Birdie",
+                    style: level2softdp,
+                  ),
+                  onTap: (() => Alert(
+                        context: context,
+                        type: AlertType.info,
+                        style: AlertStyle(
+                            animationDuration: Duration(milliseconds: 500),
+                            animationType: AnimationType.grow,
+                            descStyle: level2softdp,
+                            titleStyle: level1dp.copyWith(fontSize: 25)),
+                        title: "AI Birdie",
+                        desc:
+                            "A mobile app for image and audio classification of birds.\n\nLEVERAGING THE POWER OF AI TO DEMOCRATIZE ORNITHOLOGY\n\n1.\t\tFor visual identification, our objective is to develop algorithms for:\nA.\tBird Detection in images\nB.\tBird Identification from images\n\n2.\t\tFor acoustic identification, our objective is to develop algorithms for:\nA.\tBird Detection in audio clip\nB.\tSpecies Identification in audio clip",
+                        buttons: [
+                          DialogButton(
+                            child: Text(
+                              "OK",
+                              style: level1w,
+                            ),
+                            color: softGreen,
+                            onPressed: () => Navigator.pop(context),
+                            width: 120,
+                          )
+                        ],
+                      ).show()),
+                ),
+                ListTile(
+                  leading: Icon(
+                    // Icons.share,
+                    FontAwesomeIcons.shareSquare,
+                    color: darkPurple,
+                  ),
+                  title: Text(
+                    "Tell a friend",
+                    style: level2softdp,
+                  ),
+                  onTap: (() => Share.share(
+                      "Hey! Check out this amazing app. It is called AI Birdie.")),
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.mail_outline,
+                    color: darkPurple,
+                  ),
+                  title: Text(
+                    "Send us feedback",
+                    style: level2softdp,
+                  ),
+                  onTap: () async {
+                    final Email email = Email(
+                      body: 'Write your feedback here.',
+                      subject: 'Feedback for AI Birdie app',
+                      recipients: ['jsonani98@gmail.com'],
+                      isHTML: false,
+                    );
 
-            // Row(
+                    await FlutterEmailSender.send(email);
+                  },
+                ),
+                ListTile(
+                  // enabled: true,
+                  leading: Icon(
+                    Icons.healing,
+                    color: darkPurple,
+                  ),
+                  title: Text(
+                    "Veterinary Services",
+                    style: level2softdp,
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => VServices()),
+                    );
+                  },
+                ),
+                ListTile(
+                  // enabled: false,
 
-            //   children: <Widget>[
-            //     SizedBox(width: 15,),
-            //     Text("OTHER", style: level1dp.copyWith(fontWeight: FontWeight.bold),),
-            //   ],
-            // ),
-            ListTile(
-              leading: Icon(
-                Icons.info_outline,
-                color: darkPurple,
-              ),
-              title: Text(
-                "About AI-Birdie",
-                style: level2softdp,
-              ),
-              onTap: (() => Alert(
-                    context: context,
-                    type: AlertType.info,
-                    style: AlertStyle(
-                        animationDuration: Duration(milliseconds: 500),
-                        animationType: AnimationType.grow,
-                        descStyle: level2softdp,
-                        titleStyle: level1dp.copyWith(fontSize: 25)),
-                    title: "AI Birdie",
-                    desc:
-                        "A mobile app for image and audio classification of birds.\n\nLEVERAGING THE POWER OF AI TO DEMOCRATIZE ORNITHOLOGY\n\n1.\t\tFor visual identification, our objective is to develop algorithms for:\nA.\tBird Detection in images\nB.\tBird Identification from images\n\n2.\t\tFor acoustic identification, our objective is to develop algorithms for:\nA.\tBird Detection in audio clip\nB.\tSpecies Identification in audio clip",
-                    buttons: [
-                      DialogButton(
+                  leading: Icon(
+                    Icons.settings,
+                    color: darkPurple,
+                  ),
+                  title: Text(
+                    "Settings",
+                    style: level2softdp,
+                  ),
+                ),
+                Spacer(),
+                signedIn
+                    ? FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        onPressed: signOut,
                         child: Text(
-                          "OK",
-                          style: level1w,
+                          "Sign out",
+                          style: level2softw,
                         ),
                         color: softGreen,
-                        onPressed: () => Navigator.pop(context),
-                        width: 120,
                       )
-                    ],
-                  ).show()),
+                    : Container(),
+              ],
             ),
-            ListTile(
-              leading: Icon(
-                // Icons.share,
-                FontAwesomeIcons.shareSquare,
-                color: darkPurple,
-              ),
-              title: Text(
-                "Tell a friend",
-                style: level2softdp,
-              ),
-              onTap: (() => Share.share(
-                  "Hey! Check out this amazing app. It is called AI Birdie.")),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.mail_outline,
-                color: darkPurple,
-              ),
-              title: Text(
-                "Send us feedback",
-                style: level2softdp,
-              ),
-              onTap: () async {
-                final Email email = Email(
-                  body: 'Write your feedback here.',
-                  subject: 'Feedback for AI Birdie app',
-                  recipients: ['jsonani98@gmail.com'],
-                  isHTML: false,
-                );
-
-                await FlutterEmailSender.send(email);
-              },
-            ),
-            ListTile(
-              // enabled: true,
-              leading: Icon(
-                Icons.healing,
-                color: darkPurple,
-              ),
-              title: Text(
-                "Veterinary Services",
-                style: level2softdp,
-              ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => VServices()),
-                );
-              },
-            ),
-            ListTile(
-              // enabled: false,
-
-              leading: Icon(
-                Icons.settings,
-                color: darkPurple,
-              ),
-              title: Text(
-                "Settings",
-                style: level2softdp,
-              ),
-            ),
-          ],
-        ),
-      )),
+          ),
+        )),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -254,6 +276,80 @@ class _DashBoardState extends State<DashBoard>
     );
   }
 
+  Widget signedInWidget() {
+    return UserAccountsDrawerHeader(
+      decoration: BoxDecoration(),
+      // arrowColor: softGreen,
+      onDetailsPressed: () {
+        print('hi');
+      },
+      accountEmail: Text(
+        "$userEmail",
+        style: level2softdp,
+      ),
+      accountName: Text(
+        "$userAccountName",
+        style: level2softdp.copyWith(fontWeight: FontWeight.bold),
+      ),
+
+      currentAccountPicture: Material(
+          elevation: 5.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+          child: ClipOval(
+              child: signedIn
+                  ? Image.network(
+                      userPhotoURL,
+                    )
+                  : Container())),
+    );
+  }
+
+  Widget notSignedInWidget() {
+    return UserAccountsDrawerHeader(
+      decoration: BoxDecoration(),
+      accountEmail: Text(
+        "Use your google account to sign in.",
+        style: level2softdp,
+      ),
+      accountName: Text(
+        "Sign In",
+        style: level1dp,
+      ),
+      currentAccountPicture: CircleAvatar(
+        backgroundColor: Colors.white,
+        child: Icon(Icons.account_circle, size: 60, color: softGreen),
+      ),
+    );
+  }
+
+  Widget signInWithGoogleButton() {
+    return Container(
+      width: 220,
+      child: RaisedButton(
+        elevation: 5.0,
+        color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Image.asset(
+              'images/google_logo.png',
+              width: 25,
+            ),
+            // SizedBox(width: 10,),
+            Text(
+              "Sign In with Google",
+              style: level2softdp,
+            ),
+          ],
+        ),
+        onPressed: signIn,
+      ),
+    );
+  }
+
   Widget _menuButton() {
     return Padding(
       padding: EdgeInsets.only(
@@ -295,6 +391,75 @@ class _DashBoardState extends State<DashBoard>
             ]),
       ),
     );
+  }
+
+  void signIn() async {
+    setState(() {
+      showSpinner = true;
+    });
+    try {
+      await googleSignIn.signIn();
+
+      if (await googleSignIn.isSignedIn()) {
+        SharedPreferences.getInstance()
+            .then((prefs) => prefs.setBool('SignInStatus', true));
+        signedIn = true;
+        prefs.setString('userEmail', googleSignIn.currentUser.email);
+        prefs.setString(
+            'userAccountName', googleSignIn.currentUser.displayName);
+        prefs.setString('userPhotoURL', googleSignIn.currentUser.photoUrl);
+
+        setState(() {
+          userEmail = googleSignIn.currentUser.email;
+          userAccountName = googleSignIn.currentUser.displayName;
+          userPhotoURL = googleSignIn.currentUser.photoUrl;
+          showSpinner = false;
+        });
+        Scaffold.of(context).showSnackBar(SnackBar(
+            action: SnackBarAction(label: 'OK', onPressed: () {}),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+            backgroundColor: darkPurple,
+            behavior: SnackBarBehavior.floating,
+            content: Text(
+              'Signed in successfully.',
+              style: level2softw,
+            )));
+      }
+    } catch (err) {
+      print('ERROR: $err');
+    }
+  }
+
+  void signOut() async {
+    setState(() {
+      showSpinner = true;
+    });
+
+    try {
+      await googleSignIn.signOut();
+
+      if (!await googleSignIn.isSignedIn()) {
+        setState(() {
+          showSpinner = false;
+        });
+        SharedPreferences.getInstance()
+            .then((prefs) => prefs.setBool('SignInStatus', false));
+        setState(() => signedIn = false);
+        Scaffold.of(context).showSnackBar(SnackBar(
+            action: SnackBarAction(label: 'OK', onPressed: () {}),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+            backgroundColor: darkPurple,
+            behavior: SnackBarBehavior.floating,
+            content: Text(
+              'Signed out.',
+              style: level2softw,
+            )));
+      }
+    } catch (err) {
+      print('ERROR: $err');
+    }
   }
 }
 

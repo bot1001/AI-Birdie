@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:aibirdie/screens/dashboard.dart';
 import 'package:aibirdie/screens/Image/camera_screen.dart';
 import 'package:aibirdie/screens/Audio/audio_classification.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 List<CameraDescription> cameras;
 
@@ -31,6 +32,13 @@ class _LandingPageState extends State<LandingPage> {
   void initState() {
     super.initState();
     createDirectories();
+    checkSignInStatus();
+  }
+
+  void checkSignInStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.getBool('SignInStatus') ?? await prefs.setBool('SignInStatus', false);
+
   }
 
   void createDirectories() async {
