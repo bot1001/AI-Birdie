@@ -47,7 +47,6 @@ dependencies:
   intl: ^0.15.8
   timer_builder: ^1.3.0
   google_sign_in: ^4.4.6
-  mime: ^0.9.6+3
 
 
   grpc: ^2.1.3

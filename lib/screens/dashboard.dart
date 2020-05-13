@@ -31,6 +31,20 @@ class _DashBoardState extends State<DashBoard>
   String userPhotoURL = "https://image.flaticon.com/icons/svg/2922/2922523.svg";
   bool showSpinner = false;
 
+  int _selectedPage = 0;
+  int currentTabIndex = 0;
+  final _pages = [
+    Dash(),
+    MyNotes(),
+    CheckList(),
+  ];
+
+  var appBarTitle = [
+    "Dashboard",
+    "My Notes",
+    "Checklist",
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -38,7 +52,6 @@ class _DashBoardState extends State<DashBoard>
 
     getSignInStatus();
   }
-
 
   void getSignInStatus() async {
     prefs = await SharedPreferences.getInstance();
@@ -58,38 +71,14 @@ class _DashBoardState extends State<DashBoard>
     super.dispose();
   }
 
-  int _selectedPage = 0;
-  int currentTabIndex = 0;
-  final _pages = [
-    Dash(),
-    MyNotes(),
-    CheckList(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xfffafafa),
-        elevation: 0.0,
-        leading: _menuButton(),
-        // actions: <Widget>[
-        //   Padding(
-        //     padding: EdgeInsets.only(right: 10, top: 15),
-        //     child: FloatingActionButton(
-        //       elevation: 0.0,
-        //       onPressed: (() => LandingPage.controller.animateToPage(1,
-        //           duration: Duration(milliseconds: 300),
-        //           curve: Curves.easeInOut)),
-        //       backgroundColor: softGreen,
-        //       child: Icon(
-        //         Icons.arrow_forward_ios,
-        //         size: 15,
-        //       ),
-        //     ),
-        //   )
-        // ],
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Color(0xfffafafa),
+      //   elevation: 0.0,
+      //   leading: _menuButton(),
+      // ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.camera),
         backgroundColor: darkPurple,
@@ -219,14 +208,51 @@ class _DashBoardState extends State<DashBoard>
           ),
         )),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(15.0),
-            child: _pages[_selectedPage],
+
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            backgroundColor: darkPurple,
+            leading: _menuButton(),
+            expandedHeight: 200.0,
+            floating: false,
+            pinned: true,
+            forceElevated: false,
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: false,
+
+              title: Text(
+                appBarTitle[_selectedPage],
+                style: level2softdp.copyWith(
+                    fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              background:
+              //  Image.asset('images/2.jpg', fit: BoxFit.cover,)
+              
+              Container(
+                color: softGreen,
+              ),
+            ),
           ),
-        ),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: _pages[_selectedPage],
+            ),
+          ),
+        ],
       ),
+
+      // body: SafeArea(
+      //   child: SingleChildScrollView(
+      //     child: Padding(
+      //       padding: EdgeInsets.all(15.0),
+      //       child: _pages[_selectedPage],
+      //     ),
+      //   ),
+      // ),
+
       bottomNavigationBar: Container(
           decoration: BoxDecoration(
             // borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -256,6 +282,8 @@ class _DashBoardState extends State<DashBoard>
               setState(() {
                 _selectedPage = index;
               });
+
+             
             },
 
             items: [
@@ -364,27 +392,27 @@ class _DashBoardState extends State<DashBoard>
               Container(
                 margin: EdgeInsets.only(bottom: 6.0),
                 height: 2.00,
-                width: 22.0,
+                width: 15.0,
                 decoration: BoxDecoration(
-                  color: darkPurple,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(4.00),
                 ),
               ),
               Container(
                 margin: EdgeInsets.only(bottom: 6.0),
                 height: 2.00,
-                width: 15.0,
+                width: 22.0,
                 decoration: BoxDecoration(
-                  color: darkPurple,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(4.00),
                 ),
               ),
               Container(
                 height: 2.00,
                 // width: 11.00,
-                width: 22.0,
+                width: 15.0,
                 decoration: BoxDecoration(
-                  color: darkPurple,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(4.00),
                 ),
               ),

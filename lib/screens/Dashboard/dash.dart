@@ -12,11 +12,11 @@ class Dash extends StatefulWidget {
 class _DashState extends State<Dash> with SingleTickerProviderStateMixin {
   TabController controller;
   int _currentIndex = 0;
-  var _lines = [
-    "Your activity at a glance",
-    "Images you have captured",
-    "Audio clips recorded"
-  ];
+  // var _lines = [
+  //   "Your activity at a glance",
+  //   "Images you have captured",
+  //   "Audio clips recorded"
+  // ];
   var dynamicIcon = [
     Image.asset('images/dash.png', width: 80,),
     Image.asset('images/dash.png', width: 80,),
@@ -48,29 +48,28 @@ class _DashState extends State<Dash> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 20),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // Padding(
+        //   padding: EdgeInsets.symmetric(vertical: 20),
+        //   child: Row(
+        //     crossAxisAlignment: CrossAxisAlignment.end,
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
             
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "Dashboard",
-                    style: TextStyle(fontSize: 35, fontFamily: 'OS_semi_bold'),
-                  ),
-                  Text(_lines[_currentIndex], style: level2softdp),
-                ],
-              ),
-              // dynamicIcon[_currentIndex],
-            ],
-          ),
-        ),
+        //     children: <Widget>[
+        //       Column(
+        //         crossAxisAlignment: CrossAxisAlignment.start,
+        //         children: <Widget>[
+        //           Text(
+        //             "Dashboard",
+        //             style: TextStyle(fontSize: 35, fontFamily: 'OS_semi_bold'),
+        //           ),
+        //           Text(_lines[_currentIndex], style: level2softdp),
+        //         ],
+        //       ),
+        //       // dynamicIcon[_currentIndex],
+        //     ],
+        //   ),
+        // ),
         Container(
           height: 40,
           child: TabBar(
@@ -101,7 +100,7 @@ class _DashState extends State<Dash> with SingleTickerProviderStateMixin {
           ),
         ),
         SizedBox(
-          height: 30,
+          height: 20,
         ),
         _pages[_currentIndex],
       ],

@@ -4,7 +4,6 @@ import 'package:aibirdie/APIs/aibirdie_audio_api/request.dart';
 // import 'package:aibirdie/screens/Audio/audio_identify.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
-// import 'package:http/http.dart';
 // import 'package:http/http.dart' as http;
 // import 'package:http/http.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -52,10 +51,18 @@ class AudioResultState extends State<AudioResult> {
 
 
 
-  void predictBird() async {
+  Future<void> predictBird() async {
+
+
     abac = AiBirdieAudioClassification(inputFile: widget.file); 
-    final Map<String, dynamic> aa = await abac.predict();
+    var aa = await abac.predict();
     print('AAAA: $aa');
+
+
+
+    setState(() {
+      _showSpinner = false;
+    });
   }
 
 
