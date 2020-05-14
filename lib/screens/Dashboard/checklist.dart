@@ -189,68 +189,71 @@ class _CheckListState extends State<CheckList> {
         ),
         noCheckList == true
             ? noNotesWidget()
-            : ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: checkList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return AnimatedContainer(
-                    duration: Duration(milliseconds: 300),
-                    margin: EdgeInsets.only(bottom: 15),
-                    decoration: BoxDecoration(
-                      color: Color(0xfff5f5f5),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(-6.00, -6.00),
-                          color: Color(0xffffffff).withOpacity(0.80),
-                          blurRadius: 10,
-                        ),
-                        BoxShadow(
-                          offset: Offset(6.00, 6.00),
-                          color: Color(0xff000000).withOpacity(0.20),
-                          blurRadius: 10,
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(15.00),
-                    ),
-                    child: Dismissible(
-                      key: UniqueKey(),
-                      direction: DismissDirection.startToEnd,
-                      onDismissed: (dismissDirection) {
-                        deleteCheckBirdAt(index);
-                      },
-                      background: dismissedBackground(),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 2, bottom: 2, right: 15),
-                        child: Row(
-                          children: <Widget>[
-                            Checkbox(
-                                activeColor: softGreen,
-                                value: isChecked[index],
-                                onChanged: (checkBoxStatus) {
-                                  setState(() {
-                                    isChecked[index] = checkBoxStatus;
-                                    // wantToWatch.removeAt(index);
-                                  });
-                                }),
-                            Text(
-                              "${checkList[index]}",
-                              style: level2softdp.copyWith(
-                                  decoration: isChecked[index]
-                                      ? TextDecoration.lineThrough
-                                      : null),
-                            ),
-                            Spacer(),
-                            Visibility(
-                                visible: isChecked[index],
-                                child: Text('Watched')),
-                            // SizedBox(width: 15,),
-                          ],
+            : Container(
+              height: checkList.length <= 7 ? (checkList.length * 110).toDouble() : (checkList.length * 80).toDouble(),
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: checkList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return AnimatedContainer(
+                      duration: Duration(milliseconds: 300),
+                      margin: EdgeInsets.only(bottom: 15),
+                      decoration: BoxDecoration(
+                        color: Color(0xfff5f5f5),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(-6.00, -6.00),
+                            color: Color(0xffffffff).withOpacity(0.80),
+                            blurRadius: 10,
+                          ),
+                          BoxShadow(
+                            offset: Offset(6.00, 6.00),
+                            color: Color(0xff000000).withOpacity(0.20),
+                            blurRadius: 10,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(15.00),
+                      ),
+                      child: Dismissible(
+                        key: UniqueKey(),
+                        direction: DismissDirection.startToEnd,
+                        onDismissed: (dismissDirection) {
+                          deleteCheckBirdAt(index);
+                        },
+                        background: dismissedBackground(),
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 2, bottom: 2, right: 15),
+                          child: Row(
+                            children: <Widget>[
+                              Checkbox(
+                                  activeColor: softGreen,
+                                  value: isChecked[index],
+                                  onChanged: (checkBoxStatus) {
+                                    setState(() {
+                                      isChecked[index] = checkBoxStatus;
+                                      // wantToWatch.removeAt(index);
+                                    });
+                                  }),
+                              Text(
+                                "${checkList[index]}",
+                                style: level2softdp.copyWith(
+                                    decoration: isChecked[index]
+                                        ? TextDecoration.lineThrough
+                                        : null),
+                              ),
+                              Spacer(),
+                              Visibility(
+                                  visible: isChecked[index],
+                                  child: Text('Watched')),
+                              // SizedBox(width: 15,),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
+            ),
       ],
     );
   }
