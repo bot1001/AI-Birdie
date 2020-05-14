@@ -112,8 +112,8 @@ class _ImageChipState extends State<ImageChip> {
             height: (images.length * 130).toDouble(),
             child: ListView.builder(
               shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
               itemCount: images.length,
+              physics: NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   margin: EdgeInsets.only(bottom: 15,),

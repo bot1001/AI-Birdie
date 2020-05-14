@@ -21,14 +21,16 @@ class _OverviewChipState extends State<OverviewChip> {
 
   Future<void> setAllCount() async {
     Directory imgDir = Directory('/storage/emulated/0/AiBirdie/Images');
-    var temp = imgDir.list();
-    var images = await temp.toList();
     Directory audDir = Directory('/storage/emulated/0/AiBirdie/Audios');
-    var temp2 = audDir.list();
-    var audios = await temp2.toList();
     File noteFile = File('/storage/emulated/0/AiBirdie/Notes/notes.txt');
-    var allNotes = await noteFile.readAsLines();
     File checkListFile = File('/storage/emulated/0/AiBirdie/Notes/checklist.txt');
+    
+    var temp = imgDir.list();
+    var temp2 = audDir.list();
+    
+    var images = await temp.toList();
+    var audios = await temp2.toList();
+    var allNotes = await noteFile.readAsLines();
     var checkList = await checkListFile.readAsLines();
 
 

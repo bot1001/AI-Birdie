@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+// import 'package:flutter_animation_set/widget/transition_animations.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
@@ -57,8 +58,10 @@ class _AudioChipState extends State<AudioChip>
     return audios.length == 0
         ? noRecordingWidget(context)
         : Container(
-          height: audios.length <=5 ? (audios.length * 200).toDouble() : (audios.length * 130).toDouble() ,
-          child: ListView.builder(
+            height: audios.length <= 5
+                ? (audios.length * 200).toDouble()
+                : (audios.length * 130).toDouble(),
+            child: ListView.builder(
               // shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemCount: audios.length,
@@ -89,8 +92,6 @@ class _AudioChipState extends State<AudioChip>
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Dismissible(
-                    
-
                     background: dismissedBackground(),
                     key: Key(audios[index].path),
                     direction: DismissDirection.startToEnd,
@@ -115,20 +116,21 @@ class _AudioChipState extends State<AudioChip>
                                   height: 75,
                                   width: 75,
                                   child: RaisedButton(
-                                      elevation: 5.0,
-                                      color: Color(0xffff2c55),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(100)),
-                                      onPressed: () {
-                                        rotationController.stop();
-                                        playAudio(index);
-                                      },
-                                      child: Icon(
-                                        Icons.music_note,
-                                        // FontAwesomeIcons.stop,
-                                        // size: 30,
-                                      )),
+                                    elevation: 5.0,
+                                    color: Color(0xffff2c55),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(100)),
+                                    onPressed: () {
+                                      rotationController.stop();
+                                      playAudio(index);
+                                    },
+                                    child: Icon(
+                                      Icons.music_note,
+                                      // FontAwesomeIcons.stop,
+                                      // size: 30,
+                                    ),
+                                  ),
                                 ),
                               )
                             : Container(
@@ -173,15 +175,15 @@ class _AudioChipState extends State<AudioChip>
                                   }),
                                   onChangeEnd: (value) {
                                     if (isPlaying[index]) {
-                                      audioPlayer
-                                          .seek(Duration(seconds: value.toInt()));
+                                      audioPlayer.seek(
+                                          Duration(seconds: value.toInt()));
                                     }
                                   },
                                 ),
                                 isPlaying[index]
                                     ? Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(horizontal: 20),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -219,43 +221,28 @@ class _AudioChipState extends State<AudioChip>
                 );
               },
             ),
-        );
+          );
   }
 
-  
-
   Widget dancingBars() {
-    if (4 <= 4) {}
-    return Row(crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
-      for (var i = 0; i < 5; i++)
-        Row(
-          children: <Widget>[
-            TimerBuilder.periodic(
-              Duration(seconds: 1),
-              builder: ((context) {
-                return AnimatedContainer(
-                  duration: Duration(milliseconds: 300),
-                  height: randomInt(5, 20).toDouble(),
-                  width: 2.0,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(100)),
-                  ),
-                );
-              }),
-            ),
-            SizedBox(
-              width: 4,
-            ),
-          ],
-        ),
-    ]);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: <Widget>[
+        for (var i = 0; i < 3; i++)
+          AnimatedContainer(
+            margin: EdgeInsets.only(right: 3),
+            duration: Duration(milliseconds: 300),
+            height: randomInt(0, 20).toDouble(),
+            width: 4.0,
+            color: Colors.white,
+          ),
+      ],
+    );
   }
 
   String getTimeStamp() {
-    var sec = getSec(seekPosition.toInt());
-    var min = getMin(seekPosition.toInt());
+    var sec = seekPosition.toInt() % 60;
+    var min = seekPosition.toInt() ~/ 60;
     var mFiller = min <= 9 ? 0 : '';
     var sFiller = sec <= 9 ? 0 : '';
     return "$mFiller$min:$sFiller$sec";
@@ -365,14 +352,6 @@ class _AudioChipState extends State<AudioChip>
           DateFormat("H:mm").format(f.lastModifiedSync()),
       style: isPlaying[index] == true ? level2softw : level2softdp,
     );
-  }
-
-  getMin(int i) {
-    return i ~/ 60;
-  }
-
-  getSec(int i) {
-    return i % 60;
   }
 
   int randomInt(int min, int max) => min + random.nextInt(max - min);

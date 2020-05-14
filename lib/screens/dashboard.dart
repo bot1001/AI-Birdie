@@ -217,21 +217,52 @@ class _DashBoardState extends State<DashBoard>
             expandedHeight: 200.0,
             floating: false,
             pinned: true,
+            stretch: true,
             forceElevated: false,
+            onStretchTrigger: () {
+              print('hi');
+              return;
+            },
             flexibleSpace: FlexibleSpaceBar(
-              centerTitle: false,
+              stretchModes: <StretchMode>[
+                StretchMode.zoomBackground,
+                StretchMode.blurBackground,
+                StretchMode.fadeTitle,
+              ],
 
+              centerTitle: false,
               title: Text(
                 appBarTitle[_selectedPage],
                 style: level2softdp.copyWith(
-                    fontWeight: FontWeight.bold, fontSize: 20),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.white),
               ),
-              background:
-              //  Image.asset('images/2.jpg', fit: BoxFit.cover,)
-              
-              Container(
-                color: softGreen,
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Image.asset(
+                    'images/2.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                  const DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment(0.0, 0.5),
+                        end: Alignment(0.0, 0.0),
+                        colors: <Color>[
+                          Color(0x60000000),
+                          Color(0x00000000),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
+
+              // Container(
+              //   color: softGreen,
+              // ),
             ),
           ),
           SliverFillRemaining(
@@ -282,8 +313,6 @@ class _DashBoardState extends State<DashBoard>
               setState(() {
                 _selectedPage = index;
               });
-
-             
             },
 
             items: [
@@ -381,7 +410,8 @@ class _DashBoardState extends State<DashBoard>
   Widget _menuButton() {
     return Padding(
       padding: EdgeInsets.only(
-        top: 15,
+        // top: 15,
+        top: 0.0,
       ),
       child: RawMaterialButton(
         onPressed: (() => _scaffoldKey.currentState.openDrawer()),

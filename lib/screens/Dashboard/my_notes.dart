@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/components/storage.dart';
 import 'package:aibirdie/components/dimissed_background.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyNotes extends StatefulWidget {
   @override
@@ -41,29 +41,29 @@ class _MyNotesState extends State<MyNotes> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 20),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "My Notes",
-                    style: TextStyle(fontSize: 35, fontFamily: 'OS_semi_bold'),
-                  ),
-                  Text("Save your notes here", style: level2softdp),
-                ],
-              ),
-              Icon(
-                FontAwesomeIcons.edit,
-                size: 30,
-              ),
-            ],
-          ),
-        ),
+        // Padding(
+        //   padding: EdgeInsets.symmetric(vertical: 20),
+        //   child: Row(
+        //     crossAxisAlignment: CrossAxisAlignment.center,
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: <Widget>[
+        //       Column(
+        //         crossAxisAlignment: CrossAxisAlignment.start,
+        //         children: <Widget>[
+        //           Text(
+        //             "My Notes",
+        //             style: TextStyle(fontSize: 35, fontFamily: 'OS_semi_bold'),
+        //           ),
+        //           Text("Save your notes here", style: level2softdp),
+        //         ],
+        //       ),
+        //       Icon(
+        //         FontAwesomeIcons.edit,
+        //         size: 30,
+        //       ),
+        //     ],
+        //   ),
+        // ),
         Container(
           margin: EdgeInsets.only(bottom: 0),
           decoration: BoxDecoration(
@@ -132,49 +132,54 @@ class _MyNotesState extends State<MyNotes> {
         ),
         noNotes == true
             ? noNotesWidget()
-            : ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: _notes.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    decoration: BoxDecoration(
-                      color: Color(0xfff5f5f5),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(-6.00, -6.00),
-                          color: Color(0xffffffff).withOpacity(0.80),
-                          blurRadius: 10,
-                        ),
-                        BoxShadow(
-                          offset: Offset(6.00, 6.00),
-                          color: Color(0xff000000).withOpacity(0.20),
-                          blurRadius: 10,
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(15.00),
-                    ),
-                    child: Dismissible(
-                      direction: DismissDirection.startToEnd,
-                      background: dismissedBackground(),
-                      onDismissed: ((dismissDirection) => deleteNoteAt(index)),
-                      key: UniqueKey(),
-                      child: ListTile(
-                        // leading: Text("${index + 1}"),
-                        title: Text(_notes[index], style: level2softdp,),
-                        trailing: IconButton(
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.red,
+            : Container(
+              // color: Colors.red,
+              height: _notes.length <= 7 ? (_notes.length * 110).toDouble() : (_notes.length * 80).toDouble(),
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: _notes.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      margin: EdgeInsets.only(bottom: 15),
+                      decoration: BoxDecoration(
+                        color: Color(0xfff5f5f5),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(-6.00, -6.00),
+                            color: Color(0xffffffff).withOpacity(0.80),
+                            blurRadius: 10,
                           ),
-                          onPressed: (() => deleteNoteAt(index)),
+                          BoxShadow(
+                            offset: Offset(6.00, 6.00),
+                            color: Color(0xff000000).withOpacity(0.20),
+                            blurRadius: 10,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(15.00),
+                      ),
+                      child: Dismissible(
+                        direction: DismissDirection.startToEnd,
+                        background: dismissedBackground(),
+                        onDismissed: ((dismissDirection) => deleteNoteAt(index)),
+                        key: UniqueKey(),
+                        child: ListTile(
+                          // leading: Text("${index + 1}"),
+                          title: Text(_notes[index], style: level2softdp,),
+                        
+                          trailing: IconButton(
+                            icon: Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                            onPressed: (() => deleteNoteAt(index)),
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
-              ),
+                    );
+                  },
+                ),
+            ),
       ],
     );
   }
