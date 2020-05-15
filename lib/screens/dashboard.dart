@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:share/share.dart';
@@ -312,48 +313,77 @@ class _DashBoardState extends State<DashBoard>
         ],
       ),
 
-      
-      bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 10.0,
-                spreadRadius: 2.0,
-                offset: Offset(
-                  0.0, // horizontal, move right 10
-                  -10.0, // vertical, move down 10
-                ),
-              ),
-            ],
+      bottomNavigationBar: CurvedNavigationBar(
+        index: _selectedPage,
+        backgroundColor: Color(0xfffafafa),
+        color: darkPurple,
+        height: 50,
+        animationCurve: Curves.easeInOut,
+        animationDuration: Duration(milliseconds: 300),
+        buttonBackgroundColor: Color(0xfffafafa),
+        items: <Widget>[
+          Icon(
+            Icons.dashboard,
+            color: softGreen,
           ),
-          child: BottomNavigationBar(
-            backgroundColor: darkPurple,
-            selectedItemColor: softGreen,
-            selectedLabelStyle: level2softg.copyWith(fontSize: 12),
-            currentIndex: _selectedPage,
-            showUnselectedLabels: false,
-            unselectedItemColor: Colors.grey,
-            onTap: (index) {
-              setState(() {
-                _selectedPage = index;
-              });
-            },
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard),
-                title: Text("Dashboard"),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.note),
-                title: Text("Notes"),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.playlist_add_check),
-                title: Text("Checklist"),
-              ),
-            ],
-          )),
+          Icon(
+            Icons.note,
+            color: softGreen,
+          ),
+          Icon(
+            Icons.playlist_add_check,
+            color: softGreen,
+          ),
+        ],
+        onTap: (index) {
+          setState(() {
+            _selectedPage = index;
+          });
+        },
+      ),
+
+      // bottomNavigationBar: Container(
+      //   decoration: BoxDecoration(
+      //     boxShadow: [
+      //       BoxShadow(
+      //         color: Colors.black26,
+      //         blurRadius: 10.0,
+      //         spreadRadius: 2.0,
+      //         offset: Offset(
+      //           0.0, // horizontal, move right 10
+      //           -10.0, // vertical, move down 10
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      //   child: BottomNavigationBar(
+      //     backgroundColor: darkPurple,
+      //     selectedItemColor: softGreen,
+      //     selectedLabelStyle: level2softg.copyWith(fontSize: 12),
+      //     currentIndex: _selectedPage,
+      //     showUnselectedLabels: false,
+      //     unselectedItemColor: Colors.grey,
+      //     onTap: (index) {
+      //       setState(() {
+      //         _selectedPage = index;
+      //       });
+      //     },
+      //     items: [
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.dashboard),
+      //         title: Text("Dashboard"),
+      //       ),
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.note),
+      //         title: Text("Notes"),
+      //       ),
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.playlist_add_check),
+      //         title: Text("Checklist"),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 
