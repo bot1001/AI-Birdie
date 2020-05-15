@@ -22,7 +22,7 @@ class DashBoard extends StatefulWidget {
 
 class _DashBoardState extends State<DashBoard>
     with SingleTickerProviderStateMixin {
-  TabController controller;
+  TabController tc;
   bool signedIn = false;
   GoogleSignIn googleSignIn = GoogleSignIn(signInOption: SignInOption.standard);
   SharedPreferences prefs;
@@ -32,15 +32,14 @@ class _DashBoardState extends State<DashBoard>
   bool showSpinner = false;
 
   int _selectedPage = 0;
-  int currentTabIndex = 0;
   final _pages = [
-    Dash(),
+    Dash(0),
     MyNotes(),
     CheckList(),
   ];
 
   var appBarTitle = [
-    "Dashboard",
+    "",
     "My Notes",
     "Checklist",
   ];
@@ -48,7 +47,7 @@ class _DashBoardState extends State<DashBoard>
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 3, vsync: this);
+    tc = TabController(length: 3, vsync: this);
 
     getSignInStatus();
   }
@@ -67,7 +66,7 @@ class _DashBoardState extends State<DashBoard>
 
   @override
   void dispose() {
-    controller.dispose();
+    tc.dispose();
     super.dispose();
   }
 
@@ -218,11 +217,41 @@ class _DashBoardState extends State<DashBoard>
             floating: false,
             pinned: true,
             stretch: true,
-            forceElevated: false,
-            onStretchTrigger: () {
-              print('hi');
-              return;
-            },
+            bottom: _selectedPage == 0
+                ? AppBar(
+                  // backgroundColor: darkPurple,
+                    leading: Container(),
+                    title: Container(
+                      height: 40,
+                      child: TabBar(
+                        indicator: BoxDecoration(
+                          color: softGreen,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        labelColor: darkPurple,
+                        labelStyle: level2softdp,
+                        unselectedLabelColor: Colors.white,
+                        unselectedLabelStyle: level2softdp,
+                        controller: tc,
+                        onTap: (index) {
+                          setState(() {
+                            _pages[0] = Dash(index);
+                          });
+                        },
+                        tabs: <Widget>[
+                          Tab(
+                            child: Text("Overview"),
+                          ),
+                          Tab(
+                            child: Text("Image"),
+                          ),
+                          Tab(
+                            child: Text("Audio"),
+                          ),
+                        ],
+                      ),
+                    ))
+                : null,
             flexibleSpace: FlexibleSpaceBar(
               stretchModes: <StretchMode>[
                 StretchMode.zoomBackground,
@@ -272,6 +301,17 @@ class _DashBoardState extends State<DashBoard>
               child: _pages[_selectedPage],
             ),
           ),
+
+          // SliverList(
+          //   delegate: SliverChildListDelegate(
+          //     [
+          //       Padding(
+          //         padding: EdgeInsets.all(15.0),
+          //         child: _pages[_selectedPage],
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
 

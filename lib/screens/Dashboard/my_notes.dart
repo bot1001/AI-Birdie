@@ -125,6 +125,8 @@ class _MyNotesState extends State<MyNotes> {
             ),
           ),
         ),
+
+
         Divider(
           height: 30,
           // thickness: 1,
@@ -133,7 +135,6 @@ class _MyNotesState extends State<MyNotes> {
         noNotes == true
             ? noNotesWidget()
             : Container(
-              // color: Colors.red,
               height: _notes.length <= 7 ? (_notes.length * 110).toDouble() : (_notes.length * 80).toDouble(),
               child: ListView.builder(
                   shrinkWrap: true,
