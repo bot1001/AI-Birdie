@@ -336,9 +336,7 @@ class _DashBoardState extends State<DashBoard>
           ),
         ],
         onTap: (index) {
-          setState(() {
-            _selectedPage = index;
-          });
+          setState(() => _selectedPage = index);
         },
       ),
 
