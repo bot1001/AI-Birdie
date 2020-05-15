@@ -98,7 +98,6 @@ class _MyNotesState extends State<MyNotes> {
                 errorBorder: InputBorder.none,
                 disabledBorder: InputBorder.none,
               ),
-              // onChanged: ((newText) => setState(() => _textInput = newText)),
               onSubmitted: (newText) async {
                 controller.clear();
                 if (newText.trim() != '') {
@@ -127,11 +126,6 @@ class _MyNotesState extends State<MyNotes> {
           ),
         ),
 
-        Divider(
-          height: 30,
-          // thickness: 1,
-          color: darkPurple,
-        ),
         noNotes == true
             ? noNotesWidget()
             : Container(

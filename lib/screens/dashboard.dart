@@ -23,13 +23,15 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard>
     with SingleTickerProviderStateMixin {
   TabController tc;
-  bool signedIn = false;
-  GoogleSignIn googleSignIn = GoogleSignIn(signInOption: SignInOption.standard);
   SharedPreferences prefs;
+
+  bool signedIn = false;
+  bool showSpinner = false;
+
   String userEmail;
   String userAccountName;
   String userPhotoURL = "https://image.flaticon.com/icons/svg/2922/2922523.svg";
-  bool showSpinner = false;
+  GoogleSignIn googleSignIn = GoogleSignIn(signInOption: SignInOption.standard);
 
   int _selectedPage = 0;
   final _pages = [
@@ -42,6 +44,24 @@ class _DashBoardState extends State<DashBoard>
     "",
     "My Notes",
     "Checklist",
+  ];
+
+  var flexTitle = [
+    Text(
+      "Dashboard",
+      style: level2softdp.copyWith(
+          fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+    ),
+    Text(
+      "My Notes",
+      style: level2softdp.copyWith(
+          fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+    ),
+    Text(
+      "Checklist",
+      style: level2softdp.copyWith(
+          fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+    ),
   ];
 
   @override
@@ -73,11 +93,6 @@ class _DashBoardState extends State<DashBoard>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Color(0xfffafafa),
-      //   elevation: 0.0,
-      //   leading: _menuButton(),
-      // ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.camera),
         backgroundColor: darkPurple,
@@ -207,7 +222,6 @@ class _DashBoardState extends State<DashBoard>
           ),
         )),
       ),
-
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -218,17 +232,18 @@ class _DashBoardState extends State<DashBoard>
             pinned: true,
             stretch: true,
             bottom: _selectedPage == 0
-                ? AppBar(
-                  // backgroundColor: darkPurple,
-                    leading: Container(),
-                    title: Container(
+                ? PreferredSize(
+                    preferredSize: Size(100, 60),
+                    child: Container(
+                      margin:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       height: 40,
                       child: TabBar(
                         indicator: BoxDecoration(
                           color: softGreen,
                           borderRadius: BorderRadius.circular(100),
                         ),
-                        labelColor: darkPurple,
+                        labelColor: Colors.white,
                         labelStyle: level2softdp,
                         unselectedLabelColor: Colors.white,
                         unselectedLabelStyle: level2softdp,
@@ -240,7 +255,7 @@ class _DashBoardState extends State<DashBoard>
                         },
                         tabs: <Widget>[
                           Tab(
-                            child: Text("Overview"),
+                            child: Text("Dashboard"),
                           ),
                           Tab(
                             child: Text("Image"),
@@ -250,16 +265,11 @@ class _DashBoardState extends State<DashBoard>
                           ),
                         ],
                       ),
-                    ))
+                    ),
+                  )
                 : null,
+            stretchTriggerOffset: 100.0,
             flexibleSpace: FlexibleSpaceBar(
-              stretchModes: <StretchMode>[
-                StretchMode.zoomBackground,
-                StretchMode.blurBackground,
-                StretchMode.fadeTitle,
-              ],
-
-              centerTitle: false,
               title: Text(
                 appBarTitle[_selectedPage],
                 style: level2softdp.copyWith(
@@ -271,27 +281,25 @@ class _DashBoardState extends State<DashBoard>
                 fit: StackFit.expand,
                 children: [
                   Image.asset(
-                    'images/2.jpg',
+                    'images/8.jpg',
                     fit: BoxFit.cover,
                   ),
-                  const DecoratedBox(
+                  DecoratedBox(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        begin: Alignment(0.0, 0.5),
+                        begin: Alignment(0.0, 0.7),
                         end: Alignment(0.0, 0.0),
                         colors: <Color>[
-                          Color(0x60000000),
-                          Color(0x00000000),
+                          darkPurple.withOpacity(0.80),
+                          Colors.transparent,
+                          // Color(0x60000000),
+                          // Color(0x00000000),
                         ],
                       ),
                     ),
                   ),
                 ],
               ),
-
-              // Container(
-              //   color: softGreen,
-              // ),
             ),
           ),
           SliverFillRemaining(
@@ -301,32 +309,12 @@ class _DashBoardState extends State<DashBoard>
               child: _pages[_selectedPage],
             ),
           ),
-
-          // SliverList(
-          //   delegate: SliverChildListDelegate(
-          //     [
-          //       Padding(
-          //         padding: EdgeInsets.all(15.0),
-          //         child: _pages[_selectedPage],
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ],
       ),
 
-      // body: SafeArea(
-      //   child: SingleChildScrollView(
-      //     child: Padding(
-      //       padding: EdgeInsets.all(15.0),
-      //       child: _pages[_selectedPage],
-      //     ),
-      //   ),
-      // ),
-
+      
       bottomNavigationBar: Container(
           decoration: BoxDecoration(
-            // borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             boxShadow: [
               BoxShadow(
                 color: Colors.black26,
@@ -338,23 +326,19 @@ class _DashBoardState extends State<DashBoard>
                 ),
               ),
             ],
-            // color: darkPurple,
           ),
           child: BottomNavigationBar(
             backgroundColor: darkPurple,
             selectedItemColor: softGreen,
             selectedLabelStyle: level2softg.copyWith(fontSize: 12),
-            // selectedIconTheme: IconThemeData(size: 25),
             currentIndex: _selectedPage,
             showUnselectedLabels: false,
             unselectedItemColor: Colors.grey,
-
             onTap: (index) {
               setState(() {
                 _selectedPage = index;
               });
             },
-
             items: [
               BottomNavigationBarItem(
                 icon: Icon(Icons.dashboard),
@@ -376,10 +360,6 @@ class _DashBoardState extends State<DashBoard>
   Widget signedInWidget() {
     return UserAccountsDrawerHeader(
       decoration: BoxDecoration(),
-      // arrowColor: softGreen,
-      onDetailsPressed: () {
-        print('hi');
-      },
       accountEmail: Text(
         "$userEmail",
         style: level2softdp,
@@ -388,7 +368,6 @@ class _DashBoardState extends State<DashBoard>
         "$userAccountName",
         style: level2softdp.copyWith(fontWeight: FontWeight.bold),
       ),
-
       currentAccountPicture: Material(
           elevation: 5.0,
           shape:
@@ -462,7 +441,7 @@ class _DashBoardState extends State<DashBoard>
               Container(
                 margin: EdgeInsets.only(bottom: 6.0),
                 height: 2.00,
-                width: 15.0,
+                width: 22.0,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(4.00),
@@ -471,7 +450,7 @@ class _DashBoardState extends State<DashBoard>
               Container(
                 margin: EdgeInsets.only(bottom: 6.0),
                 height: 2.00,
-                width: 22.0,
+                width: 15.0,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(4.00),
@@ -480,7 +459,7 @@ class _DashBoardState extends State<DashBoard>
               Container(
                 height: 2.00,
                 // width: 11.00,
-                width: 15.0,
+                width: 22.0,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(4.00),
@@ -558,32 +537,5 @@ class _DashBoardState extends State<DashBoard>
     } catch (err) {
       print('ERROR: $err');
     }
-  }
-}
-
-class CircleTabIndicator extends Decoration {
-  final BoxPainter _painter;
-
-  CircleTabIndicator({@required Color color, @required double radius})
-      : _painter = _CirclePainter(color, radius);
-
-  @override
-  BoxPainter createBoxPainter([onChanged]) => _painter;
-}
-
-class _CirclePainter extends BoxPainter {
-  final Paint _paint;
-  final double radius;
-
-  _CirclePainter(Color color, this.radius)
-      : _paint = Paint()
-          ..color = color
-          ..isAntiAlias = true;
-
-  @override
-  void paint(Canvas canvas, Offset offset, ImageConfiguration cfg) {
-    final Offset circleOffset =
-        offset + Offset(cfg.size.width / 2, cfg.size.height - radius - 5);
-    canvas.drawCircle(circleOffset, radius, _paint);
   }
 }

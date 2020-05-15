@@ -102,91 +102,88 @@ class _CheckListState extends State<CheckList> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 20),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "Checklist",
-                    style: TextStyle(fontSize: 35, fontFamily: 'OS_semi_bold'),
-                  ),
-                  Text("Which birds would you like to see?",
-                      style: level2softdp),
-                ],
-              ),
-              FloatingActionButton(
-                  backgroundColor: softGreen,
-                  child: Icon(
-                    Icons.add,
-                  ),
-                  onPressed: () {
-                    Alert(
-                      title: '',
-                      context: context,
-                      content: Column(
-                        children: <Widget>[
-                          Text(
-                            "Write a bird name",
-                            style: level2softdp.copyWith(fontSize: 25),
-                          ),
-                          TextField(
-                            decoration: InputDecoration(
-                                hintText: 'E.g. Blue Jay',
-                                hintStyle: TextStyle(fontFamily: 'OS_regular')),
-                            style: level2softdp,
-                            onChanged: (newText) {
-                              setState(() {
-                                birdInput = newText;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      buttons: [
-                        DialogButton(
-                          child: Text(
-                            'Add',
-                            style: level2softw,
-                          ),
-                          onPressed: () async {
-                            if (birdInput.trim() != '') {
-                              await appendContent(
-                                  checklistFile, "${birdInput.trim()}\n");
-                              var value =
-                                  await readContentsByLine(checklistFile);
-                              setState(() {
-                                checkList = value;
-                                noCheckList = false;
-                                isChecked.add(false);
-                              });
-                            } else {
-                              print('hahaha');
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                  action: SnackBarAction(
-                                      label: 'OK', onPressed: () {}),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  backgroundColor: darkPurple,
-                                  behavior: SnackBarBehavior.floating,
-                                  content: Text(
-                                    'You entered nothing.',
-                                    style: level2softw,
-                                  )));
-                            }
-                            Navigator.of(context).pop();
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "Add new bird",
+                  style: TextStyle(fontSize: 25, fontFamily: 'OS_semi_bold'),
+                ),
+                Text("Which birds would you like to see?",
+                    style: level2softdp),
+              ],
+            ),
+            FloatingActionButton(
+                backgroundColor: softGreen,
+                child: Icon(
+                  Icons.add,
+                ),
+                onPressed: () {
+                  Alert(
+                    title: '',
+                    context: context,
+                    content: Column(
+                      children: <Widget>[
+                        Text(
+                          "Write a bird name",
+                          style: level2softdp.copyWith(fontSize: 25),
+                        ),
+                        TextField(
+                          decoration: InputDecoration(
+                              hintText: 'E.g. Blue Jay',
+                              hintStyle: TextStyle(fontFamily: 'OS_regular')),
+                          style: level2softdp,
+                          onChanged: (newText) {
+                            setState(() {
+                              birdInput = newText;
+                            });
                           },
-                          color: softGreen,
-                        )
+                        ),
                       ],
-                    ).show();
-                  }),
-            ],
-          ),
+                    ),
+                    buttons: [
+                      DialogButton(
+                        child: Text(
+                          'Add',
+                          style: level2softw,
+                        ),
+                        onPressed: () async {
+                          if (birdInput.trim() != '') {
+                            await appendContent(
+                                checklistFile, "${birdInput.trim()}\n");
+                            var value =
+                                await readContentsByLine(checklistFile);
+                            setState(() {
+                              checkList = value;
+                              noCheckList = false;
+                              isChecked.add(false);
+                            });
+                          } else {
+                            print('hahaha');
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                                action: SnackBarAction(
+                                    label: 'OK', onPressed: () {}),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                backgroundColor: darkPurple,
+                                behavior: SnackBarBehavior.floating,
+                                content: Text(
+                                  'You entered nothing.',
+                                  style: level2softw,
+                                )));
+                          }
+                          Navigator.of(context).pop();
+                        },
+                        color: softGreen,
+                      )
+                    ],
+                  ).show();
+                }),
+          ],
         ),
         noCheckList == true
             ? noNotesWidget()
