@@ -111,105 +111,101 @@ class _ImageChipState extends State<ImageChip> {
           )
         : Container(
             height: (images.length * 130).toDouble(),
-            child: AnimationLimiter(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: images.length,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) {
-                  return AnimationConfiguration.staggeredList(
-                    position: index,
-                    duration: Duration(milliseconds: 375),
-                    child: SlideAnimation(
-                      // verticalOffset: 50.0,
-                      // scale: 1.5,
-                      horizontalOffset: 500.0,
-                      child: FadeInAnimation(
-                        child: Container(
-                          margin: EdgeInsets.only(
-                            bottom: 15,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Color(0xfff5f5f5),
-                            boxShadow: [
-                              BoxShadow(
-                                offset: Offset(-6.00, -6.00),
-                                color: Color(0xffffffff).withOpacity(0.80),
-                                blurRadius: 10,
-                              ),
-                              BoxShadow(
-                                offset: Offset(6.00, 6.00),
-                                color: Color(0xff000000).withOpacity(0.20),
-                                blurRadius: 10,
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(15.00),
-                          ),
-                          child: Dismissible(
-                            key: UniqueKey(),
-                            background: dismissedBackground(),
-                            onDismissed: (a) {
-                              deleteImage(index);
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              fullscreenDialog: false,
-                                              builder: (context) {
-                                                return ImageFull(
-                                                  inp: images[index],
-                                                );
-                                              }),
-                                        );
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.all(10.0),
-                                        child: Material(
-                                          elevation: 5.0,
-                                          // color: Colors.transparent,
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          child: Hero(
-                                            tag: '${images[index].path}',
-                                            child: CircleAvatar(
-                                              radius: 28,
-                                              backgroundImage:
-                                                  FileImage(images[index]),
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                            ),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: images.length,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) {
+                return AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: Duration(milliseconds: 300),
+                  child: ScaleAnimation(
+                    scale: 1.5,
+                    child: FadeInAnimation(
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          bottom: 15,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color(0xfff5f5f5),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(-6.00, -6.00),
+                              color: Color(0xffffffff).withOpacity(0.80),
+                              blurRadius: 10,
+                            ),
+                            BoxShadow(
+                              offset: Offset(6.00, 6.00),
+                              color: Color(0xff000000).withOpacity(0.20),
+                              blurRadius: 10,
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(15.00),
+                        ),
+                        child: Dismissible(
+                          key: UniqueKey(),
+                          background: dismissedBackground(),
+                          onDismissed: (a) {
+                            deleteImage(index);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            fullscreenDialog: false,
+                                            builder: (context) {
+                                              return ImageFull(
+                                                inp: images[index],
+                                              );
+                                            }),
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: Material(
+                                        elevation: 5.0,
+                                        // color: Colors.transparent,
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        child: Hero(
+                                          tag: '${images[index].path}',
+                                          child: CircleAvatar(
+                                            radius: 28,
+                                            backgroundImage:
+                                                FileImage(images[index]),
+                                            backgroundColor:
+                                                Colors.transparent,
                                           ),
                                         ),
                                       ),
                                     ),
-                                    titleWidget(images[index]),
-                                  ],
-                                ),
-                                IconButton(
-                                    icon: Icon(
-                                      Icons.delete,
-                                      color: Colors.red,
-                                    ),
-                                    onPressed: () {
-                                      deleteImage(index);
-                                    }),
-                              ],
-                            ),
+                                  ),
+                                  titleWidget(images[index]),
+                                ],
+                              ),
+                              IconButton(
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                  onPressed: () {
+                                    deleteImage(index);
+                                  }),
+                            ],
                           ),
-                          // ),
                         ),
+                        // ),
                       ),
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           );
   }
