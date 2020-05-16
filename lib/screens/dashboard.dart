@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:share/share.dart';
@@ -347,7 +345,7 @@ class _DashBoardState extends State<DashBoard>
                 title: Text("Checklist"),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.photo_camera),
+                icon: Icon(Icons.camera_alt),
                 title: Text("Camera"),
               ),
             ],
