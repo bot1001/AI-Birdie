@@ -43,7 +43,7 @@ class _AudioClassificationState extends State<AudioClassification> {
                 children: <Widget>[
                   DragTarget(
                     onAccept: (val) async {
-                      file = await FilePicker.getFile(type: FileType.audio);
+                      file = await FilePicker.getFile(type: FileType.audio,);
                       if (file != null) {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => AudioIdentify(file)));

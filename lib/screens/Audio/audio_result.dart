@@ -22,10 +22,8 @@ class AudioResultState extends State<AudioResult> {
   var accuracy = [];
   AiBirdieAudioClassification abac;
 
-
   @override
   void initState() {
-
     // Timer(Duration(seconds: 2), (){
     //   setState(() {
     //     _showSpinner = false;
@@ -36,45 +34,18 @@ class AudioResultState extends State<AudioResult> {
 
     predictBird();
 
-
     super.initState();
   }
 
-
-
-
-
-
-
-
-
-
-
-
   Future<void> predictBird() async {
-
-
-    abac = AiBirdieAudioClassification(inputFile: widget.file); 
-    var aa = await abac.predict();
-    print('AAAA: $aa');
-
-
+    abac = AiBirdieAudioClassification(inputFile: widget.file);
+    var species = await abac.predict();
+    print('Result: $species');
 
     setState(() {
       _showSpinner = false;
     });
   }
-
-
-
-
-
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -85,19 +56,19 @@ class AudioResultState extends State<AudioResult> {
           child: Stack(
             children: <Widget>[
               Padding(
-            padding: EdgeInsets.only(top: 100),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Results",
-                  style: level2softg.copyWith(
-                      fontSize: 35, fontFamily: 'OS_semi_bold'),
+                padding: EdgeInsets.only(top: 100),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "Results",
+                      style: level2softg.copyWith(
+                          fontSize: 35, fontFamily: 'OS_semi_bold'),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          ListView.builder(
+              ),
+              ListView.builder(
                 padding: EdgeInsets.only(top: 200),
                 itemCount: labels.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -119,7 +90,11 @@ class AudioResultState extends State<AudioResult> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
-                                  Text("Learn more", style: level2softdp.copyWith(color: Colors.blue, decoration: TextDecoration.underline,)),
+                                  Text("Learn more",
+                                      style: level2softdp.copyWith(
+                                        color: Colors.blue,
+                                        decoration: TextDecoration.underline,
+                                      )),
                                 ],
                               ),
                             ],
@@ -138,7 +113,7 @@ class AudioResultState extends State<AudioResult> {
                           ]);
                       show.show();
                     },
-                                      child: Container(
+                    child: Container(
                         child: Center(
                           child: Padding(
                             padding: EdgeInsets.symmetric(
@@ -168,7 +143,8 @@ class AudioResultState extends State<AudioResult> {
                             ),
                           ),
                         ),
-                        margin: EdgeInsets.only(bottom: 20, left: 30, right: 30),
+                        margin:
+                            EdgeInsets.only(bottom: 20, left: 30, right: 30),
                         height: 70,
                         decoration: BoxDecoration(
                           color: Color(0xfff5f5f5),
@@ -189,13 +165,8 @@ class AudioResultState extends State<AudioResult> {
                   );
                 },
               ),
-
             ],
-
           ),
-          
-
-
         ),
       ),
     );
