@@ -1,4 +1,5 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'dart:ui';
+
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:share/share.dart';
@@ -94,19 +95,13 @@ class _DashBoardState extends State<DashBoard>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.camera),
-        backgroundColor: darkPurple,
-        onPressed: (() => LandingPage.controller.animateToPage(1,
-            duration: Duration(milliseconds: 300), curve: Curves.easeInOut)),
-      ),
       key: _scaffoldKey,
       drawer: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Drawer(
             child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(5.0),
             child: Column(
               children: <Widget>[
                 signedIn ? signedInWidget() : notSignedInWidget(),
@@ -312,76 +307,53 @@ class _DashBoardState extends State<DashBoard>
           ),
         ],
       ),
-
-      bottomNavigationBar: CurvedNavigationBar(
-        index: _selectedPage,
-        backgroundColor: Color(0xfffafafa),
-        color: darkPurple,
-        height: 50,
-        animationCurve: Curves.easeInOut,
-        animationDuration: Duration(milliseconds: 300),
-        buttonBackgroundColor: Color(0xfffafafa),
-        items: <Widget>[
-          Icon(
-            Icons.dashboard,
-            color: softGreen,
+      bottomNavigationBar: Container(
+        height: 70,
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: darkPurple,
+            selectedItemColor: softGreen,
+            selectedLabelStyle: level2softg.copyWith(fontSize: 12),
+            currentIndex: _selectedPage,
+            showUnselectedLabels: false,
+            unselectedItemColor: Colors.grey,
+            onTap: (index) {
+              if (index == 3) {
+                LandingPage.controller.animateToPage(1,
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeInOut);
+              } else
+                setState(() => _selectedPage = index);
+            },
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.dashboard),
+                title: Text("Dashboard"),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.note),
+                title: Text("Notes"),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.playlist_add_check),
+                title: Text("Checklist"),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.photo_camera),
+                title: Text("Camera"),
+              ),
+            ],
           ),
-          Icon(
-            Icons.note,
-            color: softGreen,
-          ),
-          Icon(
-            Icons.playlist_add_check,
-            color: softGreen,
-          ),
-        ],
-        onTap: (index) {
-          setState(() => _selectedPage = index);
-        },
+        ),
       ),
-
-      // bottomNavigationBar: Container(
-      //   decoration: BoxDecoration(
-      //     boxShadow: [
-      //       BoxShadow(
-      //         color: Colors.black26,
-      //         blurRadius: 10.0,
-      //         spreadRadius: 2.0,
-      //         offset: Offset(
-      //           0.0, // horizontal, move right 10
-      //           -10.0, // vertical, move down 10
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      //   child: BottomNavigationBar(
-      //     backgroundColor: darkPurple,
-      //     selectedItemColor: softGreen,
-      //     selectedLabelStyle: level2softg.copyWith(fontSize: 12),
-      //     currentIndex: _selectedPage,
-      //     showUnselectedLabels: false,
-      //     unselectedItemColor: Colors.grey,
-      //     onTap: (index) {
-      //       setState(() {
-      //         _selectedPage = index;
-      //       });
-      //     },
-      //     items: [
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.dashboard),
-      //         title: Text("Dashboard"),
-      //       ),
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.note),
-      //         title: Text("Notes"),
-      //       ),
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.playlist_add_check),
-      //         title: Text("Checklist"),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 
