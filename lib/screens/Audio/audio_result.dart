@@ -1,11 +1,7 @@
 import 'dart:io';
-// import 'dart:async';
 import 'package:aibirdie/APIs/aibirdie_audio_api/request.dart';
-// import 'package:aibirdie/screens/Audio/audio_identify.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
-// import 'package:http/http.dart' as http;
-// import 'package:http/http.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -43,6 +39,17 @@ class AudioResultState extends State<AudioResult> {
     print('Result: $species');
 
     setState(() {
+      labels.add(species['0'].toString().split(":").first.substring(1));
+      labels.add(species['1'].toString().split(":").first.substring(1));
+      labels.add(species['2'].toString().split(":").first.substring(1));
+
+      accuracy.add(
+          '${species['0'].toString().split(":").last.substring(0, species['0'].toString().split(":").last.length - 1)} %');
+      accuracy.add(
+          '${species['1'].toString().split(":").last.substring(0, species['1'].toString().split(":").last.length - 1)} %');
+      accuracy.add(
+          '${species['2'].toString().split(":").last.substring(0, species['2'].toString().split(":").last.length - 1)} %');
+
       _showSpinner = false;
     });
   }

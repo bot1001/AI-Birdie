@@ -275,8 +275,9 @@ class _DashBoardState extends State<DashBoard>
                 fit: StackFit.expand,
                 children: [
                   Image.asset(
-                    'images/8.jpg',
+                    'images/5.jpg',
                     fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
                   ),
                   DecoratedBox(
                     decoration: BoxDecoration(
