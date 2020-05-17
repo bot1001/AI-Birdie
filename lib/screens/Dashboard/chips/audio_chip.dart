@@ -333,18 +333,14 @@ class _AudioChipState extends State<AudioChip>
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                      child: CircleAvatar(
-                        radius: 15,
-                        backgroundColor: softGreen,
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                          size: 15,
-                        ),
+                      child: Icon(
+                        Icons.music_note,
+                        color: Colors.grey,
+                        size: 30,
                       ),
                     ),
                     Text(
-                      "and then go to Audio section.",
+                      "on the camera screen.",
                       style: level2softdp,
                     ),
                   ],

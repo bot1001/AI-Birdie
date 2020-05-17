@@ -34,7 +34,7 @@ final TextStyle level2g = TextStyle(
     color: softGreen);
 final TextStyle level1dp = TextStyle(
     fontSize: 15,
-    // fontFamily: 'M_medium',
+    fontFamily: 'OS_regular',
     color: darkPurple);
 
 final TextStyle level2w = TextStyle(

@@ -46,29 +46,11 @@ class _DashBoardState extends State<DashBoard>
     "Checklist",
   ];
 
-  var flexTitle = [
-    Text(
-      "Dashboard",
-      style: level2softdp.copyWith(
-          fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
-    ),
-    Text(
-      "My Notes",
-      style: level2softdp.copyWith(
-          fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
-    ),
-    Text(
-      "Checklist",
-      style: level2softdp.copyWith(
-          fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
-    ),
-  ];
 
   @override
   void initState() {
     super.initState();
     tc = TabController(length: 3, vsync: this);
-
     getSignInStatus();
   }
 
@@ -103,7 +85,8 @@ class _DashBoardState extends State<DashBoard>
             child: Column(
               children: <Widget>[
                 signedIn ? signedInWidget() : notSignedInWidget(),
-                signedIn ? Container() : signInWithGoogleButton(),
+                // signedIn ? Container() : signInWithGoogleButton(),
+                // Above line is temporarily commented
                 ListTile(
                   leading: Icon(
                     Icons.info_outline,
@@ -187,8 +170,18 @@ class _DashBoardState extends State<DashBoard>
                   },
                 ),
                 ListTile(
-                  // enabled: false,
-
+                  onTap: () {
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                        action: SnackBarAction(label: 'OK', onPressed: () {}, ),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        backgroundColor: darkPurple,
+                        behavior: SnackBarBehavior.floating,
+                        content: Text(
+                          'Settings are not available yet. Be patient.',
+                          style: level2softw,
+                        )));
+                  },
                   leading: Icon(
                     Icons.settings,
                     color: darkPurple,
@@ -382,6 +375,18 @@ class _DashBoardState extends State<DashBoard>
 
   Widget notSignedInWidget() {
     return UserAccountsDrawerHeader(
+      onDetailsPressed: () {
+        Scaffold.of(context).showSnackBar(SnackBar(
+            action: SnackBarAction(label: 'OK', onPressed: () {}),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+            backgroundColor: darkPurple,
+            behavior: SnackBarBehavior.floating,
+            content: Text(
+              'Functionality temporarily disabled. Crowd sourcing module is pending.',
+              style: level2softw,
+            )));
+      },
       decoration: BoxDecoration(),
       accountEmail: Text(
         "Use your google account to sign in.",
