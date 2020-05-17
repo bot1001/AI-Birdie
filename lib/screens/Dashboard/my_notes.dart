@@ -210,6 +210,7 @@ class _MyNotesState extends State<MyNotes> {
 
   Widget noNotesWidget() {
     return Container(
+        margin: EdgeInsets.only(top: 20),
         decoration: BoxDecoration(
           color: Color(0xfff5f5f5),
           boxShadow: [
