@@ -242,7 +242,7 @@ class _DashBoardState extends State<DashBoard>
                         },
                         tabs: <Widget>[
                           Tab(
-                            child: Text("Dashboard"),
+                            child: Text("Overview"),
                           ),
                           Tab(
                             child: Text("Image"),
