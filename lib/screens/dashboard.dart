@@ -258,12 +258,12 @@ class _DashBoardState extends State<DashBoard>
             stretchTriggerOffset: 100.0,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
-                appBarTitle[_selectedPage],
-                style: level2softdp.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.white),
-              ),
+                  appBarTitle[_selectedPage],
+                  style: level2softdp.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.white),
+                ),
               background: Stack(
                 fit: StackFit.expand,
                 children: [

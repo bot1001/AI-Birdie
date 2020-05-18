@@ -16,8 +16,7 @@ void main() async {
     Permission.camera,
     Permission.microphone,
   ].request();
-      runApp(MyApp());
-  
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -25,9 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'AI Birdie',
-      theme: ThemeData(
-          // primarySwatch: Color(0xff1D1B27),
-          primaryColor: darkPurple),
+      theme: ThemeData(primaryColor: darkPurple),
       home: LandingPage(cameras),
       debugShowCheckedModeBanner: false,
     );

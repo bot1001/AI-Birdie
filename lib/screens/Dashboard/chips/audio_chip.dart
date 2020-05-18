@@ -282,8 +282,8 @@ class _AudioChipState extends State<AudioChip>
           setState(() => seekPosition = a.inMicroseconds.toDouble() / 1000000));
       File f = audios[index];
       audioPlayer.play(f.path, isLocal: true);
-      audioPlayer.durationHandler = (duration) => setState(
-          () => audioDuration = duration.inMicroseconds.toDouble() / 1000000);
+      // audioPlayer.durationHandler = (duration) => setState(
+      //     () => audioDuration = duration.inMicroseconds.toDouble() / 1000000);
     }
     audioPlayer.onPlayerCompletion
         .listen((event) => setState(() => isPlaying[index] = false));
