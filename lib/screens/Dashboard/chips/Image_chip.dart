@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:animations/animations.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:intl/intl.dart';
@@ -175,8 +176,7 @@ class _ImageChipState extends State<ImageChip> {
                                             radius: 28,
                                             backgroundImage:
                                                 FileImage(images[index]),
-                                            backgroundColor:
-                                                Colors.transparent,
+                                            backgroundColor: Colors.transparent,
                                           ),
                                         ),
                                       ),
@@ -186,17 +186,17 @@ class _ImageChipState extends State<ImageChip> {
                                 ],
                               ),
                               IconButton(
-                                  icon: Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                  ),
-                                  onPressed: () {
-                                    deleteImage(index);
-                                  }),
+                                icon: Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                                onPressed: () {
+                                  deleteImage(index);
+                                },
+                              ),
                             ],
                           ),
                         ),
-                        // ),
                       ),
                     ),
                   ),
