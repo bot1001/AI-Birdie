@@ -285,11 +285,8 @@ class _AudioChipState extends State<AudioChip>
       File f = audios[index];
       audioPlayer.play(f.path, isLocal: true);
 
-      audioPlayer.onDurationChanged.listen((event) { 
-        setState(() {
-          audioDuration = event.inMicroseconds.toDouble() / 1000000;
-        });
-      });
+      audioPlayer.onDurationChanged.listen((event) => setState(
+          () => audioDuration = event.inMicroseconds.toDouble() / 1000000));
 
       // audioPlayer.durationHandler = (duration) => setState((){
       //   print(duration.inSeconds);

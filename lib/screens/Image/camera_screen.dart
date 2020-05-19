@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,8 @@ class _CameraScreenState extends State<CameraScreen> {
   var animatedBorder = Colors.white;
   // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  bool flashOn = false;
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +39,7 @@ class _CameraScreenState extends State<CameraScreen> {
       animatedColor = null;
       animatedBorder = Colors.white;
     });
+
   }
 
   @override
@@ -69,40 +73,57 @@ class _CameraScreenState extends State<CameraScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(
-                              "AI Birdie",
-                              style: level2softw.copyWith(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.add_photo_alternate,
-                                color: Colors.white,
-                                size: 35,
-                              ),
-                              onPressed: () async {
-                                File image = await ImagePicker.pickImage(
-                                    source: ImageSource.gallery);
-                                // print(image.path);
-                                if (image != null)
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          ImageResult(image),
-                                    ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "AI Birdie",
+                                  style: level2softw.copyWith(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.add_photo_alternate,
+                                    color: Colors.white,
+                                    size: 35,
+                                  ),
+                                  onPressed: () async {
+                                    File image = await ImagePicker.pickImage(
+                                        source: ImageSource.gallery);
+                                    // print(image.path);
+                                    if (image != null)
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ImageResult(image),
+                                        ),
 
 /*  original */
-                                    // MaterialPageRoute(
-                                    //   builder: (context) =>
-                                    //       PreviewPage(image, Storage()),
-                                    // ),
-                                  );
+                                        // MaterialPageRoute(
+                                        //   builder: (context) =>
+                                        //       PreviewPage(image, Storage()),
+                                        // ),
+                                      );
+                                  },
+                                )
+                              ],
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  flashOn = !flashOn;
+                                });
                               },
-                            )
+                              child: Icon(
+                                flashOn ? Icons.flash_on : Icons.flash_off,
+                                color: Colors.white,
+                              ),
+                            ),
                           ],
                         ),
                         // Expanded(
@@ -290,16 +311,18 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   void _onCapturePressed(context) async {
+    if (flashOn) {}
     try {
       final path =
           '/storage/emulated/0/AiBirdie/Images/${DateTime.now().toString()}.png';
 
       await controller.takePicture(path);
 
+      if (flashOn) {}
+
       Navigator.push(
         context,
-
-       MaterialPageRoute(
+        MaterialPageRoute(
           builder: (context) => ImageResult(File(path)),
         ),
 
