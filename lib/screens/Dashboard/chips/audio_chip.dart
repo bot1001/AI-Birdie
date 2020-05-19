@@ -70,10 +70,10 @@ class _AudioChipState extends State<AudioChip>
                 return AnimationConfiguration.staggeredList(
                   position: index,
                   duration: Duration(milliseconds: 300),
-                                  child: ScaleAnimation(
+                  child: ScaleAnimation(
                     scale: 1.5,
-                                    child: FadeInAnimation(
-                                      child: AnimatedContainer(
+                    child: FadeInAnimation(
+                      child: AnimatedContainer(
                         padding: EdgeInsets.symmetric(
                           vertical: isPlaying[index] == true ? 20 : 0,
                         ),
@@ -104,7 +104,6 @@ class _AudioChipState extends State<AudioChip>
                           direction: DismissDirection.startToEnd,
                           onDismissed: (dismissDirection) {
                             deleteAudio(index);
-
                             if (isPlaying[index] == true) {
                               audioPlayer.stop();
                             }
@@ -148,10 +147,10 @@ class _AudioChipState extends State<AudioChip>
                                         elevation: 5.0,
                                         color: softGreen,
                                         shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(100)),
+                                            borderRadius:
+                                                BorderRadius.circular(100)),
                                         onPressed: () {
                                           rotationController.repeat();
-
                                           playAudio(index);
                                         },
                                         child: Icon(
@@ -173,17 +172,19 @@ class _AudioChipState extends State<AudioChip>
                                             ? Color(0xffff2c55)
                                             : Colors.black38,
                                         inactiveColor: Color(0xffe7e6eb),
-                                        value: isPlaying[index] ? seekPosition : 0,
+                                        value:
+                                            isPlaying[index] ? seekPosition : 0,
                                         min: 0,
                                         max: audioDuration,
                                         onChanged: ((value) {
                                           if (isPlaying[index])
-                                            setState(() => seekPosition = value);
+                                            setState(
+                                                () => seekPosition = value);
                                         }),
                                         onChangeEnd: (value) {
                                           if (isPlaying[index]) {
-                                            audioPlayer.seek(
-                                                Duration(seconds: value.toInt()));
+                                            audioPlayer.seek(Duration(
+                                                seconds: value.toInt()));
                                           }
                                         },
                                       ),
@@ -193,7 +194,8 @@ class _AudioChipState extends State<AudioChip>
                                                   horizontal: 20),
                                               child: Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.spaceBetween,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: <Widget>[
                                                   dancingBars(),
                                                   TimerBuilder.periodic(
@@ -260,7 +262,7 @@ class _AudioChipState extends State<AudioChip>
 
   void playAudio(int index) {
     //This is very complicated method, do not even try to understand it..
-    //Even if I look back at this afterwhile, I won't get it 😂😂😂
+    //Even if I look back at this after a while, I won't get it 😂😂😂
 
     if (isPlaying.indexOf(true) != -1 && isPlaying[index] == false) {
       audioPlayer.stop();
@@ -282,8 +284,20 @@ class _AudioChipState extends State<AudioChip>
           setState(() => seekPosition = a.inMicroseconds.toDouble() / 1000000));
       File f = audios[index];
       audioPlayer.play(f.path, isLocal: true);
-      // audioPlayer.durationHandler = (duration) => setState(
-      //     () => audioDuration = duration.inMicroseconds.toDouble() / 1000000);
+
+      audioPlayer.onDurationChanged.listen((event) { 
+        setState(() {
+          audioDuration = event.inMicroseconds.toDouble() / 1000000;
+        });
+      });
+
+      // audioPlayer.durationHandler = (duration) => setState((){
+      //   print(duration.inSeconds);
+
+      // audioDuration = duration.inMicroseconds.toDouble() / 1000000;
+
+      // });
+
     }
     audioPlayer.onPlayerCompletion
         .listen((event) => setState(() => isPlaying[index] = false));
