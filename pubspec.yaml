@@ -24,8 +24,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   image_picker: ^0.6.2+1
-  datetime_picker_formfield: ^0.4.3
-  geolocator: ^5.1.5
+  # datetime_picker_formfield: ^0.4.3
+  # geolocator: ^5.1.5
   camera: ^0.5.7+4
   path_provider: ^1.6.7
   path: ^1.6.4
@@ -48,7 +48,10 @@ dependencies:
   google_sign_in: ^4.4.6
   flutter_staggered_animations: ^0.1.2
   requests: ^3.1.0
-  # animations: ^1.0.0+5
+  hardware_buttons: ^1.0.0
+
+
+
 
 
   grpc: ^2.1.3

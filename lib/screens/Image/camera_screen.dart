@@ -9,7 +9,6 @@ import 'package:aibirdie/constants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:aibirdie/screens/landing_page.dart';
 import 'package:aibirdie/screens/Image/image_result.dart';
-// import 'package:assets_audio_player/assets_audio_player.dart';
 
 class CameraScreen extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -33,13 +32,15 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   void initState() {
     super.initState();
-    _initCameraController(widget.cameras[0]).then((void v) {});
+    _initCameraController(widget.cameras.first).then((void v) {});
     setState(() {
       animatedHeight = 80.0;
       animatedMargin = 5.0;
       animatedColor = null;
       animatedBorder = Colors.white;
     });
+
+
 
   }
 
@@ -74,59 +75,42 @@ class _CameraScreenState extends State<CameraScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  "AI Birdie",
-                                  style: level2softw.copyWith(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.add_photo_alternate,
-                                    color: Colors.white,
-                                    size: 35,
-                                  ),
-                                  onPressed: () async {
-                                    File image = await ImagePicker.pickImage(
-                                        source: ImageSource.gallery);
-                                    // print(image.path);
-                                    if (image != null)
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              ImageResult(image),
-                                        ),
+                            Text(
+                              "AI Birdie",
+                              style: level2softw.copyWith(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.add_photo_alternate,
+                                color: Colors.white,
+                                size: 35,
+                              ),
+                              onPressed: () async {
+                                File image = await ImagePicker.pickImage(
+                                    source: ImageSource.gallery);
+                                // print(image.path);
+                                if (image != null)
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ImageResult(image),
+                                    ),
 
 /*  original */
-                                        // MaterialPageRoute(
-                                        //   builder: (context) =>
-                                        //       PreviewPage(image, Storage()),
-                                        // ),
-                                      );
-                                  },
-                                )
-                              ],
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  flashOn = !flashOn;
-                                });
+                                    // MaterialPageRoute(
+                                    //   builder: (context) =>
+                                    //       PreviewPage(image, Storage()),
+                                    // ),
+                                  );
                               },
-                              child: Icon(
-                                flashOn ? Icons.flash_on : Icons.flash_off,
-                                color: Colors.white,
-                              ),
-                            ),
+                            )
                           ],
                         ),
+
                         // Expanded(
                         //   child: Container(
                         //     color: Colors.red,
@@ -169,8 +153,8 @@ class _CameraScreenState extends State<CameraScreen> {
                                 ),
                               ),
                               onTap: () {
-
-                               audioCache.play('camera_click.ogg', mode: PlayerMode.LOW_LATENCY);
+                                audioCache.play('camera_click.ogg',
+                                    mode: PlayerMode.LOW_LATENCY);
 
                                 setState(() {
                                   animatedHeight = 90;
@@ -317,7 +301,9 @@ class _CameraScreenState extends State<CameraScreen> {
       final path =
           '/storage/emulated/0/AiBirdie/Images/${DateTime.now().toString()}.png';
 
-      await controller.takePicture(path);
+      await controller.takePicture(
+        path,
+      );
 
       if (flashOn) {}
 
