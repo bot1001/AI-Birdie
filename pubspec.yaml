@@ -19,43 +19,76 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # image
+  camera: ^0.5.8+1
+  image_picker: ^0.6.6+4
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
-  image_picker: ^0.6.2+1
-  # datetime_picker_formfield: ^0.4.3
-  # geolocator: ^5.1.5
-  camera: ^0.5.7+4
-  path_provider: ^1.6.7
-  path: ^1.6.4
-  rflutter_alert: ^1.0.3
-  font_awesome_flutter: ^8.5.0
-  file_picker: ^1.4.3+2
+  # audio
   flutter_audio_recorder: ^0.5.5
-  audioplayers: ^0.13.5
+  audioplayers: ^0.15.1
+
+  # networking
   http: ^0.12.1
-  share: ^0.6.3+5
-  flutter_email_sender: ^2.2.2
-  url_launcher: ^5.4.1
-  flutter_animation_set: ^0.0.4
-  flutter_timer: ^0.0.6
-  modal_progress_hud: ^0.1.3
-  shared_preferences: ^0.5.7+2
-  permission_handler: ^5.0.0+hotfix.4
-  intl: ^0.15.8
-  timer_builder: ^1.3.0
-  google_sign_in: ^4.4.6
-  flutter_staggered_animations: ^0.1.2
+  google_sign_in: ^4.5.0
   requests: ^3.1.0
-  hardware_buttons: ^1.0.0
 
+  # file io
+  path_provider: ^1.6.8
+  path: ^1.6.4
+  file_picker: ^1.9.0+1
 
+  # animations
+  flutter_animation_set: ^0.0.4
+  flutter_staggered_animations: ^0.1.2
+  modal_progress_hud: ^0.1.3
 
+  # utilities
+  share: ^0.6.4+2
+  url_launcher: ^5.4.7
+  flutter_timer: ^0.0.6
+  timer_builder: ^1.3.0
+  rflutter_alert: ^1.0.3
+  font_awesome_flutter: ^8.8.1
+  flutter_email_sender: ^3.0.1
 
+  # os
+  shared_preferences: ^0.5.7+2
+  permission_handler: ^5.0.0+hotfix.6
+  intl: ^0.16.1
 
+  # API
   grpc: ^2.1.3
   protobuf: ^1.0.1
+
+
+
+  # Old dependencies incase something goes wrong
+  # image_picker: ^0.6.2+1
+  # datetime_picker_formfield: ^0.4.3
+  # geolocator: ^5.1.5
+  # camera: ^0.5.7+4
+  # path_provider: ^1.6.7
+  # path: ^1.6.4
+  # rflutter_alert: ^1.0.3
+  # font_awesome_flutter: ^8.5.0
+  # file_picker: ^1.4.3+2
+  # flutter_audio_recorder: ^0.5.5
+  # audioplayers: ^0.13.5
+  # http: ^0.12.1
+  # share: ^0.6.3+5
+  # flutter_email_sender: ^2.2.2
+  # url_launcher: ^5.4.1
+  # flutter_animation_set: ^0.0.4
+  # flutter_timer: ^0.0.6
+  # modal_progress_hud: ^0.1.3
+  # shared_preferences: ^0.5.7+2
+  # permission_handler: ^5.0.0+hotfix.4
+  # intl: ^0.15.8
+  # timer_builder: ^1.3.0
+  # google_sign_in: ^4.4.6
+  # flutter_staggered_animations: ^0.1.2
+  # requests: ^3.1.0
+  # hardware_buttons: ^1.0.0
 
 
 
