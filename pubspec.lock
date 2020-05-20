@@ -15,13 +15,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.0"
-  assets_audio_player:
-    dependency: "direct main"
-    description:
-      name: assets_audio_player
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.4.7+4"
   async:
     dependency: transitive
     description:
@@ -443,13 +436,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  rxdart:
-    dependency: transitive
-    description:
-      name: rxdart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.24.1"
   share:
     dependency: "direct main"
     description:

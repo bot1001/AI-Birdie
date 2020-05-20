@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -7,7 +9,7 @@ import 'package:aibirdie/constants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:aibirdie/screens/landing_page.dart';
 import 'package:aibirdie/screens/Image/image_result.dart';
-import 'package:assets_audio_player/assets_audio_player.dart';
+// import 'package:assets_audio_player/assets_audio_player.dart';
 
 class CameraScreen extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -24,7 +26,7 @@ class _CameraScreenState extends State<CameraScreen> {
   var animatedMargin = 10.0;
   var animatedColor;
   var animatedBorder = Colors.white;
-  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  AudioCache audioCache = AudioCache();
 
   bool flashOn = false;
 
@@ -32,7 +34,6 @@ class _CameraScreenState extends State<CameraScreen> {
   void initState() {
     super.initState();
     _initCameraController(widget.cameras[0]).then((void v) {});
-    // print("camera initiated");
     setState(() {
       animatedHeight = 80.0;
       animatedMargin = 5.0;
@@ -168,9 +169,9 @@ class _CameraScreenState extends State<CameraScreen> {
                                 ),
                               ),
                               onTap: () {
-                                AssetsAudioPlayer.playAndForget(
-                                    Audio('images/camera_click.ogg'),
-                                    volume: 0.5);
+
+                               audioCache.play('camera_click.ogg', mode: PlayerMode.LOW_LATENCY);
+
                                 setState(() {
                                   animatedHeight = 90;
                                   animatedMargin = 0;
