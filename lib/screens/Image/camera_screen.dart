@@ -299,7 +299,7 @@ class _CameraScreenState extends State<CameraScreen> {
     if (flashOn) {}
     try {
       final path =
-          '/storage/emulated/0/AiBirdie/Images/${DateTime.now().toString()}.png';
+          '/storage/emulated/0/AiBirdie/Images/${DateTime.now().toString()}.jpg';
 
       await controller.takePicture(
         path,
