@@ -20,35 +20,26 @@ class AudioResultState extends State<AudioResult> {
 
   @override
   void initState() {
-    // Timer(Duration(seconds: 2), (){
-    //   setState(() {
-    //     _showSpinner = false;
-    //     labels = ['Rock Bunting','Chestnutcrowned Laughingthrush','Bspotted Nutcracker'];
-    //     accuracy = ['90%','89.02%','85.65%'];
-    //   });
-    // });
-
     predictBird();
-
     super.initState();
   }
 
   Future<void> predictBird() async {
     abac = AiBirdieAudioClassification(inputFile: widget.file);
-    var species = await abac.predict();
-    print('Result: $species');
+    var result = await abac.predict();
+    // print('Result: $result');
 
     setState(() {
-      labels.add(species['0'].toString().split(":").first.substring(1));
-      labels.add(species['1'].toString().split(":").first.substring(1));
-      labels.add(species['2'].toString().split(":").first.substring(1));
+      labels.add(result['0'].toString().split(":").first.substring(1));
+      labels.add(result['1'].toString().split(":").first.substring(1));
+      labels.add(result['2'].toString().split(":").first.substring(1));
 
       accuracy.add(
-          '${species['0'].toString().split(":").last.substring(0, species['0'].toString().split(":").last.length - 1)} %');
+          '${result['0'].toString().split(":").last.substring(0, result['0'].toString().split(":").last.length - 1)} %');
       accuracy.add(
-          '${species['1'].toString().split(":").last.substring(0, species['1'].toString().split(":").last.length - 1)} %');
+          '${result['1'].toString().split(":").last.substring(0, result['1'].toString().split(":").last.length - 1)} %');
       accuracy.add(
-          '${species['2'].toString().split(":").last.substring(0, species['2'].toString().split(":").last.length - 1)} %');
+          '${result['2'].toString().split(":").last.substring(0, result['2'].toString().split(":").last.length - 1)} %');
 
       _showSpinner = false;
     });

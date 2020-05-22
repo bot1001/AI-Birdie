@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:aibirdie/components/waves.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/components/buttons.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_timer/flutter_timer.dart';
 import 'package:aibirdie/screens/Audio/audio_identify.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:flutter_animation_set/widget/transition_animations.dart';
+import 'package:timer_builder/timer_builder.dart';
 
 class AudioRecord extends StatefulWidget {
   @override
@@ -26,7 +28,7 @@ class _AudioRecordState extends State<AudioRecord> {
   Future startRecording() async {
     final String filePath =
         '/storage/emulated/0/AiBirdie/Audios/${DateTime.now().millisecondsSinceEpoch.toString()}.wav';
-    recorder = FlutterAudioRecorder(filePath, audioFormat: AudioFormat.WAV);
+    recorder = FlutterAudioRecorder(filePath, audioFormat: AudioFormat.WAV, );
 
     await FlutterAudioRecorder.hasPermissions;
 
@@ -50,33 +52,61 @@ class _AudioRecordState extends State<AudioRecord> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
+                // Hero(
+                //   tag: 'mic',
+                //   child: Container(
+                //     width: 80,
+                //     height: 80,
+                //     child: RaisedButton(
+                //         color: softGreen,
+                //         shape: RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.circular(100),
+                //         ),
+                //         child: Icon(
+                //           Icons.mic,
+                //           size: 30,
+                //           color: Colors.white,
+                //         ),
+                //         onPressed: () {}),
+                //   ),
+                // ),
                 Hero(
                   tag: 'mic',
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    child: RaisedButton(
-                        color: Color(0xff8fc551),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100),
+                                  child: Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      Container(
+                        child: YYDoubleBounce(),
+                        width: 100,
+                        height: 100,
+                      ),
+                      TimerBuilder.periodic(
+                        Duration(
+                          milliseconds: 1000
                         ),
-                        child: Icon(
-                          Icons.mic,
-                          size: 30,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {}),
+                        builder: (context) {
+                        
+                        return AnimatedContainer(
+                          duration: Duration(milliseconds: 1000),
+                          child: Icon(
+                            Icons.mic,
+                            size: 50,
+                            color: softGreen,
+                          ),
+                        );
+                        }
+
+
+                      ),
+                    ],
                   ),
-                ),
-                Container(
-                  child: YYDoubleBounce(),
-                  color: Colors.black,
-                  width: 50,
-                  height: 50,
                 ),
                 Text(
                   "Recording...",
                   style: level2w,
+                ),
+                AnimatedWave(
+                  barColor: Colors.white,
                 ),
                 TikTikTimer(
                   initialDate: DateTime.now(),
