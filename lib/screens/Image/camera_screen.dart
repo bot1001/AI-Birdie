@@ -10,6 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:aibirdie/screens/landing_page.dart';
 import 'package:aibirdie/screens/Image/image_result.dart';
 
+import '../landing_page.dart';
+
 class CameraScreen extends StatefulWidget {
   final List<CameraDescription> cameras;
   CameraScreen(this.cameras);
@@ -28,6 +30,8 @@ class _CameraScreenState extends State<CameraScreen> {
   AudioCache audioCache = AudioCache();
 
   bool flashOn = false;
+  bool sessionOn = false;
+  int sessionImageCount = 0;
 
   @override
   void initState() {
@@ -39,14 +43,14 @@ class _CameraScreenState extends State<CameraScreen> {
       animatedColor = null;
       animatedBorder = Colors.white;
     });
-
-
-
   }
 
   @override
   void dispose() {
     controller?.dispose();
+    setState(() {
+      sessionOn = false;
+    });
     super.dispose();
   }
 
@@ -166,55 +170,107 @@ class _CameraScreenState extends State<CameraScreen> {
                               },
                             ),
                             Row(
+                              // crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Column(
-                                  children: <Widget>[
-                                    IconButton(
-                                      onPressed: () {
-                                        LandingPage.controller.animateToPage(0,
-                                            duration:
-                                                Duration(milliseconds: 300),
-                                            curve: Curves.easeInOut);
-                                        // controller.dispose();
-                                      },
-                                      icon: Icon(
-                                        Icons.dashboard,
-                                        color: Colors.white,
-                                        size: 35,
+                                Container(
+                                  width: 100,
+                                  child: Column(
+                                    children: <Widget>[
+                                      IconButton(
+                                        onPressed: () {
+                                          LandingPage.controller.animateToPage(
+                                              0,
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              curve: Curves.easeInOut);
+                                          // controller.dispose();
+                                        },
+                                        icon: Icon(
+                                          Icons.dashboard,
+                                          color: Colors.white,
+                                          size: 35,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      "Dashboard",
-                                      style: level2softw.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ],
+                                      Text(
+                                        "Dashboard",
+                                        style: level2softw.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                                 Column(
                                   children: <Widget>[
-                                    IconButton(
-                                      onPressed: (() => LandingPage.controller
-                                          .animateToPage(2,
-                                              duration:
-                                                  Duration(milliseconds: 300),
-                                              curve: Curves.easeInOut)),
-                                      // onPressed: () => myTransition(
-                                      //     context, 1.0, 0.0, AudioClassification()),
-                                      icon: Icon(
-                                        Icons.audiotrack,
-                                        color: Colors.white,
-                                        size: 30,
-                                      ),
+                                    SizedBox(
+                                      height: 10,
                                     ),
-                                    Text(
-                                      "Audio",
-                                      style: level2softw.copyWith(
-                                        fontWeight: FontWeight.bold,
+                                    Visibility(
+                                      visible: sessionOn,
+                                      child: AnimatedContainer(
+                                        duration: Duration(milliseconds: 300),
+                                        child: Stack(
+                                          alignment: Alignment.topRight,
+                                          children: <Widget>[
+                                            IconButton(
+                                              icon: Icon(
+                                                Icons.photo_library,
+                                                color: Colors.white,
+                                                size: 30,
+                                              ),
+                                              onPressed: () {
+                                                LandingPage.camController
+                                                    .animateToPage(1,
+                                                        duration: Duration(
+                                                            milliseconds: 300),
+                                                        curve:
+                                                            Curves.easeInOut);
+                                              },
+                                            ),
+                                            CircleAvatar(
+                                              backgroundColor: softGreen,
+                                              radius: 8,
+                                              child: Text(
+                                                sessionImageCount.toString(),
+                                                style: level2softw.copyWith(
+                                                    fontSize: 10,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],
+                                ),
+                                Container(
+                                  width: 100,
+                                  child: Column(
+                                    children: <Widget>[
+                                      IconButton(
+                                        onPressed: (() => LandingPage.controller
+                                            .animateToPage(2,
+                                                duration:
+                                                    Duration(milliseconds: 300),
+                                                curve: Curves.easeInOut)),
+                                        // onPressed: () => myTransition(
+                                        //     context, 1.0, 0.0, AudioClassification()),
+                                        icon: Icon(
+                                          Icons.audiotrack,
+                                          color: Colors.white,
+                                          size: 30,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Audio",
+                                        style: level2softw.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -296,7 +352,10 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   void _onCapturePressed(context) async {
-    if (flashOn) {}
+    setState(() {
+      sessionOn = true;
+      sessionImageCount++;
+    });
     try {
       final path =
           '/storage/emulated/0/AiBirdie/Images/${DateTime.now().toString()}.jpg';
@@ -305,19 +364,17 @@ class _CameraScreenState extends State<CameraScreen> {
         path,
       );
 
-      if (flashOn) {}
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => ImageResult(File(path)),
+      //   ),
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ImageResult(File(path)),
-        ),
-
-        /**original */
-        // MaterialPageRoute(
-        //   builder: (context) => PreviewPage(File(path), Storage()),
-        // ),
-      );
+      //   /**original */
+      //   // MaterialPageRoute(
+      //   //   builder: (context) => PreviewPage(File(path), Storage()),
+      //   // ),
+      // );
       setState(() {
         animatedHeight = 80.0;
         animatedMargin = 5.0;

@@ -13,6 +13,10 @@ class LandingPage extends StatefulWidget {
   static PageController controller =
       PageController(initialPage: 1, keepPage: false);
 
+  static PageController camController = PageController(
+    keepPage: false,
+  );
+
   LandingPage(List<CameraDescription> icameras) {
     cameras = icameras;
   }
@@ -21,10 +25,19 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
+  int camIndex = 0;
   var _currentPage = 1;
   var _pages = [
     DashBoard(),
-    CameraScreen(cameras),
+    PageView(
+
+      controller: LandingPage.camController,
+      scrollDirection: Axis.vertical,
+      children: <Widget>[
+        CameraScreen(cameras),
+        Container(),
+      ],
+    ),
     AudioClassification(),
   ];
 
@@ -38,7 +51,6 @@ class _LandingPageState extends State<LandingPage> {
   void checkSignInStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.getBool('SignInStatus') ?? await prefs.setBool('SignInStatus', false);
-
   }
 
   void createDirectories() async {
@@ -76,9 +88,13 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   Future<bool> _willPopCallback() async {
-    if (_currentPage == 1)
-      return true;
-    else
+    if (_currentPage == 1) {
+      if (LandingPage.camController.page == 1) {
+        LandingPage.camController.animateToPage(0,
+            duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+      } else
+        return true;
+    } else
       LandingPage.controller.animateToPage(1,
           duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
 

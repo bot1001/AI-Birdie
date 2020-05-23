@@ -14,7 +14,6 @@ Future<List<String>> readContentsByLine(File file) async {
     List<String> contents = await file.readAsLines();
     return contents;
   } catch (e) {
-    //   // If there is an error reading, return a default String
     return [];
   }
 }
