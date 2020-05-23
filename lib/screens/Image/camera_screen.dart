@@ -201,50 +201,50 @@ class _CameraScreenState extends State<CameraScreen> {
                                     ],
                                   ),
                                 ),
-                                Column(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Visibility(
-                                      visible: sessionOn,
-                                      child: AnimatedContainer(
-                                        duration: Duration(milliseconds: 300),
-                                        child: Stack(
-                                          alignment: Alignment.topRight,
-                                          children: <Widget>[
-                                            IconButton(
-                                              icon: Icon(
-                                                Icons.photo_library,
-                                                color: Colors.white,
-                                                size: 30,
-                                              ),
-                                              onPressed: () {
-                                                LandingPage.camController
-                                                    .animateToPage(1,
-                                                        duration: Duration(
-                                                            milliseconds: 300),
-                                                        curve:
-                                                            Curves.easeInOut);
-                                              },
-                                            ),
-                                            CircleAvatar(
-                                              backgroundColor: softGreen,
-                                              radius: 8,
-                                              child: Text(
-                                                sessionImageCount.toString(),
-                                                style: level2softw.copyWith(
-                                                    fontSize: 10,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                // Column(
+                                //   children: <Widget>[
+                                //     SizedBox(
+                                //       height: 10,
+                                //     ),
+                                //     Visibility(
+                                //       visible: sessionOn,
+                                //       child: AnimatedContainer(
+                                //         duration: Duration(milliseconds: 300),
+                                //         child: Stack(
+                                //           alignment: Alignment.topRight,
+                                //           children: <Widget>[
+                                //             IconButton(
+                                //               icon: Icon(
+                                //                 Icons.photo_library,
+                                //                 color: Colors.white,
+                                //                 size: 30,
+                                //               ),
+                                //               onPressed: () {
+                                //                 LandingPage.camController
+                                //                     .animateToPage(1,
+                                //                         duration: Duration(
+                                //                             milliseconds: 300),
+                                //                         curve:
+                                //                             Curves.easeInOut);
+                                //               },
+                                //             ),
+                                //             CircleAvatar(
+                                //               backgroundColor: softGreen,
+                                //               radius: 8,
+                                //               child: Text(
+                                //                 sessionImageCount.toString(),
+                                //                 style: level2softw.copyWith(
+                                //                     fontSize: 10,
+                                //                     fontWeight:
+                                //                         FontWeight.bold),
+                                //               ),
+                                //             ),
+                                //           ],
+                                //         ),
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
                                 Container(
                                   width: 100,
                                   child: Column(
@@ -352,10 +352,10 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   void _onCapturePressed(context) async {
-    setState(() {
-      sessionOn = true;
-      sessionImageCount++;
-    });
+    // setState(() {
+    //   sessionOn = true;
+    //   sessionImageCount++;
+    // });
     try {
       final path =
           '/storage/emulated/0/AiBirdie/Images/${DateTime.now().toString()}.jpg';
@@ -364,17 +364,17 @@ class _CameraScreenState extends State<CameraScreen> {
         path,
       );
 
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => ImageResult(File(path)),
-      //   ),
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ImageResult(File(path)),
+        ),
 
-      //   /**original */
-      //   // MaterialPageRoute(
-      //   //   builder: (context) => PreviewPage(File(path), Storage()),
-      //   // ),
-      // );
+        /**original */
+        // MaterialPageRoute(
+        //   builder: (context) => PreviewPage(File(path), Storage()),
+        // ),
+      );
       setState(() {
         animatedHeight = 80.0;
         animatedMargin = 5.0;

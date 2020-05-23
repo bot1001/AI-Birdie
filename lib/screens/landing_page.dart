@@ -29,15 +29,15 @@ class _LandingPageState extends State<LandingPage> {
   var _currentPage = 1;
   var _pages = [
     DashBoard(),
-    PageView(
+    // PageView(
 
-      controller: LandingPage.camController,
-      scrollDirection: Axis.vertical,
-      children: <Widget>[
+    //   controller: LandingPage.camController,
+    //   scrollDirection: Axis.vertical,
+    //   children: <Widget>[
         CameraScreen(cameras),
-        Container(),
-      ],
-    ),
+    //     Container(),
+    //   ],
+    // ),
     AudioClassification(),
   ];
 
@@ -89,10 +89,10 @@ class _LandingPageState extends State<LandingPage> {
 
   Future<bool> _willPopCallback() async {
     if (_currentPage == 1) {
-      if (LandingPage.camController.page == 1) {
-        LandingPage.camController.animateToPage(0,
-            duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-      } else
+      // if (LandingPage.camController.page == 1) {
+      //   LandingPage.camController.animateToPage(0,
+      //       duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+      // } else
         return true;
     } else
       LandingPage.controller.animateToPage(1,

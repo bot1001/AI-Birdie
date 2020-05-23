@@ -34,7 +34,7 @@ class _AudioRecordState extends State<AudioRecord> {
       audioFormat: AudioFormat.WAV,
       sampleRate: 44100,
     );
-
+    
     await FlutterAudioRecorder.hasPermissions;
 
     await recorder.initialized;
