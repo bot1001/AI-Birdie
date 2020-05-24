@@ -1,12 +1,10 @@
 import 'dart:io';
 import 'package:aibirdie/screens/Audio/start_recording.dart';
-import 'package:aibirdie/screens/upload_file.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/screens/dashboard.dart';
 import 'package:aibirdie/screens/Image/camera_screen.dart';
-// import 'package:aibirdie/screens/Audio/audio_classification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 List<CameraDescription> cameras;
@@ -42,7 +40,6 @@ class _LandingPageState extends State<LandingPage> {
     // ),
     // AudioClassification(),
     StartRecording(),
-    UploadFile(),
   ];
 
   @override

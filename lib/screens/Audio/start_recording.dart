@@ -13,17 +13,6 @@ class _StartRecordingState extends State<StartRecording> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-          icon: Icon(Icons.arrow_forward_ios),
-          onPressed: () {
-            LandingPage.controller.animateToPage(3,
-                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-          },
-          color: darkPurple,
-        ),
-
-        ],
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {

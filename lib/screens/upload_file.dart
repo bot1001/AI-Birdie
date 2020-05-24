@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/screens/Audio/audio_identify.dart';
 import 'package:aibirdie/screens/Image/image_result.dart';
-import 'package:aibirdie/screens/landing_page.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,8 +21,7 @@ class _UploadFileState extends State<UploadFile> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
-            LandingPage.controller.animateToPage(2,
-                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+           Navigator.of(context).pop();  
           },
           color: darkPurple,
         ),

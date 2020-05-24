@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:aibirdie/screens/upload_file.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:camera/camera.dart';
@@ -55,21 +56,16 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // if (!controller.value.isInitialized) {
     return !controller.value.isInitialized
         ? Container(
             child: Center(
               child: CircularProgressIndicator(),
             ),
           )
-        :
-        // }
-
-        Scaffold(
+        : Scaffold(
             backgroundColor: Colors.black,
             body: SafeArea(
               child: Stack(
-                // fit: StackFit.passthrough,
                 children: <Widget>[
                   _cameraPreviewWidget(context),
                   Padding(
@@ -89,7 +85,8 @@ class _CameraScreenState extends State<CameraScreen> {
                                   color: Colors.black.withOpacity(0.1),
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Text(
                                       "AI Birdie",
@@ -101,12 +98,13 @@ class _CameraScreenState extends State<CameraScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10,),
+                            SizedBox(
+                              width: 10,
+                            ),
                             Container(
                               decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(100)
-                              ),
+                                  color: Colors.black.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(100)),
                               width: 45,
                               height: 45,
                               child: IconButton(
@@ -116,52 +114,28 @@ class _CameraScreenState extends State<CameraScreen> {
                                   size: 30,
                                 ),
                                 onPressed: () {
-                                  LandingPage.controller.animateToPage(3,
-                                      duration: Duration(milliseconds: 300),
-                                      curve: Curves.easeInOut);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => UploadFile()));
                                 },
                               ),
                             )
                           ],
                         ),
-
-                        // Expanded(
-                        //   child: Container(
-                        //     color: Colors.red,
-                        //     child: SwipeDetector(
-                        //       onSwipeLeft: () => myTransition(
-                        //           context, 1.0, 0.0, AudioClassification()),
-                        //       onSwipeRight: () =>
-                        //           myTransition(context, -1.0, 0.0, Dashboard()),
-                        //       swipeConfiguration: SwipeConfiguration(
-                        //           horizontalSwipeMaxHeightThreshold: 100.0,
-                        //           horizontalSwipeMinDisplacement: 10.0,
-                        //           horizontalSwipeMinVelocity: 10.0),
-                        //       child: Container(
-                        //         color: Colors.transparent,
-                        //         width: double.infinity,
-                        //         // height: height * 0.6,
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                         Column(
                           children: <Widget>[
                             GestureDetector(
-                              child: Hero(
-                                tag: 'key',
-                                child: AnimatedContainer(
-                                  curve: Curves.bounceOut,
-                                  duration: Duration(milliseconds: 300),
-                                  margin:
-                                      EdgeInsets.only(bottom: animatedMargin),
-                                  height: animatedHeight,
-                                  decoration: BoxDecoration(
-                                    color: animatedColor,
-                                    border: Border.all(
-                                        width: 5.00, color: animatedBorder),
-                                    shape: BoxShape.circle,
-                                  ),
+                              child: AnimatedContainer(
+                                curve: Curves.bounceOut,
+                                duration: Duration(milliseconds: 300),
+                                margin: EdgeInsets.only(bottom: animatedMargin),
+                                height: animatedHeight,
+                                decoration: BoxDecoration(
+                                  color: animatedColor,
+                                  border: Border.all(
+                                      width: 5.00, color: animatedBorder),
+                                  shape: BoxShape.circle,
                                 ),
                               ),
                               onTap: () {
@@ -178,7 +152,6 @@ class _CameraScreenState extends State<CameraScreen> {
                               },
                             ),
                             Row(
-                              // crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Container(
@@ -188,11 +161,11 @@ class _CameraScreenState extends State<CameraScreen> {
                                       IconButton(
                                         onPressed: () {
                                           LandingPage.controller.animateToPage(
-                                              0,
-                                              duration:
-                                                  Duration(milliseconds: 300),
-                                              curve: Curves.easeInOut);
-                                          // controller.dispose();
+                                            0,
+                                            duration:
+                                                Duration(milliseconds: 300),
+                                            curve: Curves.easeInOut,
+                                          );
                                         },
                                         icon: Icon(
                                           Icons.dashboard,
@@ -263,8 +236,6 @@ class _CameraScreenState extends State<CameraScreen> {
                                                 duration:
                                                     Duration(milliseconds: 300),
                                                 curve: Curves.easeInOut)),
-                                        // onPressed: () => myTransition(
-                                        //     context, 1.0, 0.0, AudioClassification()),
                                         icon: Icon(
                                           Icons.audiotrack,
                                           color: Colors.white,
@@ -338,7 +309,6 @@ class _CameraScreenState extends State<CameraScreen> {
     return MeasureSize(
       onChange: (size) {
         setState(() {
-          // print(MediaQuery.of(context).size.aspectRatio);
           sca = MediaQuery.of(context).size.height / size.longestSide;
         });
       },
@@ -377,11 +347,6 @@ class _CameraScreenState extends State<CameraScreen> {
         MaterialPageRoute(
           builder: (context) => ImageResult(File(path)),
         ),
-
-        /**original */
-        // MaterialPageRoute(
-        //   builder: (context) => PreviewPage(File(path), Storage()),
-        // ),
       );
       setState(() {
         animatedHeight = 80.0;
