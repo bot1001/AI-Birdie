@@ -19,6 +19,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+    
   # image
   camera: ^0.5.8+1
   image_picker: ^0.6.6+4
@@ -45,7 +46,6 @@ dependencies:
   # utilities
   share: ^0.6.4+2
   url_launcher: ^5.4.7
-  flutter_timer: ^0.0.6
   timer_builder: ^1.3.0
   rflutter_alert: ^1.0.3
   font_awesome_flutter: ^8.8.1

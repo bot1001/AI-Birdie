@@ -6,7 +6,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:aibirdie/constants.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:aibirdie/screens/landing_page.dart';
 import 'package:aibirdie/screens/Image/image_result.dart';
 
@@ -74,43 +73,54 @@ class _CameraScreenState extends State<CameraScreen> {
                 children: <Widget>[
                   _cameraPreviewWidget(context),
                   Padding(
-                    padding: EdgeInsets.only(
-                        top: 10, bottom: 20, left: 20, right: 20),
+                    padding: EdgeInsets.all(10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(
-                              "AI Birdie",
-                              style: level2softw.copyWith(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.add_photo_alternate,
-                                color: Colors.white,
-                                size: 35,
-                              ),
-                              onPressed: () async {
-                                File image = await ImagePicker.pickImage(
-                                    source: ImageSource.gallery);
-                                // print(image.path);
-                                if (image != null)
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ImageResult(image),
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 11.5, horizontal: 20),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                  color: Colors.black.withOpacity(0.1),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      "AI Birdie",
+                                      style: level2softw.copyWith(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
                                     ),
-
-/*  original */
-                                    // MaterialPageRoute(
-                                    //   builder: (context) =>
-                                    //       PreviewPage(image, Storage()),
-                                    // ),
-                                  );
-                              },
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10,),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(100)
+                              ),
+                              width: 45,
+                              height: 45,
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.file_upload,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                                onPressed: () {
+                                  LandingPage.controller.animateToPage(3,
+                                      duration: Duration(milliseconds: 300),
+                                      curve: Curves.easeInOut);
+                                },
+                              ),
                             )
                           ],
                         ),
@@ -141,13 +151,11 @@ class _CameraScreenState extends State<CameraScreen> {
                               child: Hero(
                                 tag: 'key',
                                 child: AnimatedContainer(
-                                  // child: Icon(Icons.camera, size: 80,),
                                   curve: Curves.bounceOut,
                                   duration: Duration(milliseconds: 300),
                                   margin:
                                       EdgeInsets.only(bottom: animatedMargin),
                                   height: animatedHeight,
-                                  // width: 70.00,
                                   decoration: BoxDecoration(
                                     color: animatedColor,
                                     border: Border.all(
