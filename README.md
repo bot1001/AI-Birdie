@@ -9,5 +9,5 @@ An android app for image and audio classification.
 ## Application Flow
 <img src = "tree.jpg">
 
-## Demo
-<img src = "ss/demo.gif" align = "left">
+## App Demonstration
+<a href = "https://youtu.be/VaODtjhh4JU"><img src = "images/Thumbnail.jpg" width="300" align="left"></a>
