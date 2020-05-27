@@ -10,4 +10,4 @@ An android app for image and audio classification.
 <img src = "tree.jpg">
 
 ## App Demonstration
-<a href = "https://youtu.be/VaODtjhh4JU"><img src = "images/Thumbnail.jpg" width="300" align="left"></a>
+<a href = "https://youtu.be/VaODtjhh4JU" target="_blank"><img src = "images/Thumbnail.jpg" width="300" align="left"></a>
