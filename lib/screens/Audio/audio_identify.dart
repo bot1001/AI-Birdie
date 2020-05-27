@@ -4,6 +4,8 @@ import 'package:aibirdie/constants.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:aibirdie/components/buttons.dart';
 import 'package:aibirdie/screens/Audio/audio_result.dart';
+import 'package:connectivity/connectivity.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 File file;
 
@@ -35,12 +37,10 @@ class _AudioIdentifyState extends State<AudioIdentify> {
           if (file.path.substring(file.path.length - 5) == "e.wav") {
             Navigator.of(context).pop();
             print(file.path.substring(file.path.length - 5));
-          }
-          else if (file.path.substring(file.path.length - 4) == ".wav") {
+          } else if (file.path.substring(file.path.length - 4) == ".wav") {
             Navigator.of(context).pop();
             Navigator.of(context).pop();
           }
-
 
 /**original */
           // if (file.path.substring(file.path.length - 4) == ".wav") {
@@ -122,12 +122,42 @@ class _AudioIdentifyState extends State<AudioIdentify> {
                         isPlaying = false;
                       });
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AudioResult(file),
-                        ),
-                      );
+                      var connectivityResult =
+                          await (Connectivity().checkConnectivity());
+                      if (connectivityResult == ConnectivityResult.none) {
+                        Alert(
+                            context: context,
+                            title: "Network Error",
+                            type: AlertType.error,
+                            desc:
+                                "Your phone is not connected to the internet.\nCheck your connection and try again",
+                            style: AlertStyle(
+                              descStyle: level2softdp,
+                              isCloseButton: false,
+                              titleStyle: level2softdp.copyWith(fontWeight: FontWeight.bold, fontSize: 25),
+                            
+                            ),
+                            buttons: [
+                              DialogButton(
+                                radius: BorderRadius.circular(100),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                color: softGreen,
+                                child: Text(
+                                  "OK",
+                                  style: level2softw,
+                                ),
+                              ),
+                            ]).show();
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AudioResult(file),
+                          ),
+                        );
+                      }
                     })
                   ],
                 ),

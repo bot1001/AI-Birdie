@@ -46,7 +46,6 @@ class _DashBoardState extends State<DashBoard>
     "Checklist",
   ];
 
-
   @override
   void initState() {
     super.initState();
@@ -171,8 +170,12 @@ class _DashBoardState extends State<DashBoard>
                 ),
                 ListTile(
                   onTap: () {
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                        action: SnackBarAction(label: 'OK', onPressed: () {}, ),
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        action: SnackBarAction(
+                          label: 'OK',
+                          onPressed: () {},
+                        ),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         backgroundColor: darkPurple,
@@ -180,7 +183,9 @@ class _DashBoardState extends State<DashBoard>
                         content: Text(
                           'Settings are not available yet. Be patient.',
                           style: level2softw,
-                        )));
+                        ),
+                      ),
+                    );
                   },
                   leading: Icon(
                     Icons.settings,
@@ -258,12 +263,12 @@ class _DashBoardState extends State<DashBoard>
             stretchTriggerOffset: 100.0,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
-                  appBarTitle[_selectedPage],
-                  style: level2softdp.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.white),
-                ),
+                appBarTitle[_selectedPage],
+                style: level2softdp.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.white),
+              ),
               background: Stack(
                 fit: StackFit.expand,
                 children: [
