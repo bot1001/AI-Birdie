@@ -10,7 +10,6 @@ import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/screens/landing_page.dart';
 import 'package:aibirdie/screens/Image/image_result.dart';
 
-import '../landing_page.dart';
 
 class CameraScreen extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -47,7 +46,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   void dispose() {
-    controller?.dispose();
+    // controller?.dispose();
     setState(() {
       sessionOn = false;
     });

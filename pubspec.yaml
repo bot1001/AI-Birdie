@@ -30,14 +30,14 @@ dependencies:
 
   # networking
   http: ^0.12.1
-  google_sign_in: ^4.5.0
   requests: ^3.1.0
   connectivity: ^0.4.8+6
 
   # backend
-  # firebase_auth: ^0.16.1
   # firebase_core: ^0.4.5
+  firebase_auth: ^0.16.1
   cloud_firestore: ^0.13.6
+  google_sign_in: ^4.5.0
 
   # file io
   path_provider: ^1.6.8

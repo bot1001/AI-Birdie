@@ -5,6 +5,7 @@ import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/components/storage.dart';
 import 'package:aibirdie/components/dimissed_background.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyNotes extends StatefulWidget {
@@ -22,21 +23,30 @@ class _MyNotesState extends State<MyNotes> {
   @override
   void initState() {
     super.initState();
-    readNotesFile();
-    // fetchData();
+    // readNotesFile();
+    fetchData();
   }
 
   void fetchData() async {
+    String userID;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userID = prefs.getString('userID');
+
+    
+      print("user ID from prefs: $userID");
+        
     try {
+ 
       Firestore.instance
           .collection('users')
-          .document('userid1')
+          .document(userID)
           .get()
           .then((value) {
         if (value.exists) {
           setState(() {
             _notes.addAll(value.data['userNotes']);
-            if(_notes.length != 0){
+            print(_notes);
+            if (_notes.length != 0) {
               noNotes = false;
             }
           });
@@ -148,7 +158,7 @@ class _MyNotesState extends State<MyNotes> {
           ),
         ),
 
-        noNotes == true
+        noNotes
             ? noNotesWidget()
             : Container(
                 height: _notes.length <= 7

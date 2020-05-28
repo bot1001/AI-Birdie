@@ -51,6 +51,7 @@ class _LandingPageState extends State<LandingPage> {
 
   void checkSignInStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("Initial Sign in status: ${prefs.getBool('SignInStatus')}");
     prefs.getBool('SignInStatus') ?? await prefs.setBool('SignInStatus', false);
   }
 

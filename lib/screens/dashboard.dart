@@ -1,4 +1,4 @@
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:aibirdie/services.dart/authentication.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:share/share.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +31,6 @@ class _DashBoardState extends State<DashBoard>
   String userEmail;
   String userAccountName;
   String userPhotoURL = "https://image.flaticon.com/icons/svg/2922/2922523.svg";
-  GoogleSignIn googleSignIn = GoogleSignIn(signInOption: SignInOption.standard);
 
   int _selectedPage = 0;
   final _pages = [
@@ -78,141 +77,166 @@ class _DashBoardState extends State<DashBoard>
       drawer: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Drawer(
-            child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Column(
-              children: <Widget>[
-                signedIn ? signedInWidget() : notSignedInWidget(),
-                // signedIn ? Container() : signInWithGoogleButton(),
-                // Above line is temporarily commented
-                ListTile(
-                  leading: Icon(
-                    Icons.info_outline,
-                    color: darkPurple,
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Column(
+                children: <Widget>[
+                  signedIn ? signedInWidget() : notSignedInWidget(),
+                  signedIn ? Container() : signInWithGoogleButton(),
+                  // Above line is temporarily commented
+                  ListTile(
+                    leading: Icon(
+                      Icons.info_outline,
+                      color: darkPurple,
+                    ),
+                    title: Text(
+                      "About AI-Birdie",
+                      style: level2softdp,
+                    ),
+                    onTap: (() => Alert(
+                          context: context,
+                          type: AlertType.info,
+                          style: AlertStyle(
+                              animationDuration: Duration(milliseconds: 500),
+                              animationType: AnimationType.grow,
+                              descStyle: level2softdp,
+                              titleStyle: level1dp.copyWith(fontSize: 25)),
+                          title: "AI Birdie",
+                          desc:
+                              "A mobile app for image and audio classification of birds.\n\nLEVERAGING THE POWER OF AI TO DEMOCRATIZE ORNITHOLOGY\n\n1.\t\tFor visual identification, our objective is to develop algorithms for:\nA.\tBird Detection in images\nB.\tBird Identification from images\n\n2.\t\tFor acoustic identification, our objective is to develop algorithms for:\nA.\tBird Detection in audio clip\nB.\tSpecies Identification in audio clip",
+                          buttons: [
+                            DialogButton(
+                              child: Text(
+                                "OK",
+                                style: level1w,
+                              ),
+                              color: softGreen,
+                              onPressed: () => Navigator.pop(context),
+                              width: 120,
+                            )
+                          ],
+                        ).show()),
                   ),
-                  title: Text(
-                    "About AI-Birdie",
-                    style: level2softdp,
+                  ListTile(
+                    leading: Icon(
+                      // Icons.share,
+                      FontAwesomeIcons.shareSquare,
+                      color: darkPurple,
+                    ),
+                    title: Text(
+                      "Tell a friend",
+                      style: level2softdp,
+                    ),
+                    onTap: (() => Share.share(
+                        "Hey! Check out this amazing app. It is called AI Birdie.")),
                   ),
-                  onTap: (() => Alert(
-                        context: context,
-                        type: AlertType.info,
-                        style: AlertStyle(
-                            animationDuration: Duration(milliseconds: 500),
-                            animationType: AnimationType.grow,
-                            descStyle: level2softdp,
-                            titleStyle: level1dp.copyWith(fontSize: 25)),
-                        title: "AI Birdie",
-                        desc:
-                            "A mobile app for image and audio classification of birds.\n\nLEVERAGING THE POWER OF AI TO DEMOCRATIZE ORNITHOLOGY\n\n1.\t\tFor visual identification, our objective is to develop algorithms for:\nA.\tBird Detection in images\nB.\tBird Identification from images\n\n2.\t\tFor acoustic identification, our objective is to develop algorithms for:\nA.\tBird Detection in audio clip\nB.\tSpecies Identification in audio clip",
-                        buttons: [
-                          DialogButton(
-                            child: Text(
-                              "OK",
-                              style: level1w,
-                            ),
-                            color: softGreen,
-                            onPressed: () => Navigator.pop(context),
-                            width: 120,
-                          )
-                        ],
-                      ).show()),
-                ),
-                ListTile(
-                  leading: Icon(
-                    // Icons.share,
-                    FontAwesomeIcons.shareSquare,
-                    color: darkPurple,
-                  ),
-                  title: Text(
-                    "Tell a friend",
-                    style: level2softdp,
-                  ),
-                  onTap: (() => Share.share(
-                      "Hey! Check out this amazing app. It is called AI Birdie.")),
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.mail_outline,
-                    color: darkPurple,
-                  ),
-                  title: Text(
-                    "Send us feedback",
-                    style: level2softdp,
-                  ),
-                  onTap: () async {
-                    final Email email = Email(
-                      body: 'Write your feedback here.',
-                      subject: 'Feedback for AI Birdie app',
-                      recipients: ['jsonani98@gmail.com'],
-                      isHTML: false,
-                    );
+                  ListTile(
+                    leading: Icon(
+                      Icons.mail_outline,
+                      color: darkPurple,
+                    ),
+                    title: Text(
+                      "Send us feedback",
+                      style: level2softdp,
+                    ),
+                    onTap: () async {
+                      final Email email = Email(
+                        body: 'Write your feedback here.',
+                        subject: 'Feedback for AI Birdie app',
+                        recipients: ['jsonani98@gmail.com'],
+                        isHTML: false,
+                      );
 
-                    await FlutterEmailSender.send(email);
-                  },
-                ),
-                ListTile(
-                  // enabled: true,
-                  leading: Icon(
-                    Icons.healing,
-                    color: darkPurple,
+                      await FlutterEmailSender.send(email);
+                    },
                   ),
-                  title: Text(
-                    "Veterinary Services",
-                    style: level2softdp,
+                  ListTile(
+                    // enabled: true,
+                    leading: Icon(
+                      Icons.healing,
+                      color: darkPurple,
+                    ),
+                    title: Text(
+                      "Veterinary Services",
+                      style: level2softdp,
+                    ),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => VServices()),
+                      );
+                    },
                   ),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => VServices()),
-                    );
-                  },
-                ),
-                ListTile(
-                  onTap: () {
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        action: SnackBarAction(
-                          label: 'OK',
-                          onPressed: () {},
+                  ListTile(
+                    onTap: () {
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          action: SnackBarAction(
+                            label: 'OK',
+                            onPressed: () {},
+                          ),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          backgroundColor: darkPurple,
+                          behavior: SnackBarBehavior.floating,
+                          content: Text(
+                            'Settings are not available yet. Be patient.',
+                            style: level2softw,
+                          ),
                         ),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        backgroundColor: darkPurple,
-                        behavior: SnackBarBehavior.floating,
-                        content: Text(
-                          'Settings are not available yet. Be patient.',
-                          style: level2softw,
-                        ),
-                      ),
-                    );
-                  },
-                  leading: Icon(
-                    Icons.settings,
-                    color: darkPurple,
+                      );
+                    },
+                    leading: Icon(
+                      Icons.settings,
+                      color: darkPurple,
+                    ),
+                    title: Text(
+                      "Settings",
+                      style: level2softdp,
+                    ),
                   ),
-                  title: Text(
-                    "Settings",
-                    style: level2softdp,
-                  ),
-                ),
-                Spacer(),
-                signedIn
-                    ? FlatButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        onPressed: signOut,
-                        child: Text(
-                          "Sign out",
-                          style: level2softw,
-                        ),
-                        color: softGreen,
-                      )
-                    : Container(),
-              ],
+                  Spacer(),
+                  signedIn
+                      ? FlatButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          // onPressed: signOut,
+                          onPressed: () async {
+                            setState(() {
+                              showSpinner = true;
+                            });
+                            await signOut();
+                            setState(() {
+                              showSpinner = false;
+                              signedIn = false;
+                            });
+                            Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                action: SnackBarAction(
+                                    label: 'OK', onPressed: () {}),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                backgroundColor: darkPurple,
+                                behavior: SnackBarBehavior.floating,
+                                content: Text(
+                                  'Signed out.',
+                                  style: level2softw,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "Sign out",
+                            style: level2softw,
+                          ),
+                          color: softGreen,
+                        )
+                      : Container(),
+                ],
+              ),
             ),
           ),
-        )),
+        ),
       ),
       body: CustomScrollView(
         slivers: <Widget>[
@@ -430,7 +454,30 @@ class _DashBoardState extends State<DashBoard>
             ),
           ],
         ),
-        onPressed: signIn,
+        // onPressed: signIn,
+        onPressed: () async {
+          setState(() {
+            showSpinner = true;
+          });
+          await signInWithGoogle();
+          setState(() {
+            showSpinner = false;
+            signedIn = true;
+          });
+          Scaffold.of(context).showSnackBar(
+            SnackBar(
+              action: SnackBarAction(label: 'OK', onPressed: () {}),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              backgroundColor: darkPurple,
+              behavior: SnackBarBehavior.floating,
+              content: Text(
+                'Signed in successfully.',
+                style: level2softw,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -479,72 +526,72 @@ class _DashBoardState extends State<DashBoard>
     );
   }
 
-  void signIn() async {
-    setState(() {
-      showSpinner = true;
-    });
-    try {
-      await googleSignIn.signIn();
+  // void signIn() async {
+  //   setState(() {
+  //     showSpinner = true;
+  //   });
+  //   try {
+  //     await googleSignIn.signIn();
 
-      if (await googleSignIn.isSignedIn()) {
-        SharedPreferences.getInstance()
-            .then((prefs) => prefs.setBool('SignInStatus', true));
-        signedIn = true;
-        prefs.setString('userEmail', googleSignIn.currentUser.email);
-        prefs.setString(
-            'userAccountName', googleSignIn.currentUser.displayName);
-        prefs.setString('userPhotoURL', googleSignIn.currentUser.photoUrl);
+  //     if (await googleSignIn.isSignedIn()) {
+  //       SharedPreferences.getInstance()
+  //           .then((prefs) => prefs.setBool('SignInStatus', true));
+  //       signedIn = true;
+  //       prefs.setString('userEmail', googleSignIn.currentUser.email);
+  //       prefs.setString(
+  //           'userAccountName', googleSignIn.currentUser.displayName);
+  //       prefs.setString('userPhotoURL', googleSignIn.currentUser.photoUrl);
 
-        setState(() {
-          userEmail = googleSignIn.currentUser.email;
-          userAccountName = googleSignIn.currentUser.displayName;
-          userPhotoURL = googleSignIn.currentUser.photoUrl;
-          showSpinner = false;
-        });
-        Scaffold.of(context).showSnackBar(SnackBar(
-            action: SnackBarAction(label: 'OK', onPressed: () {}),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-            backgroundColor: darkPurple,
-            behavior: SnackBarBehavior.floating,
-            content: Text(
-              'Signed in successfully.',
-              style: level2softw,
-            )));
-      }
-    } catch (err) {
-      print('ERROR: $err');
-    }
-  }
+  //       setState(() {
+  //         userEmail = googleSignIn.currentUser.email;
+  //         userAccountName = googleSignIn.currentUser.displayName;
+  //         userPhotoURL = googleSignIn.currentUser.photoUrl;
+  //         showSpinner = false;
+  //       });
+  //       Scaffold.of(context).showSnackBar(SnackBar(
+  //           action: SnackBarAction(label: 'OK', onPressed: () {}),
+  //           shape:
+  //               RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+  //           backgroundColor: darkPurple,
+  //           behavior: SnackBarBehavior.floating,
+  //           content: Text(
+  //             'Signed in successfully.',
+  //             style: level2softw,
+  //           )));
+  //     }
+  //   } catch (err) {
+  //     print('ERROR: $err');
+  //   }
+  // }
 
-  void signOut() async {
-    setState(() {
-      showSpinner = true;
-    });
+  // void signOut() async {
+  //   setState(() {
+  //     showSpinner = true;
+  //   });
 
-    try {
-      await googleSignIn.signOut();
+  //   try {
+  //     await googleSignIn.signOut();
 
-      if (!await googleSignIn.isSignedIn()) {
-        setState(() {
-          showSpinner = false;
-        });
-        SharedPreferences.getInstance()
-            .then((prefs) => prefs.setBool('SignInStatus', false));
-        setState(() => signedIn = false);
-        Scaffold.of(context).showSnackBar(SnackBar(
-            action: SnackBarAction(label: 'OK', onPressed: () {}),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-            backgroundColor: darkPurple,
-            behavior: SnackBarBehavior.floating,
-            content: Text(
-              'Signed out.',
-              style: level2softw,
-            )));
-      }
-    } catch (err) {
-      print('ERROR: $err');
-    }
-  }
+  //     if (!await googleSignIn.isSignedIn()) {
+  //       setState(() {
+  //         showSpinner = false;
+  //       });
+  //       SharedPreferences.getInstance()
+  //           .then((prefs) => prefs.setBool('SignInStatus', false));
+  //       setState(() => signedIn = false);
+  //       Scaffold.of(context).showSnackBar(SnackBar(
+  //           action: SnackBarAction(label: 'OK', onPressed: () {}),
+  //           shape:
+  //               RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+  //           backgroundColor: darkPurple,
+  //           behavior: SnackBarBehavior.floating,
+  //           content: Text(
+  //             'Signed out.',
+  //             style: level2softw,
+  //           )));
+  //     }
+  //   } catch (err) {
+  //     print('ERROR: $err');
+  //   }
+  // }
 }
