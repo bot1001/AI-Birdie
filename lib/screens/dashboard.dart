@@ -27,10 +27,7 @@ class _DashBoardState extends State<DashBoard>
 
   bool signedIn = false;
   bool showSpinner = false;
-
-  String userEmail;
-  String userAccountName;
-  String userPhotoURL = "https://image.flaticon.com/icons/svg/2922/2922523.svg";
+  
 
   int _selectedPage = 0;
   final _pages = [
@@ -56,11 +53,6 @@ class _DashBoardState extends State<DashBoard>
     prefs = await SharedPreferences.getInstance();
     setState(() {
       signedIn = prefs.getBool('SignInStatus');
-    });
-    setState(() {
-      userEmail = prefs.getString('userEmail');
-      userAccountName = prefs.getString('userAccountName');
-      userPhotoURL = prefs.getString('userPhotoURL');
     });
   }
 
@@ -378,15 +370,16 @@ class _DashBoardState extends State<DashBoard>
     );
   }
 
-  Widget signedInWidget() {
+   Widget signedInWidget() {
+
     return UserAccountsDrawerHeader(
       decoration: BoxDecoration(),
       accountEmail: Text(
-        "$userEmail",
+        "${prefs.getString('userEmail')}",
         style: level2softdp,
       ),
       accountName: Text(
-        "$userAccountName",
+        "${prefs.getString('userName')}",
         style: level2softdp.copyWith(fontWeight: FontWeight.bold),
       ),
       currentAccountPicture: Material(
@@ -396,7 +389,9 @@ class _DashBoardState extends State<DashBoard>
           child: ClipOval(
               child: signedIn
                   ? Image.network(
-                      userPhotoURL,
+                      "${prefs.getString('userPhotoUrl')}",
+                      // loadingBuilder: (context, child, loadingProgress) =>
+                      //     CircularProgressIndicator(),
                     )
                   : Container())),
     );
@@ -525,73 +520,4 @@ class _DashBoardState extends State<DashBoard>
       ),
     );
   }
-
-  // void signIn() async {
-  //   setState(() {
-  //     showSpinner = true;
-  //   });
-  //   try {
-  //     await googleSignIn.signIn();
-
-  //     if (await googleSignIn.isSignedIn()) {
-  //       SharedPreferences.getInstance()
-  //           .then((prefs) => prefs.setBool('SignInStatus', true));
-  //       signedIn = true;
-  //       prefs.setString('userEmail', googleSignIn.currentUser.email);
-  //       prefs.setString(
-  //           'userAccountName', googleSignIn.currentUser.displayName);
-  //       prefs.setString('userPhotoURL', googleSignIn.currentUser.photoUrl);
-
-  //       setState(() {
-  //         userEmail = googleSignIn.currentUser.email;
-  //         userAccountName = googleSignIn.currentUser.displayName;
-  //         userPhotoURL = googleSignIn.currentUser.photoUrl;
-  //         showSpinner = false;
-  //       });
-  //       Scaffold.of(context).showSnackBar(SnackBar(
-  //           action: SnackBarAction(label: 'OK', onPressed: () {}),
-  //           shape:
-  //               RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-  //           backgroundColor: darkPurple,
-  //           behavior: SnackBarBehavior.floating,
-  //           content: Text(
-  //             'Signed in successfully.',
-  //             style: level2softw,
-  //           )));
-  //     }
-  //   } catch (err) {
-  //     print('ERROR: $err');
-  //   }
-  // }
-
-  // void signOut() async {
-  //   setState(() {
-  //     showSpinner = true;
-  //   });
-
-  //   try {
-  //     await googleSignIn.signOut();
-
-  //     if (!await googleSignIn.isSignedIn()) {
-  //       setState(() {
-  //         showSpinner = false;
-  //       });
-  //       SharedPreferences.getInstance()
-  //           .then((prefs) => prefs.setBool('SignInStatus', false));
-  //       setState(() => signedIn = false);
-  //       Scaffold.of(context).showSnackBar(SnackBar(
-  //           action: SnackBarAction(label: 'OK', onPressed: () {}),
-  //           shape:
-  //               RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-  //           backgroundColor: darkPurple,
-  //           behavior: SnackBarBehavior.floating,
-  //           content: Text(
-  //             'Signed out.',
-  //             style: level2softw,
-  //           )));
-  //     }
-  //   } catch (err) {
-  //     print('ERROR: $err');
-  //   }
-  // }
 }

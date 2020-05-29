@@ -28,21 +28,20 @@ Future<void> signInWithGoogle() async {
         },
         googleUser.id,
       );
-      await SharedPreferences.getInstance().then((prefs) => prefs.setString('userID', googleUser.id));
-      print("New users");
-    } else
-      print("Old user");
+      // print("New users");
+    }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('SignInStatus', true);
+    prefs.setString('userID', googleUser.id);
+    prefs.setString('userName', googleUser.displayName);
+    prefs.setString('userEmail', googleUser.email);
+    prefs.setString('userPhotoUrl', googleUser.photoUrl);
 
     print("Signed in: ${fbUser.displayName}");
-    SharedPreferences.getInstance()
-        .then((prefs) => prefs.setBool('SignInStatus', true));
   } catch (e) {}
 }
 
 Future<void> addNewUser(Map<String, dynamic> userData, String userID) async {
-  // Firestore.instance.collection('users/$email').add(userData,).catchError((e) {
-  //   print(e);
-  // });
   Firestore.instance.collection('users').document('$userID').setData(userData);
 }
 

@@ -2,11 +2,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
-import 'package:aibirdie/components/storage.dart';
 import 'package:aibirdie/components/dimissed_background.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyNotes extends StatefulWidget {
   @override
@@ -16,7 +14,10 @@ class MyNotes extends StatefulWidget {
 class _MyNotesState extends State<MyNotes> {
   final controller = TextEditingController();
   final notesFile = File('/storage/emulated/0/AiBirdie/Notes/notes.txt');
-  var noNotes = true;
+  var noNotes = false;
+  SharedPreferences prefs;
+  bool loading = true;
+  String userID;
 
   var _notes = [];
 
@@ -28,75 +29,28 @@ class _MyNotesState extends State<MyNotes> {
   }
 
   void fetchData() async {
-    String userID;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs = await SharedPreferences.getInstance();
     userID = prefs.getString('userID');
-
-    
-      print("user ID from prefs: $userID");
-        
-    try {
- 
-      Firestore.instance
-          .collection('users')
-          .document(userID)
-          .get()
-          .then((value) {
-        if (value.exists) {
-          setState(() {
-            _notes.addAll(value.data['userNotes']);
-            print(_notes);
-            if (_notes.length != 0) {
-              noNotes = false;
-            }
-          });
-        }
-      });
-    } catch (e) {
-      print("Got error: $e");
-    }
+    readNote();
   }
 
-  void readNotesFile() async {
-    var value = await readContentsByLine(notesFile);
-    setState(() {
-      if (value.length == 0) {
-        noNotes = true;
-      } else {
-        _notes = value;
-        noNotes = false;
-      }
-    });
-  }
+  // void readNotesFile() async {
+  //   var value = await readContentsByLine(notesFile);
+  //   setState(() {
+  //     if (value.length == 0) {
+  //       noNotes = true;
+  //     } else {
+  //       _notes = value;
+  //       noNotes = false;
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        // Padding(
-        //   padding: EdgeInsets.symmetric(vertical: 20),
-        //   child: Row(
-        //     crossAxisAlignment: CrossAxisAlignment.center,
-        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //     children: <Widget>[
-        //       Column(
-        //         crossAxisAlignment: CrossAxisAlignment.start,
-        //         children: <Widget>[
-        //           Text(
-        //             "My Notes",
-        //             style: TextStyle(fontSize: 35, fontFamily: 'OS_semi_bold'),
-        //           ),
-        //           Text("Save your notes here", style: level2softdp),
-        //         ],
-        //       ),
-        //       Icon(
-        //         FontAwesomeIcons.edit,
-        //         size: 30,
-        //       ),
-        //     ],
-        //   ),
-        // ),
         Container(
           margin: EdgeInsets.only(bottom: 0),
           decoration: BoxDecoration(
@@ -132,11 +86,12 @@ class _MyNotesState extends State<MyNotes> {
               ),
               onSubmitted: (newText) async {
                 controller.clear();
-                if (newText.trim() != '') {
-                  await appendContent(notesFile, "${newText.trim()}\n");
-                  var value = await readContentsByLine(notesFile);
+                var input = newText.trim();
+                if (input != '') {
+                  addNote(input);
+
                   setState(() {
-                    _notes = value;
+                    _notes.add(input);
                     noNotes = false;
                   });
                 } else {
@@ -157,112 +112,162 @@ class _MyNotesState extends State<MyNotes> {
             ),
           ),
         ),
+        loading
+            ? Center(
+                child: Container(
+                  padding: EdgeInsets.only(top: 50),
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            : noNotes
+                ? noNotesWidget()
+                : Container(
+                    height: _notes.length <= 7
+                        ? (_notes.length * 110).toDouble()
+                        : (_notes.length * 80).toDouble(),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: _notes.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return AnimationConfiguration.staggeredList(
+                          position: index,
+                          duration: Duration(milliseconds: 300),
+                          child: SlideAnimation(
+                            verticalOffset: 50.0,
+                            child: FadeInAnimation(
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 15),
+                                decoration: BoxDecoration(
+                                  color: Color(0xfff5f5f5),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(-6.00, -6.00),
+                                      color:
+                                          Color(0xffffffff).withOpacity(0.80),
+                                      blurRadius: 10,
+                                    ),
+                                    BoxShadow(
+                                      offset: Offset(6.00, 6.00),
+                                      color:
+                                          Color(0xff000000).withOpacity(0.20),
+                                      blurRadius: 10,
+                                    ),
+                                  ],
+                                  borderRadius: BorderRadius.circular(15.00),
+                                ),
+                                child: Dismissible(
+                                  direction: DismissDirection.startToEnd,
+                                  background: dismissedBackground(),
+                                  onDismissed: (dismissDirection) {
+                                    deleteNote(index);
 
-        noNotes
-            ? noNotesWidget()
-            : Container(
-                height: _notes.length <= 7
-                    ? (_notes.length * 110).toDouble()
-                    : (_notes.length * 80).toDouble(),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: _notes.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return AnimationConfiguration.staggeredList(
-                      position: index,
-                      duration: Duration(milliseconds: 300),
-                      child: SlideAnimation(
-                        verticalOffset: 50.0,
-                        child: FadeInAnimation(
-                          child: Container(
-                            margin: EdgeInsets.only(bottom: 15),
-                            decoration: BoxDecoration(
-                              color: Color(0xfff5f5f5),
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: Offset(-6.00, -6.00),
-                                  color: Color(0xffffffff).withOpacity(0.80),
-                                  blurRadius: 10,
-                                ),
-                                BoxShadow(
-                                  offset: Offset(6.00, 6.00),
-                                  color: Color(0xff000000).withOpacity(0.20),
-                                  blurRadius: 10,
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(15.00),
-                            ),
-                            child: Dismissible(
-                              direction: DismissDirection.startToEnd,
-                              background: dismissedBackground(),
-                              onDismissed: ((dismissDirection) =>
-                                  deleteNoteAt(index)),
-                              key: UniqueKey(),
-                              child: ListTile(
-                                // leading: Text("${index + 1}"),
-                                title: Text(
-                                  _notes[index],
-                                  style: level2softdp,
-                                ),
+                                    // fetchData();
 
-                                trailing: IconButton(
-                                  icon: Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
+                                    // deleteNoteAt(index);
+                                  },
+                                  key: UniqueKey(),
+                                  child: ListTile(
+                                    // leading: Text("${index + 1}"),
+                                    title: Text(
+                                      _notes[index],
+                                      style: level2softdp,
+                                    ),
+
+                                    trailing: IconButton(
+                                      icon: Icon(
+                                        Icons.delete,
+                                        color: Colors.red,
+                                      ),
+                                      onPressed: () {
+                                        deleteNote(index);
+                                      },
+                                    ),
                                   ),
-                                  onPressed: (() => deleteNoteAt(index)),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
+                        );
+                      },
+                    ),
+                  ),
       ],
     );
   }
 
-  Future<void> deleteNoteAt(int index) async {
-    _notes.removeAt(index);
-    String temp = "";
-    for (var everyNote in _notes) temp = temp + everyNote + "\n";
-    await clearFile(notesFile);
-    await appendContent(notesFile, temp);
-    var value = await readContentsByLine(notesFile);
-    setState(() => _notes = value);
-    if (_notes.length == 0) {
-      // print("All notes deleted");
-      setState(() => noNotes = true);
+  void readNote() {
+    Firestore.instance.collection('users').document(userID).get().then((value) {
+      if (value.exists) {
+        setState(() {
+          _notes.addAll(value.data['userNotes']);
+          loading = false;
+          if (_notes.length == 0) noNotes = true;
+        });
+      }
+    }).catchError((e) {
+      print("Error: $e");
+    });
+  }
+
+  void addNote(String input) {
+    Firestore.instance.collection('users').document(userID).updateData({
+      'userNotes': FieldValue.arrayUnion([input]),
+    }).catchError((e) {
+      print("Error: $e");
+    });
+  }
+
+  void deleteNote(int index) {
+    try {
+      Firestore.instance.collection('users').document(userID).updateData({
+        'userNotes': FieldValue.arrayRemove([_notes[index]]),
+      });
+      setState(() {
+        _notes.removeAt(index);
+        if (_notes.length == 0) noNotes = true;
+      });
+    } catch (e) {
+      print("Error: $e");
     }
   }
 
+  // Future<void> deleteNoteAt(int index) async {
+  //   _notes.removeAt(index);
+  //   String temp = "";
+  //   for (var everyNote in _notes) temp = temp + everyNote + "\n";
+  //   await clearFile(notesFile);
+  //   await appendContent(notesFile, temp);
+  //   var value = await readContentsByLine(notesFile);
+  //   setState(() => _notes = value);
+  //   if (_notes.length == 0) {
+  //     setState(() => noNotes = true);
+  //   }
+  // }
+
   Widget noNotesWidget() {
     return Container(
-        margin: EdgeInsets.only(top: 20),
-        decoration: BoxDecoration(
-          color: Color(0xfff5f5f5),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(-6.00, -6.00),
-              color: Color(0xffffffff).withOpacity(0.80),
-              blurRadius: 10,
-            ),
-            BoxShadow(
-              offset: Offset(6.00, 6.00),
-              color: Color(0xff000000).withOpacity(0.20),
-              blurRadius: 10,
-            ),
-          ],
-          borderRadius: BorderRadius.circular(15.00),
-        ),
-        height: MediaQuery.of(context).size.height * 0.3,
-        // color: Colors.red,
-        child: Center(
-            child: Column(
+      margin: EdgeInsets.only(top: 20),
+      decoration: BoxDecoration(
+        color: Color(0xfff5f5f5),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(-6.00, -6.00),
+            color: Color(0xffffffff).withOpacity(0.80),
+            blurRadius: 10,
+          ),
+          BoxShadow(
+            offset: Offset(6.00, 6.00),
+            color: Color(0xff000000).withOpacity(0.20),
+            blurRadius: 10,
+          ),
+        ],
+        borderRadius: BorderRadius.circular(15.00),
+      ),
+      height: MediaQuery.of(context).size.height * 0.3,
+      // color: Colors.red,
+      child: Center(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Icon(
@@ -279,6 +284,8 @@ class _MyNotesState extends State<MyNotes> {
               ],
             ),
           ],
-        )));
+        ),
+      ),
+    );
   }
 }
