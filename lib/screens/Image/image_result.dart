@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'dart:async';
+// import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -29,37 +29,38 @@ class _ImageResultState extends State<ImageResult> {
 
   @override
   void initState() {
-    Timer(Duration(seconds: 2), () {
-      setState(() {
-        _showSpinner = false;
-        labels = [
-          'Black And White Warbler',
-          'Baird Sparrow',
-          'Brown Creeper',
-          'Evening Grosbeak',
-          'Heermann Gull'
-        ];
-        accuracy = ['78%', '11%', '4%', '2%', '0.5%'];
-      });
-    });
+    // Timer(Duration(seconds: 2), () {
+    //   setState(() {
+    //     _showSpinner = false;
+    //     labels = [
+    //       'Black And White Warbler',
+    //       'Baird Sparrow',
+    //       'Brown Creeper',
+    //       'Evening Grosbeak',
+    //       'Heermann Gull'
+    //     ];
+    //     accuracy = ['78%', '11%', '4%', '2%', '0.5%'];
+
+
+    //   });
+    // });
     super.initState();
 
     /**original */
-    // classifier = AiBirdieImageClassification(widget.serverIP);
-    // print('aaama gayu che aa');
-    // classifier.predict(widget.imageInputFile.path).then((value) {
-    //   result = value;
-    //   var response = result.results;
-    //   // print(a);
-    //   setState(() {
-    //     response.forEach((f) {
-    //       labels.add(f.label);
-    //       accuracy.add('${(f.percent * 100).toString().substring(0, 5)} %');
-    //     });
-    //     _showSpinner = false;
-    //   });
+    classifier = AiBirdieImageClassification(widget.serverIP);
+    print('aaama gayu che aa');
+    classifier.predict(widget.imageInputFile.path).then((value) {
+      result = value;
+      var response = result.results;
+      setState(() {
+        response.forEach((f) {
+          labels.add(f.label);
+          accuracy.add('${(f.percent * 100).toString().substring(0, 5)} %');
+        });
+        _showSpinner = false;
+      });
 
-    // });
+    });
   }
 
   @override
