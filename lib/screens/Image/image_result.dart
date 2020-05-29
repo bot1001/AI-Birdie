@@ -1,5 +1,6 @@
 import 'dart:io';
 // import 'dart:async';
+import 'package:aibirdie/APIs/image_api/classification.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -47,20 +48,24 @@ class _ImageResultState extends State<ImageResult> {
     super.initState();
 
     /**original */
-    classifier = AiBirdieImageClassification(widget.serverIP);
-    print('aaama gayu che aa');
-    classifier.predict(widget.imageInputFile.path).then((value) {
-      result = value;
-      var response = result.results;
+    var classifier = Classification.instance;
+    classifier.predict([widget.imageInputFile.path]).then((value) {
       setState(() {
-        response.forEach((f) {
-          labels.add(f.label);
-          accuracy.add('${(f.percent * 100).toString().substring(0, 5)} %');
-        });
+        for (Map result in value) {
+          List<int> id = List.castFrom<dynamic, int>(result['id']);
+
+          // temporary fix for now
+          labels = id.map((e) => e.toString()).toList();
+
+          accuracy = List.castFrom<dynamic, double>(result['probabilities']);
+          accuracy = accuracy
+              .map<String>((e) => '${(e * 100).toString().substring(0, 5)} %')
+              .toList();
+        }
         _showSpinner = false;
       });
-
     });
+
   }
 
   @override
