@@ -107,7 +107,7 @@ class _AudioIdentifyState extends State<AudioIdentify> {
                               isPlaying == true ? Icons.stop : Icons.play_arrow,
                               size: 40,
                               color:
-                                  isPlaying == true ? Colors.red[900] : myGreen,
+                                  isPlaying == true ? Colors.red[900] : softGreen,
                             ),
                           ],
                         ),

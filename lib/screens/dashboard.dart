@@ -54,6 +54,7 @@ class _DashBoardState extends State<DashBoard>
     setState(() {
       signedIn = prefs.getBool('SignInStatus');
     });
+    setSignInStatus();
   }
 
   @override

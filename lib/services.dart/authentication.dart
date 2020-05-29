@@ -1,3 +1,4 @@
+import 'package:aibirdie/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -38,6 +39,7 @@ Future<void> signInWithGoogle() async {
     prefs.setString('userPhotoUrl', googleUser.photoUrl);
 
     print("Signed in: ${fbUser.displayName}");
+    signedIn = true;
   } catch (e) {}
 }
 
@@ -51,6 +53,7 @@ Future<void> signOut() async {
     await gsi.signOut();
     SharedPreferences.getInstance()
         .then((prefs) => prefs.setBool('SignInStatus', false));
+    signedIn = false;
   } catch (e) {
     print("Error: $e");
   }

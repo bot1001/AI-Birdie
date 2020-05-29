@@ -30,8 +30,13 @@ class _MyNotesState extends State<MyNotes> {
 
   void fetchData() async {
     prefs = await SharedPreferences.getInstance();
-    userID = prefs.getString('userID');
-    readNote();
+    if(signedIn){
+      userID = prefs.getString('userID');
+      readNote();
+    }
+    setState(() {
+      loading = true;
+    });
   }
 
   // void readNotesFile() async {
@@ -112,87 +117,134 @@ class _MyNotesState extends State<MyNotes> {
             ),
           ),
         ),
-        loading
-            ? Center(
-                child: Container(
-                  padding: EdgeInsets.only(top: 50),
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            : noNotes
-                ? noNotesWidget()
-                : Container(
-                    height: _notes.length <= 7
-                        ? (_notes.length * 110).toDouble()
-                        : (_notes.length * 80).toDouble(),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: _notes.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return AnimationConfiguration.staggeredList(
-                          position: index,
-                          duration: Duration(milliseconds: 300),
-                          child: SlideAnimation(
-                            verticalOffset: 50.0,
-                            child: FadeInAnimation(
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: 15),
-                                decoration: BoxDecoration(
-                                  color: Color(0xfff5f5f5),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(-6.00, -6.00),
-                                      color:
-                                          Color(0xffffffff).withOpacity(0.80),
-                                      blurRadius: 10,
+        signedIn
+            ? loading
+                ? Center(
+                    child: Container(
+                      padding: EdgeInsets.only(top: 50),
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : noNotes
+                    ? noNotesWidget()
+                    : Container(
+                        height: _notes.length <= 7
+                            ? (_notes.length * 110).toDouble()
+                            : (_notes.length * 80).toDouble(),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: _notes.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return AnimationConfiguration.staggeredList(
+                              position: index,
+                              duration: Duration(milliseconds: 300),
+                              child: SlideAnimation(
+                                verticalOffset: 50.0,
+                                child: FadeInAnimation(
+                                  child: Container(
+                                    margin: EdgeInsets.only(bottom: 15),
+                                    decoration: BoxDecoration(
+                                      color: Color(0xfff5f5f5),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: Offset(-6.00, -6.00),
+                                          color: Color(0xffffffff)
+                                              .withOpacity(0.80),
+                                          blurRadius: 10,
+                                        ),
+                                        BoxShadow(
+                                          offset: Offset(6.00, 6.00),
+                                          color: Color(0xff000000)
+                                              .withOpacity(0.20),
+                                          blurRadius: 10,
+                                        ),
+                                      ],
+                                      borderRadius:
+                                          BorderRadius.circular(15.00),
                                     ),
-                                    BoxShadow(
-                                      offset: Offset(6.00, 6.00),
-                                      color:
-                                          Color(0xff000000).withOpacity(0.20),
-                                      blurRadius: 10,
-                                    ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(15.00),
-                                ),
-                                child: Dismissible(
-                                  direction: DismissDirection.startToEnd,
-                                  background: dismissedBackground(),
-                                  onDismissed: (dismissDirection) {
-                                    deleteNote(index);
-
-                                    // fetchData();
-
-                                    // deleteNoteAt(index);
-                                  },
-                                  key: UniqueKey(),
-                                  child: ListTile(
-                                    // leading: Text("${index + 1}"),
-                                    title: Text(
-                                      _notes[index],
-                                      style: level2softdp,
-                                    ),
-
-                                    trailing: IconButton(
-                                      icon: Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                      ),
-                                      onPressed: () {
+                                    child: Dismissible(
+                                      direction: DismissDirection.startToEnd,
+                                      background: dismissedBackground(),
+                                      onDismissed: (dismissDirection) {
                                         deleteNote(index);
+
+                                        // fetchData();
+
+                                        // deleteNoteAt(index);
                                       },
+                                      key: UniqueKey(),
+                                      child: ListTile(
+                                        // leading: Text("${index + 1}"),
+                                        title: Text(
+                                          _notes[index],
+                                          style: level2softdp,
+                                        ),
+
+                                        trailing: IconButton(
+                                          icon: Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          ),
+                                          onPressed: () {
+                                            deleteNote(index);
+                                          },
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                            );
+                          },
+                        ),
+                      )
+            : notSignedInWidget(),
       ],
+    );
+  }
+
+  Widget notSignedInWidget() {
+    return Container(
+      margin: EdgeInsets.only(top: 20),
+      decoration: BoxDecoration(
+        color: Color(0xfff5f5f5),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(-6.00, -6.00),
+            color: Color(0xffffffff).withOpacity(0.80),
+            blurRadius: 10,
+          ),
+          BoxShadow(
+            offset: Offset(6.00, 6.00),
+            color: Color(0xff000000).withOpacity(0.20),
+            blurRadius: 10,
+          ),
+        ],
+        borderRadius: BorderRadius.circular(15.00),
+      ),
+      height: MediaQuery.of(context).size.height * 0.3,
+      // color: Colors.red,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Icon(
+              Icons.account_circle,
+              size: 40,
+              color: softGreen,
+            ),
+            Column(
+              children: <Widget>[
+                Text(
+                  "Sign in to view your notes here.",
+                  style: level2softdp,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
