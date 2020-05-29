@@ -15,7 +15,7 @@ class _OverviewChipState extends State<OverviewChip> {
   int notesSaved = 0;
   int checkListCount = 0;
   SharedPreferences prefs;
-  bool loading = true;
+  bool loading = false;
 
   @override
   void initState() {
@@ -43,6 +43,11 @@ class _OverviewChipState extends State<OverviewChip> {
     //   notesSaved = allNotes.length;
     //   checkListCount = checkList.length;
     // });
+    if(signedIn){
+      setState(() {
+        loading = true;
+      });
+
     prefs = await SharedPreferences.getInstance();
     Firestore.instance
         .collection('users')
@@ -56,6 +61,7 @@ class _OverviewChipState extends State<OverviewChip> {
         
       });
     });
+    }
   }
 
   @override
@@ -259,10 +265,11 @@ class _OverviewChipState extends State<OverviewChip> {
                           ),
                         ],
                       ),
+
                       loading
                           ? CircularProgressIndicator()
                           : Text(
-                              "$notesSaved",
+                              signedIn ? "$notesSaved" : "0",
                               style: level2softg.copyWith(
                                   fontSize: 40, fontWeight: FontWeight.w900),
                             ),

@@ -27,13 +27,13 @@ Future<void> signInWithGoogle() async {
           'userEmail': googleUser.email,
           'userNotes': [],
         },
-        googleUser.id,
+        fbUser.uid,
       );
       // print("New users");
     }
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('SignInStatus', true);
-    prefs.setString('userID', googleUser.id);
+    prefs.setString('userID', fbUser.uid);
     prefs.setString('userName', googleUser.displayName);
     prefs.setString('userEmail', googleUser.email);
     prefs.setString('userPhotoUrl', googleUser.photoUrl);
