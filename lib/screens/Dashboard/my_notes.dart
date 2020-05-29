@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:aibirdie/components/not_signedIn_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
@@ -93,7 +94,20 @@ class _MyNotesState extends State<MyNotes> {
                 controller.clear();
                 var input = newText.trim();
                 if (input != '') {
+                  if(signedIn)
                   addNote(input);
+                  else{
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                      action: SnackBarAction(label: 'OK', onPressed: () {}),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      backgroundColor: darkPurple,
+                      behavior: SnackBarBehavior.floating,
+                      content: Text(
+                        'Sign in to view and add new notes.',
+                        style: level2softw,
+                      )));
+                  }
 
                   setState(() {
                     _notes.add(input);
@@ -199,54 +213,11 @@ class _MyNotesState extends State<MyNotes> {
                           },
                         ),
                       )
-            : notSignedInWidget(),
+            : NotSignedInWidget(text: "Sign in to view your notes here.",),
       ],
     );
   }
 
-  Widget notSignedInWidget() {
-    return Container(
-      margin: EdgeInsets.only(top: 20),
-      decoration: BoxDecoration(
-        color: Color(0xfff5f5f5),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(-6.00, -6.00),
-            color: Color(0xffffffff).withOpacity(0.80),
-            blurRadius: 10,
-          ),
-          BoxShadow(
-            offset: Offset(6.00, 6.00),
-            color: Color(0xff000000).withOpacity(0.20),
-            blurRadius: 10,
-          ),
-        ],
-        borderRadius: BorderRadius.circular(15.00),
-      ),
-      height: MediaQuery.of(context).size.height * 0.3,
-      // color: Colors.red,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Icon(
-              Icons.account_circle,
-              size: 40,
-              color: softGreen,
-            ),
-            Column(
-              children: <Widget>[
-                Text(
-                  "Sign in to view your notes here.",
-                  style: level2softdp,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   void readNote() {
     Firestore.instance.collection('users').document(userID).get().then((value) {

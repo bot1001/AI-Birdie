@@ -28,7 +28,7 @@ class Classification {
   static Classification instance = Classification._();
 
   Future<List> predict(List<String> imagePath) async {
-    var tS = DateTime.now().millisecondsSinceEpoch;
+    // var tS = DateTime.now().millisecondsSinceEpoch;
 
     var i = [];
 
@@ -50,12 +50,13 @@ class Classification {
         "v1/projects/$_PROJECT_ID/models/$_MODEL_NAME:predict", "POST",
         body: json.encode(reqData));
 
-    print(
-        'LOG: Prediction Time: ${(DateTime.now().millisecondsSinceEpoch - tS) / 1000}s');
+    // print(
+    //     'LOG: Prediction Time: ${(DateTime.now().millisecondsSinceEpoch - tS) / 1000}s');
     return response['predictions'];
   }
 
   void getCredentials() async {
-    _credentials = new ServiceAccountCredentials.fromJson(await rootBundle.loadString(secretPATH));
+    _credentials = new ServiceAccountCredentials.fromJson(
+        await rootBundle.loadString(secretPATH));
   }
 }

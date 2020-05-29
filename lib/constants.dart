@@ -44,7 +44,9 @@ final TextStyle level2softw =
     TextStyle(fontSize: 15, fontFamily: 'OS_regular', color: Colors.white);
 
 bool signedIn = false;
+String globalUserID = '';
 Future<void> setSignInStatus() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   signedIn =  prefs.getBool('SignInStatus');
+  globalUserID = prefs.getString('userID');
 }

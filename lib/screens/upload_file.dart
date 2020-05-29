@@ -17,11 +17,10 @@ class _UploadFileState extends State<UploadFile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
-           Navigator.of(context).pop();  
+            Navigator.of(context).pop();
           },
           color: darkPurple,
         ),
@@ -30,8 +29,7 @@ class _UploadFileState extends State<UploadFile> {
         elevation: 0.0,
         title: Text(
           "Upload file",
-          style:
-              level2softdp.copyWith(fontSize: 20),
+          style: level2softdp.copyWith(fontSize: 20),
         ),
       ),
       body: Center(
@@ -80,8 +78,11 @@ class _UploadFileState extends State<UploadFile> {
                   ],
                 ),
                 onPressed: () async {
-                  File image =
-                      await ImagePicker.pickImage(source: ImageSource.gallery);
+                  File image;
+                  final picker = ImagePicker();
+                  final pickedFile =
+                      await picker.getImage(source: ImageSource.gallery);
+                  image = File(pickedFile.path);
                   if (image != null)
                     Navigator.push(
                       context,
