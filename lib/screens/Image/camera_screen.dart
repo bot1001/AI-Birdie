@@ -46,7 +46,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   void dispose() {
-    // controller?.dispose();
+    controller?.dispose();
     setState(() {
       sessionOn = false;
     });
