@@ -44,7 +44,17 @@ Future<void> signInWithGoogle() async {
 }
 
 Future<void> addNewUser(Map<String, dynamic> userData, String userID) async {
-  Firestore.instance.collection('users').document('$userID').setData(userData);
+  await Firestore.instance.collection('users').document('$userID').setData(userData);
+  await Firestore.instance.collection('users').document('$userID').collection('userChecklists').document().setData({});
+  
+  
+  //  .add({'birds':[
+  //   {
+  //     'birdName':'birdName',
+  //     'checked':'checked',
+  //   }  
+  // ]});
+
 }
 
 Future<void> signOut() async {

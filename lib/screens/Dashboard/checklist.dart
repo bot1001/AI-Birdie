@@ -4,11 +4,11 @@ import 'package:aibirdie/screens/Dashboard/checklist_birds.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
-import 'package:aibirdie/components/storage.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:aibirdie/components/dimissed_background.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckList extends StatefulWidget {
   @override
@@ -25,25 +25,32 @@ class _CheckListState extends State<CheckList> {
   var noCheckList = true;
   bool loading = true;
   bool birdLoading = true;
+  String myUserID;
 
   String birdInput = '';
   QuerySnapshot snapShots;
 
-  final userChecklists = Firestore.instance
-      .collection('users')
-      .document(globalUserID)
-      .collection('userChecklists');
-
+  var userChecklists;
   @override
   void initState() {
-    fetchData();
+    if (signedIn) {
+      userChecklists = Firestore.instance
+          .collection('users')
+          .document(myUserID)
+          .collection('userChecklists');
+      fetchData();
+    }
     super.initState();
   }
 
   void fetchData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    myUserID = prefs.getString('userID');
+
     snapShots = await userChecklists.getDocuments();
     setState(() {
       checkList = snapShots.documents.map((e) => e.documentID).toList();
+      // print("cccc: $checkList");
     });
     // checkList = value.data['userChecklists'];
 
@@ -57,18 +64,18 @@ class _CheckListState extends State<CheckList> {
     });
   }
 
-  void readChecklistFile() async {
-    var value = await readContentsByLine(checklistFile);
-    setState(() {
-      if (value.length == 0) {
-        noCheckList = true;
-      } else {
-        checkList = value;
-        noCheckList = false;
-      }
-      // for (var i = 0; i < checkList.length; i++) isChecked.add(false);
-    });
-  }
+  // void readChecklistFile() async {
+  //   var value = await readContentsByLine(checklistFile);
+  //   setState(() {
+  //     if (value.length == 0) {
+  //       noCheckList = true;
+  //     } else {
+  //       checkList = value;
+  //       noCheckList = false;
+  //     }
+  //     // for (var i = 0; i < checkList.length; i++) isChecked.add(false);
+  //   });
+  // }
 
   Widget noNotesWidget() {
     return Container(
@@ -272,15 +279,15 @@ class _CheckListState extends State<CheckList> {
                                         key: UniqueKey(),
                                         direction: DismissDirection.startToEnd,
                                         onDismissed: (dismissDirection) async {
+                                          await userChecklists
+                                              .document('${checkList[index]}')
+                                              .delete();
                                           setState(() {
                                             checkList.removeAt(index);
                                             if (checkList.length == 0) {
                                               noCheckList = true;
                                             }
                                           });
-                                          await userChecklists
-                                              .document('${checkList[index]}')
-                                              .delete();
                                         },
                                         background: dismissedBackground(),
                                         child: Padding(

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/screens/Audio/start_recording.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/gestures.dart';
@@ -53,6 +54,7 @@ class _LandingPageState extends State<LandingPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("Initial Sign in status: ${prefs.getBool('SignInStatus')}");
     prefs.getBool('SignInStatus') ?? await prefs.setBool('SignInStatus', false);
+    setSignInStatus();
   }
 
   void createDirectories() async {
