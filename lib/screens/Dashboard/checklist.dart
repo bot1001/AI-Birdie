@@ -1,11 +1,12 @@
 import 'dart:io';
 import 'package:aibirdie/components/not_signedIn_widget.dart';
-import 'package:animations/animations.dart';
+import 'package:aibirdie/screens/Dashboard/checklist_birds.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/components/storage.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:aibirdie/components/dimissed_background.dart';
 
@@ -308,53 +309,41 @@ class _CheckListState extends State<CheckList> {
                                         child: Padding(
                                           padding: EdgeInsets.only(
                                               top: 2, bottom: 2, right: 15),
-                                          child: OpenContainer(
-                                            closedElevation: 0.0,
-                                            closedColor: Color(0xfff5f5f5),
-                                            openBuilder: (context, action) {
-                                              // print(birds);
-                                              return Scaffold(
-                                                appBar: AppBar(),
-                                                body: Container(
-                                                  child: Center(
-                                                    child: ListView.builder(
-                                                      itemCount: birds.length,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        return Container(
-                                                          child:
-                                                              CheckboxListTile(
-                                                            value: false,
-                                                            onChanged: (s) {},
-                                                            title: Text(
-                                                                "${birds[index]}",
-                                                                style:
-                                                                    level2softdp),
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
+                                          child: ListTile(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                  type:
+                                                      PageTransitionType.scale,
+                                                  alignment:
+                                                      Alignment.center,
+                                                  child: CheckListBirds(
+                                                    checklist: checkList[index],
+                                                    birds:
+                                                        birds[checkList[index]],
                                                   ),
                                                 ),
                                               );
+
+                                              // Navigator.push(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //     builder: (context) =>
+                                              //         CheckListBirds(
+                                              //       birds:
+                                              //           birds[checkList[index]],
+                                              //     ),
+                                              //   ),
+                                              // );
                                             },
-                                            tappable: false,
-                                            closedBuilder: (context, action) =>
-                                                ListTile(
-                                              leading: Icon(
-                                                Icons.playlist_add_check,
-                                                color: softGreen,
-                                              ),
-                                              title: Text(
-                                                "${checkList[index]}",
-                                                style: level2softdp,
-                                              ),
-                                              trailing: IconButton(
-                                                icon: Icon(Icons.add),
-                                                onPressed: () {
-                                                  action.call();
-                                                },
-                                              ),
+                                            leading: Icon(
+                                              Icons.playlist_add_check,
+                                              color: softGreen,
+                                            ),
+                                            title: Text(
+                                              "${checkList[index]}",
+                                              style: level2softdp,
                                             ),
                                           ),
                                         ),
