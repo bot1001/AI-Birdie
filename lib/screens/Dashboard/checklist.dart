@@ -29,27 +29,30 @@ class _CheckListState extends State<CheckList> {
 
   String birdInput = '';
   QuerySnapshot snapShots;
+  SharedPreferences prefs;
 
-  var userChecklists;
   @override
   void initState() {
     if (signedIn) {
-      userChecklists = Firestore.instance
-          .collection('users')
-          .document(myUserID)
-          .collection('userChecklists');
       fetchData();
     }
     super.initState();
   }
 
   void fetchData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    myUserID = prefs.getString('userID');
+    prefs = await SharedPreferences.getInstance();
 
-    snapShots = await userChecklists.getDocuments();
+    snapShots = await Firestore.instance
+        .collection('users')
+        .document('${prefs.getString('userID')}')
+        .collection('userChecklists')
+        .getDocuments();
     setState(() {
-      checkList = snapShots.documents.map((e) => e.documentID).toList();
+      for (var i in snapShots.documents) {
+        if (i.documentID == "INIT") continue;
+        checkList.add(i.documentID);
+      }
+ 
       // print("cccc: $checkList");
     });
     // checkList = value.data['userChecklists'];
@@ -198,9 +201,17 @@ class _CheckListState extends State<CheckList> {
                           onPressed: () async {
                             var input = birdInput.trim();
                             if (input != '') {
-                              userChecklists.document('$input').setData({
+                              Firestore.instance
+                                  .collection('users')
+                                  .document('${prefs.getString('userID')}')
+                                  .collection('userChecklists')
+                                  .document(input)
+                                  .setData({
                                 'birds': [],
                               });
+                              // userChecklists.document('$input').setData({
+                              //   'birds': [],
+                              // });
 
                               setState(() {
                                 checkList.add(input);
@@ -279,7 +290,11 @@ class _CheckListState extends State<CheckList> {
                                         key: UniqueKey(),
                                         direction: DismissDirection.startToEnd,
                                         onDismissed: (dismissDirection) async {
-                                          await userChecklists
+                                          await Firestore.instance
+                                              .collection('users')
+                                              .document(
+                                                  '${prefs.getString('userID')}')
+                                              .collection('userChecklists')
                                               .document('${checkList[index]}')
                                               .delete();
                                           setState(() {
