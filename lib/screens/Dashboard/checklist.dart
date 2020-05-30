@@ -21,7 +21,6 @@ class _CheckListState extends State<CheckList> {
 
   // var isChecked = [];
   var checkList = [];
-  var birds = {};
 
   var noCheckList = true;
   bool loading = true;
@@ -37,8 +36,6 @@ class _CheckListState extends State<CheckList> {
 
   @override
   void initState() {
-    // readChecklistFile();
-    // for (var i = 0; i < checkList.length; i++) isChecked.add(false);
     fetchData();
     super.initState();
   }
@@ -54,18 +51,6 @@ class _CheckListState extends State<CheckList> {
       setState(() {
         noCheckList = false;
       });
-
-    var a = await Firestore.instance
-        .collection('users')
-        .document(globalUserID)
-        .collection('userChecklists')
-        .getDocuments();
-
-    setState(() {
-      for (var i in a.documents)
-        birds.addAll({'${i.documentID}': i.data['birds']});
-    });
-    print("maru: $birds");
 
     setState(() {
       loading = false;
@@ -129,20 +114,6 @@ class _CheckListState extends State<CheckList> {
     );
   }
 
-  // Future<void> deleteCheckBirdAt(int index) async {
-  //   checkList.removeAt(index);
-  //   String temp = "";
-  //   for (var everyCheckBird in checkList) temp = temp + everyCheckBird + "\n";
-  //   await clearFile(checklistFile);
-  //   await appendContent(checklistFile, temp);
-  //   var value = await readContentsByLine(checklistFile);
-  //   setState(() => checkList = value);
-  //   if (checkList.length == 0) {
-  //     print("All notes deleted");
-  //     setState(() => noCheckList = true);
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -202,11 +173,21 @@ class _CheckListState extends State<CheckList> {
                       ),
                       buttons: [
                         DialogButton(
+                          color: Colors.white,
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            "Cancel",
+                            style: level2softdp,
+                          ),
+                        ),
+                        DialogButton(
                           child: Text(
                             'Create',
                             style: level2softw,
                           ),
-                          // radius: BorderRadius.circular(100),
+                          radius: BorderRadius.circular(100),
                           onPressed: () async {
                             var input = birdInput.trim();
                             if (input != '') {
@@ -214,20 +195,10 @@ class _CheckListState extends State<CheckList> {
                                 'birds': [],
                               });
 
-                              // Firestore.instance.collection('users').document(globalUserID).
-
                               setState(() {
                                 checkList.add(input);
+                                birdInput = '';
                               });
-
-                              // await appendContent(
-                              //     checklistFile, "${birdInput.trim()}\n");
-                              // var value = await readContentsByLine(checklistFile);
-                              // setState(() {
-                              //   checkList = value;
-                              //   noCheckList = false;
-                              //   isChecked.add(false);
-                              // });
                             } else {
                               Scaffold.of(context).showSnackBar(SnackBar(
                                   action: SnackBarAction(
@@ -301,6 +272,12 @@ class _CheckListState extends State<CheckList> {
                                         key: UniqueKey(),
                                         direction: DismissDirection.startToEnd,
                                         onDismissed: (dismissDirection) async {
+                                          setState(() {
+                                            checkList.removeAt(index);
+                                            if (checkList.length == 0) {
+                                              noCheckList = true;
+                                            }
+                                          });
                                           await userChecklists
                                               .document('${checkList[index]}')
                                               .delete();
@@ -316,26 +293,12 @@ class _CheckListState extends State<CheckList> {
                                                 PageTransition(
                                                   type:
                                                       PageTransitionType.scale,
-                                                  alignment:
-                                                      Alignment.center,
+                                                  alignment: Alignment.center,
                                                   child: CheckListBirds(
                                                     checklist: checkList[index],
-                                                    birds:
-                                                        birds[checkList[index]],
                                                   ),
                                                 ),
                                               );
-
-                                              // Navigator.push(
-                                              //   context,
-                                              //   MaterialPageRoute(
-                                              //     builder: (context) =>
-                                              //         CheckListBirds(
-                                              //       birds:
-                                              //           birds[checkList[index]],
-                                              //     ),
-                                              //   ),
-                                              // );
                                             },
                                             leading: Icon(
                                               Icons.playlist_add_check,
