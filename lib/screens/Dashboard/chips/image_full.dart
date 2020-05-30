@@ -25,13 +25,16 @@ class ImageFull extends StatelessWidget {
                   tag: inp.path,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
-                    child: Image.file(
-                      inp,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: Image.file(
+                        inp,
+                      ),
                     ),
                   )),
-              SizedBox(
-                height: 20,
-              ),
+              // SizedBox(
+              //   height: 20,
+              // ),
               Container(
                 height: 50,
                 width: double.infinity,
