@@ -1,4 +1,5 @@
 import 'package:aibirdie/services.dart/authentication.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:share/share.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,6 @@ class _DashBoardState extends State<DashBoard>
 
   bool signedIn = false;
   bool showSpinner = false;
-  
 
   int _selectedPage = 0;
   final _pages = [
@@ -54,7 +54,6 @@ class _DashBoardState extends State<DashBoard>
     setState(() {
       signedIn = prefs.getBool('SignInStatus');
     });
-    
   }
 
   @override
@@ -195,28 +194,63 @@ class _DashBoardState extends State<DashBoard>
                               borderRadius: BorderRadius.circular(5)),
                           // onPressed: signOut,
                           onPressed: () async {
-                            setState(() {
-                              showSpinner = true;
-                            });
-                            await signOut();
-                            setState(() {
-                              showSpinner = false;
-                              signedIn = false;
-                            });
-                            Scaffold.of(context).showSnackBar(
-                              SnackBar(
-                                action: SnackBarAction(
-                                    label: 'OK', onPressed: () {}),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                backgroundColor: darkPurple,
-                                behavior: SnackBarBehavior.floating,
-                                content: Text(
-                                  'Signed out.',
-                                  style: level2softw,
+                            var connectivityResult =
+                                await (Connectivity().checkConnectivity());
+                            if (connectivityResult == ConnectivityResult.none) {
+                              Alert(
+                                  context: context,
+                                  title: "Network Error",
+                                  type: AlertType.error,
+                                  desc:
+                                      "Your phone is not connected to the internet.\nCheck your connection and try again",
+                                  style: AlertStyle(
+                                    descStyle: level2softdp,
+                                    isCloseButton: false,
+                                    titleStyle: level2softdp.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 25),
+                                  ),
+                                  closeFunction: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  buttons: [
+                                    DialogButton(
+                                      radius: BorderRadius.circular(100),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      color: softGreen,
+                                      child: Text(
+                                        "OK",
+                                        style: level2softw,
+                                      ),
+                                    ),
+                                  ]).show();
+                              // Navigator.of(context).pop();
+                            } else {
+                              setState(() {
+                                showSpinner = true;
+                              });
+                              await signOut();
+                              setState(() {
+                                showSpinner = false;
+                                signedIn = false;
+                              });
+                              Scaffold.of(context).showSnackBar(
+                                SnackBar(
+                                  action: SnackBarAction(
+                                      label: 'OK', onPressed: () {}),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  backgroundColor: darkPurple,
+                                  behavior: SnackBarBehavior.floating,
+                                  content: Text(
+                                    'Signed out.',
+                                    style: level2softw,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           },
                           child: Text(
                             "Sign out",
@@ -371,8 +405,7 @@ class _DashBoardState extends State<DashBoard>
     );
   }
 
-   Widget signedInWidget() {
-
+  Widget signedInWidget() {
     return UserAccountsDrawerHeader(
       decoration: BoxDecoration(),
       accountEmail: Text(
@@ -452,27 +485,60 @@ class _DashBoardState extends State<DashBoard>
         ),
         // onPressed: signIn,
         onPressed: () async {
-          setState(() {
-            showSpinner = true;
-          });
-          await signInWithGoogle();
-          setState(() {
-            showSpinner = false;
-            signedIn = true;
-          });
-          Scaffold.of(context).showSnackBar(
-            SnackBar(
-              action: SnackBarAction(label: 'OK', onPressed: () {}),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              backgroundColor: darkPurple,
-              behavior: SnackBarBehavior.floating,
-              content: Text(
-                'Signed in successfully.',
-                style: level2softw,
+          var connectivityResult = await (Connectivity().checkConnectivity());
+          if (connectivityResult == ConnectivityResult.none) {
+            Alert(
+                context: context,
+                title: "Network Error",
+                type: AlertType.error,
+                desc:
+                    "Your phone is not connected to the internet.\nCheck your connection and try again",
+                style: AlertStyle(
+                  descStyle: level2softdp,
+                  isCloseButton: false,
+                  titleStyle: level2softdp.copyWith(
+                      fontWeight: FontWeight.bold, fontSize: 25),
+                ),
+                closeFunction: () {
+                  Navigator.of(context).pop();
+                },
+                buttons: [
+                  DialogButton(
+                    radius: BorderRadius.circular(100),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    color: softGreen,
+                    child: Text(
+                      "OK",
+                      style: level2softw,
+                    ),
+                  ),
+                ]).show();
+            // Navigator.of(context).pop();
+          } else {
+            setState(() {
+              showSpinner = true;
+            });
+            await signInWithGoogle();
+            setState(() {
+              showSpinner = false;
+              signedIn = true;
+            });
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                action: SnackBarAction(label: 'OK', onPressed: () {}),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                backgroundColor: darkPurple,
+                behavior: SnackBarBehavior.floating,
+                content: Text(
+                  'Signed in successfully.',
+                  style: level2softw,
+                ),
               ),
-            ),
-          );
+            );
+          }
         },
       ),
     );

@@ -6,6 +6,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckListBirds extends StatefulWidget {
   final String checklist;
@@ -25,6 +26,7 @@ class _CheckListBirdsState extends State<CheckListBirds> {
   DocumentReference checkListDoc;
 
   bool noBirds = false;
+  SharedPreferences prefs;
 
   @override
   void initState() {
@@ -33,19 +35,20 @@ class _CheckListBirdsState extends State<CheckListBirds> {
   }
 
   void fetchBirds() async {
+    prefs = await SharedPreferences.getInstance();
     setState(() {
       loading = true;
     });
     snapShot = await Firestore.instance
         .collection('users')
-        .document(globalUserID)
+        .document('${prefs.getString('userID')}')
         .collection('userChecklists')
         .document(widget.checklist)
         .get();
 
     checkListDoc = Firestore.instance
         .collection('users')
-        .document(globalUserID)
+        .document('${prefs.getString('userID')}')
         .collection('userChecklists')
         .document(widget.checklist);
 

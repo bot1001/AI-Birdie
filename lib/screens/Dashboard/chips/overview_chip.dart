@@ -1,4 +1,6 @@
 // import 'dart:io';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
@@ -24,43 +26,52 @@ class _OverviewChipState extends State<OverviewChip> {
   }
 
   Future<void> setAllCount() async {
-    // Directory imgDir = Directory('/storage/emulated/0/AiBirdie/Images');
-    // Directory audDir = Directory('/storage/emulated/0/AiBirdie/Audios');
+    Directory imgDir = Directory('/storage/emulated/0/AiBirdie/Images');
+    Directory audDir = Directory('/storage/emulated/0/AiBirdie/Audios');
     // File noteFile = File('/storage/emulated/0/AiBirdie/Notes/notes.txt');
     // File checkListFile = File('/storage/emulated/0/AiBirdie/Notes/checklist.txt');
 
-    // var temp = imgDir.list();
-    // var temp2 = audDir.list();
+    var temp = imgDir.list();
+    var temp2 = audDir.list();
 
-    // var images = await temp.toList();
-    // var audios = await temp2.toList();
+    var images = await temp.toList();
+    var audios = await temp2.toList();
     // var allNotes = await noteFile.readAsLines();
     // var checkList = await checkListFile.readAsLines();
 
-    // setState(() {
-    //   imagesCaptured = images.length;
-    //   audioRecorded = audios.length;
-    //   notesSaved = allNotes.length;
-    //   checkListCount = checkList.length;
-    // });
-    if(signedIn){
+    setState(() {
+      imagesCaptured = images.length;
+      audioRecorded = audios.length;
+      //   notesSaved = allNotes.length;
+      //   checkListCount = checkList.length;
+    });
+    if (signedIn) {
       setState(() {
         loading = true;
       });
 
-    prefs = await SharedPreferences.getInstance();
-    Firestore.instance
-        .collection('users')
-        .document('${prefs.getString('userID')}')
-        .get()
-        .then((value) {
-      List temp = value.data['userNotes'];
-      setState(() {
-        notesSaved = temp.length;
-        loading = false;
-        
+      prefs = await SharedPreferences.getInstance();
+      Firestore.instance
+          .collection('users')
+          .document('${prefs.getString('userID')}')
+          .get()
+          .then((value) {
+        List temp = value.data['userNotes'];
+        setState(() {
+          notesSaved = temp.length;
+          loading = false;
+        });
       });
-    });
+
+      var checkDoc = await Firestore.instance
+          .collection('users')
+          .document('${prefs.getString('userID')}')
+          .collection('userChecklists')
+          .getDocuments();
+
+      setState(() {
+        checkListCount = checkDoc.documents.length-1;
+      });
     }
   }
 
@@ -265,7 +276,6 @@ class _OverviewChipState extends State<OverviewChip> {
                           ),
                         ],
                       ),
-
                       loading
                           ? CircularProgressIndicator()
                           : Text(
@@ -320,11 +330,13 @@ class _OverviewChipState extends State<OverviewChip> {
                           ),
                         ],
                       ),
-                      Text(
-                        "$checkListCount",
-                        style: level2softg.copyWith(
-                            fontSize: 40, fontWeight: FontWeight.w900),
-                      ),
+                      loading
+                          ? CircularProgressIndicator()
+                          : Text(
+                              signedIn ? "$checkListCount" : "0",
+                              style: level2softg.copyWith(
+                                  fontSize: 40, fontWeight: FontWeight.w900),
+                            ),
                     ],
                   ),
                 ),
