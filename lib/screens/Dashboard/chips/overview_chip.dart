@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,6 +19,7 @@ class _OverviewChipState extends State<OverviewChip> {
   int checkListCount = 0;
   SharedPreferences prefs;
   bool loading = false;
+  bool internetCheck = true;
 
   @override
   void initState() {
@@ -45,33 +47,42 @@ class _OverviewChipState extends State<OverviewChip> {
       //   notesSaved = allNotes.length;
       //   checkListCount = checkList.length;
     });
-    if (signedIn) {
-      setState(() {
-        loading = true;
-      });
 
-      prefs = await SharedPreferences.getInstance();
-      Firestore.instance
-          .collection('users')
-          .document('${prefs.getString('userID')}')
-          .get()
-          .then((value) {
-        List temp = value.data['userNotes'];
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        internetCheck = false;
+      });
+    } else {
+      if (signedIn) {
         setState(() {
-          notesSaved = temp.length;
-          loading = false;
+          loading = true;
         });
-      });
 
-      var checkDoc = await Firestore.instance
-          .collection('users')
-          .document('${prefs.getString('userID')}')
-          .collection('userChecklists')
-          .getDocuments();
+        prefs = await SharedPreferences.getInstance();
+        Firestore.instance
+            .collection('users')
+            .document('${prefs.getString('userID')}')
+            .get()
+            .then((value) {
+          List temp = value.data['userNotes'];
+          setState(() {
+            notesSaved = temp.length;
+            loading = false;
+          });
+        });
 
-      setState(() {
-        checkListCount = checkDoc.documents.length-1;
-      });
+        var checkDoc = await Firestore.instance
+            .collection('users')
+            .document('${prefs.getString('userID')}')
+            .collection('userChecklists')
+            .getDocuments();
+
+        setState(() {
+          checkListCount = checkDoc.documents.length - 1;
+          internetCheck = true;
+        });
+      }
     }
   }
 
@@ -276,13 +287,18 @@ class _OverviewChipState extends State<OverviewChip> {
                           ),
                         ],
                       ),
-                      loading
-                          ? CircularProgressIndicator()
-                          : Text(
-                              signedIn ? "$notesSaved" : "0",
-                              style: level2softg.copyWith(
-                                  fontSize: 40, fontWeight: FontWeight.w900),
-                            ),
+                      internetCheck
+                          ? loading
+                              ? CircularProgressIndicator()
+                              : Text(
+                                  signedIn ? "$notesSaved" : "0",
+                                  style: level2softg.copyWith(
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.w900),
+                                )
+                          : Container(
+                            child: Icon(Icons.error_outline, color: softGreen, size: 30,),
+                          ),
                     ],
                   ),
                 ),
@@ -330,13 +346,18 @@ class _OverviewChipState extends State<OverviewChip> {
                           ),
                         ],
                       ),
-                      loading
-                          ? CircularProgressIndicator()
-                          : Text(
-                              signedIn ? "$checkListCount" : "0",
-                              style: level2softg.copyWith(
-                                  fontSize: 40, fontWeight: FontWeight.w900),
-                            ),
+                      internetCheck
+                          ? loading
+                              ? CircularProgressIndicator()
+                              : Text(
+                                  signedIn ? "$checkListCount" : "0",
+                                  style: level2softg.copyWith(
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.w900),
+                                )
+                          : Container(
+                            child: Icon(Icons.error_outline, color: softGreen, size: 30,),
+                          ),
                     ],
                   ),
                 ),

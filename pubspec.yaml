@@ -69,6 +69,9 @@ dependencies:
   googleapis: ^0.55.0
   googleapis_auth: ^0.2.11+1
 
+  # Private packages
+  ai_birdie_image:
+    git: https://github.com/sjdev24/ai_birdie_image.git
 
 
   # Old dependencies incase something goes wrong

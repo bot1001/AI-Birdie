@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 // import 'package:aibirdie/components/waves.dart';
 import 'package:aibirdie/components/waves.dart';
@@ -20,14 +21,36 @@ class AudioRecord extends StatefulWidget {
 class _AudioRecordState extends State<AudioRecord> {
   FlutterAudioRecorder recorder;
   String filePath;
+  File audioFile;
 
   int min = 0;
   int sec = 0;
+
+  double timeLimit = 9.0;
+
+  // bool timesUp = false;
 
   @override
   void initState() {
     super.initState();
     startRecording();
+    listenTimeLimit();
+  }
+
+  void listenTimeLimit() async {
+    Timer.periodic(Duration(seconds: 1), (timer) async {
+      if(timer.tick == timeLimit){
+        var result = await recorder.stop();
+        audioFile = File(result.path);
+
+        if (audioFile != null) {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => AudioIdentify(audioFile)));
+        }
+        timer.cancel();
+      }
+
+    });
   }
 
   Future startRecording() async {
@@ -87,11 +110,11 @@ class _AudioRecordState extends State<AudioRecord> {
                     myTimerWidget(),
                     solidButton("End Recording", () async {
                       var result = await recorder.stop();
-                      file = File(result.path);
+                      audioFile = File(result.path);
 
-                      if (file != null) {
+                      if (audioFile != null) {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => AudioIdentify(file)));
+                            builder: (context) => AudioIdentify(audioFile)));
                       }
                     }),
                   ],
@@ -114,6 +137,11 @@ class _AudioRecordState extends State<AudioRecord> {
         sFiller = sec <= 9 ? "0" : "";
         mFiller = min <= 9 ? "0" : "";
 
+        // if (sec == 8) {
+        //   setState(() {
+        //     timesUp = true;
+        //   });
+        // }
         return Container(
           child: Text(
             "$mFiller$min:$sFiller${sec++}",

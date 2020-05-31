@@ -8,6 +8,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
+  ai_birdie_image:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "2eeefea1e679a7c826a75335b4ed42915348abe5"
+      url: "https://github.com/sjdev24/ai_birdie_image.git"
+    source: git
+    version: "1.0.1"
   archive:
     dependency: transitive
     description:

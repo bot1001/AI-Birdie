@@ -1,16 +1,17 @@
 import 'dart:io';
-// import 'dart:async';
-import 'package:aibirdie/APIs/image_api/classification.dart';
+import 'package:ai_birdie_image/aibirdieimage.dart';
+// import 'package:aibirdie/APIs/image_api/classification.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:aibirdie/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:aibirdie/APIs/aibirdie_image_api/aibirdie_image_classification.dart';
-import 'package:aibirdie/APIs/aibirdie_image_api/generated/image_classification.pbgrpc.dart';
+// import 'package:aibirdie/APIs/aibirdie_image_api/aibirdie_image_classification.dart';
+// import 'package:aibirdie/APIs/aibirdie_image_api/generated/image_classification.pbgrpc.dart';
 
 class ImageResult extends StatefulWidget {
   final File imageInputFile;
-  final String serverIP = '35.232.129.172';
+
 
   ImageResult(this.imageInputFile);
 
@@ -19,54 +20,57 @@ class ImageResult extends StatefulWidget {
 }
 
 class _ImageResultState extends State<ImageResult> {
-  AiBirdieImageClassification classifier;
-  var response;
-  ImageClassificationResponse result;
 
   bool _showSpinner = true;
-  bool connectivity = false;
 
-  var labels = [];
-  var accuracy = [];
+  List<int> ids = [];
+  List<String> labels = [];
+  List<double> accuracy = [];
+  List<String> accuracyStrings = [];
+  List<DocumentSnapshot> docSpecies = [];
+
 
   @override
   void initState() {
-    // Timer(Duration(seconds: 2), () {
-    //   setState(() {
-    //     _showSpinner = false;
-    //     labels = [
-    //       'Black And White Warbler',
-    //       'Baird Sparrow',
-    //       'Brown Creeper',
-    //       'Evening Grosbeak',
-    //       'Heermann Gull'
-    //     ];
-    //     accuracy = ['78%', '11%', '4%', '2%', '0.5%'];
-
-    //   });
-    // });
     super.initState();
+    _doPrediction();
+  }
 
-    /**original */
+    void _doPrediction() async {
+    Firestore db = Firestore.instance;
+    CollectionReference refBirdSpecies = db.collection("bird-species");
+    CollectionReference refImages = db.collection("images");
+    print(refImages);
 
-    var classifier = Classification.instance;
-    classifier.predict([widget.imageInputFile.path]).then((value) {
-      setState(() {
-        for (Map result in value) {
-          List<int> id = List.castFrom<dynamic, int>(result['id']);
+    // bird-specie document contains images collection and each id represents image id of document images collection
+    // image document has uri
+    // use firebase storage to fetch image
 
-          // temporary fix for now
-          labels = id.map((e) => e.toString()).toList();
+    var classifier = AIBirdieImage.classification();
 
-          accuracy = List.castFrom<dynamic, double>(result['probabilities']);
-          accuracy = accuracy
-              .map<String>((e) => '${(e * 100).toString().substring(0, 5)} %')
-              .toList();
-        }
-        _showSpinner = false;
-      });
+    var predictionResult =
+        await classifier.predict([widget.imageInputFile.path]);
+    for (Map result in predictionResult) {
+      ids = List.castFrom<dynamic, int>(result['id']);
+
+      for (var e in ids) {
+        docSpecies.add(await refBirdSpecies.document(e.toString()).get());
+      }
+
+      accuracy = List.castFrom<dynamic, double>(result['probabilities']);
+    }
+
+    setState(() {
+      labels = docSpecies.map<String>((e) => e.data["name"]).toList();
+      accuracyStrings = accuracy
+          .map<String>((e) => '${(e * 100).toString().substring(0, 5)} %')
+          .toList();
+      _showSpinner = false;
     });
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -102,12 +106,12 @@ class _ImageResultState extends State<ImageResult> {
                           style: AlertStyle(
                               titleStyle: level2softdp.copyWith(
                                   fontSize: 25, fontWeight: FontWeight.bold)),
-                          title: 'Black And White Warbler',
+                          title: docSpecies[index].data["name"],
                           type: AlertType.info,
                           content: Column(
                             children: <Widget>[
                               Text(
-                                "The black-and-white warbler is a species of New World warbler, and the only member of its genus, Mniotilta. It breeds in northern and eastern North America and winters in Florida, Central America, and the West Indies down to Peru. This species is a very rare vagrant to western Europe.",
+                                docSpecies[index].data["trivia"],
                                 style: level2softdp,
                                 textAlign: TextAlign.justify,
                               ),
@@ -158,7 +162,7 @@ class _ImageResultState extends State<ImageResult> {
                                       style: level2softdp,
                                     ),
                                     Text(
-                                      accuracy[index],
+                                      accuracyStrings[index],
                                       style: level2softdp,
                                     ),
                                   ],
