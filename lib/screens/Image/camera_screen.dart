@@ -4,12 +4,13 @@ import 'package:aibirdie/screens/upload_file.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:camera/camera.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:aibirdie/constants.dart';
 import 'package:aibirdie/screens/landing_page.dart';
 import 'package:aibirdie/screens/Image/image_result.dart';
-
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class CameraScreen extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -341,12 +342,45 @@ class _CameraScreenState extends State<CameraScreen> {
         path,
       );
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ImageResult(File(path)),
-        ),
-      );
+      var connectivityResult = await (Connectivity().checkConnectivity());
+      if (connectivityResult == ConnectivityResult.none) {
+        print("aama aaja");
+        Alert(
+            context: context,
+            title: "Network Error",
+            type: AlertType.error,
+            desc:
+                "Image has been saved to the phone.\nYour phone is not connected to the internet.\nConnect to internet to classify this image.",
+            style: AlertStyle(
+              descStyle: level2softdp,
+              isCloseButton: false,
+              titleStyle: level2softdp.copyWith(
+                  fontWeight: FontWeight.bold, fontSize: 25),
+            ),
+      
+            buttons: [
+              DialogButton(
+                radius: BorderRadius.circular(100),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                color: softGreen,
+                child: Text(
+                  "OK",
+                  style: level2softw,
+                ),
+              ),
+            ]).show();
+        // Navigator.of(context).pop();
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ImageResult(File(path)),
+          ),
+        );
+      }
+
       setState(() {
         animatedHeight = 80.0;
         animatedMargin = 5.0;

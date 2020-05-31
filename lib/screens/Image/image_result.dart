@@ -24,6 +24,7 @@ class _ImageResultState extends State<ImageResult> {
   ImageClassificationResponse result;
 
   bool _showSpinner = true;
+  bool connectivity = false;
 
   var labels = [];
   var accuracy = [];
@@ -42,12 +43,12 @@ class _ImageResultState extends State<ImageResult> {
     //     ];
     //     accuracy = ['78%', '11%', '4%', '2%', '0.5%'];
 
-
     //   });
     // });
     super.initState();
 
     /**original */
+
     var classifier = Classification.instance;
     classifier.predict([widget.imageInputFile.path]).then((value) {
       setState(() {
@@ -65,7 +66,6 @@ class _ImageResultState extends State<ImageResult> {
         _showSpinner = false;
       });
     });
-
   }
 
   @override
